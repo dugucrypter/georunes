@@ -1,0 +1,469 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2021-12-21 14:20+0000\n"
+"PO-Revision-Date: 2021-12-21 14:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ../../../geoglyph\n"
+"X-Poedit-KeywordsList: _\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: binary/delaroche.py:177 ternary/qap.py:90
+msgid "granodiorite"
+msgstr "granodiorite"
+
+#: binary/delaroche.py:178 ternary/qap.py:80
+msgid "granite"
+msgstr "granite"
+
+#: binary/delaroche.py:179 ternary/qap.py:91
+msgid "tonalite"
+msgstr "tonalite"
+
+#: binary/delaroche.py:180
+msgid "diorite"
+msgstr "diorite"
+
+#: binary/delaroche.py:181
+msgid ""
+"monzo\n"
+"-diorite"
+msgstr ""
+"monzo\n"
+"-diorite"
+
+#: binary/delaroche.py:182
+msgid ""
+"monzo-\n"
+"nite"
+msgstr ""
+"monzo-\n"
+"nite"
+
+#: binary/delaroche.py:184
+msgid "gabbrodiorite"
+msgstr "gabbrodiorite"
+
+#: binary/delaroche.py:185
+msgid ""
+"monzo-\n"
+"gabbro"
+msgstr ""
+"monzo-\n"
+"gabbro"
+
+#: binary/delaroche.py:186
+msgid "gabbro-norite"
+msgstr "gabbro-norite"
+
+#: binary/delaroche.py:187
+msgid "gabbro"
+msgstr "gabbro"
+
+#: binary/delaroche.py:188
+msgid "theralite"
+msgstr "théralite"
+
+#: binary/delaroche.py:189
+msgid "melteigite"
+msgstr "meltéigite"
+
+#: binary/delaroche.py:191
+msgid "essexite"
+msgstr "essexite"
+
+#: binary/delaroche.py:192
+msgid "ijolite"
+msgstr "ijolite"
+
+#: binary/delaroche.py:194
+msgid ""
+"quartz\n"
+"monzonite"
+msgstr ""
+"quartz\n"
+"monzonite"
+
+#: binary/delaroche.py:195
+msgid ""
+"quartz\n"
+"syenite"
+msgstr ""
+"quartz\n"
+"syenite"
+
+#: binary/delaroche.py:196 ternary/qap.py:88
+msgid "syenite"
+msgstr "syénite"
+
+#: binary/delaroche.py:197
+msgid ""
+"nepheline\n"
+"syenite"
+msgstr ""
+"syénite à/\n"
+"népheline"
+
+#: binary/delaroche.py:198
+msgid "ultramafic rock"
+msgstr "roche ultramafique"
+
+#: binary/delaroche.py:199
+msgid ""
+"syeno-\n"
+"gabbro"
+msgstr ""
+"syéno-\n"
+"gabbro"
+
+#: binary/delaroche.py:200
+msgid "alkali-gabbro"
+msgstr "gabbro alcalin"
+
+#: binary/delaroche.py:201
+msgid ""
+"syeno-\n"
+"diorite"
+msgstr ""
+"syéno-\n"
+"diorite"
+
+#: binary/delaroche.py:202
+msgid "alkali-granite"
+msgstr "granite alcalin"
+
+#: binary/diagramba.py:67
+msgid "felsic"
+msgstr "felsique"
+
+#: binary/peccetaylor.py:46
+msgid "low-K tholeite"
+msgstr "tholéite K-pauvre"
+
+#: binary/peccetaylor.py:47
+msgid "medium-K calc-alkaline"
+msgstr "calco-alcalin K-moyen"
+
+#: binary/peccetaylor.py:48
+msgid "high-K calc-alkaline"
+msgstr "calco-alcalin K-élevé"
+
+#: binary/peccetaylor.py:49
+msgid "shoshonitic"
+msgstr "shoshonitique"
+
+#: binary/shand.py:56
+msgid "Peralkaline"
+msgstr "Péralcalin"
+
+#: binary/shand.py:57
+msgid "Metaluminous"
+msgstr "Métalumineux"
+
+#: binary/shand.py:58
+msgid "Peraluminous"
+msgstr "Peralumineux"
+
+#: binary/sialkali.py:99 ternary/barker.py:47 ternary/barker.py:76
+msgid "Granite"
+msgstr "Granite"
+
+#: binary/sialkali.py:100
+msgid "Quartz diorite"
+msgstr "Diorite à quartz"
+
+#: binary/sialkali.py:101
+msgid "Diorite"
+msgstr "Diorite"
+
+#: binary/sialkali.py:102 binary/sialkali.py:106
+msgid "Gabbro"
+msgstr "Gabbro"
+
+#: binary/sialkali.py:103 binary/sialkali.py:108
+msgid "Syenite"
+msgstr "Syénite"
+
+#: binary/sialkali.py:104
+msgid "Syenodiorite"
+msgstr "Syénodiorite"
+
+#: binary/sialkali.py:105
+msgid ""
+"Nepheline\n"
+"syenite"
+msgstr ""
+"Syénite à/\n"
+"népheline"
+
+#: binary/sialkali.py:107
+msgid "Ijolite"
+msgstr "Ijolite"
+
+#: binary/sialkali.py:113
+msgid "Alkaline"
+msgstr "Alcalin"
+
+#: binary/sialkali.py:114
+msgid "Subalkaline"
+msgstr "Sub-alcalin"
+
+#: binary/sialkali.py:148
+msgid ""
+"picro-\n"
+"basalt"
+msgstr ""
+"picro-\n"
+"basalte"
+
+#: binary/sialkali.py:149
+msgid "basalt"
+msgstr "basalte"
+
+#: binary/sialkali.py:150
+msgid ""
+"basaltic\n"
+"andesite"
+msgstr ""
+"andésite\n"
+"basaltique"
+
+#: binary/sialkali.py:151
+msgid "andesite"
+msgstr "andésite"
+
+#: binary/sialkali.py:152 ternary/qap.py:103
+msgid "dacite"
+msgstr "dacite"
+
+#: binary/sialkali.py:153
+msgid ""
+"trachy-\n"
+"basalt"
+msgstr ""
+"trachy-\n"
+"basalte"
+
+#: binary/sialkali.py:154
+msgid ""
+"basaltic\n"
+"trachy-\n"
+"andesite"
+msgstr ""
+"trachy-\n"
+"andésite\n"
+"basaltique"
+
+#: binary/sialkali.py:155
+msgid ""
+"trachy-\n"
+"andesite"
+msgstr ""
+"trachy-\n"
+"andésite"
+
+#: binary/sialkali.py:156
+msgid ""
+"trachyte/\n"
+"trachydacite"
+msgstr ""
+"trachyte/\n"
+"trachydacite"
+
+#: binary/sialkali.py:157
+msgid ""
+"tephrite/\n"
+"basanite"
+msgstr ""
+"téphrite/\n"
+"basanite"
+
+#: binary/sialkali.py:158
+msgid "phonotephrite"
+msgstr "phonotéphrite"
+
+#: binary/sialkali.py:159
+msgid "tephriphonolite"
+msgstr "téphriphonolite"
+
+#: binary/sialkali.py:160
+msgid "phonolite"
+msgstr "phonolite"
+
+#: binary/sialkali.py:161
+msgid "foidite"
+msgstr "foidite"
+
+#: ternary/afm.py:28
+msgid "Tholeiite series"
+msgstr "Série tholéique"
+
+#: ternary/afm.py:29
+msgid "Calc-alkaline series"
+msgstr "Série calco-alcaline"
+
+#: ternary/barker.py:48 ternary/barker.py:77
+msgid "Tonalite"
+msgstr "Tonalite"
+
+#: ternary/barker.py:49 ternary/barker.py:78
+msgid "Granodiorite"
+msgstr "Granodiorite"
+
+#: ternary/barker.py:50 ternary/barker.py:75
+msgid "Trondhjemite"
+msgstr "Trondhjémite"
+
+#: ternary/barker.py:79
+msgid "Quartz monzonite"
+msgstr "Monzonite à quartz"
+
+#: ternary/jensen.py:62
+msgid "TH"
+msgstr "TH"
+
+#: ternary/jensen.py:64 ternary/jensen.py:73
+msgid "Dacite"
+msgstr "Dacite"
+
+#: ternary/jensen.py:65
+msgid ""
+"High-Fe\n"
+"tholeiite\n"
+"basalt"
+msgstr ""
+"Basalt\n"
+"tholéitique\n"
+"Fe-riche"
+
+#: ternary/jensen.py:67 ternary/jensen.py:72
+msgid "Andesite"
+msgstr "Andésite"
+
+#: ternary/jensen.py:68
+msgid "Rhyolite"
+msgstr "Rhyolite"
+
+#: ternary/jensen.py:70
+msgid "CA"
+msgstr "CA"
+
+#: ternary/jensen.py:74
+msgid "Basalt"
+msgstr "Basalte"
+
+#: ternary/jensen.py:75
+msgid ""
+"High-Mg\n"
+"tholeiite\n"
+"basalt"
+msgstr ""
+"Basalt\n"
+"tholéitique\n"
+"Mg-riche"
+
+#: ternary/jensen.py:77
+msgid "Komatiitic basalt"
+msgstr "Basalte komatiitique"
+
+#: ternary/jensen.py:78
+msgid "Komatiite"
+msgstr "Komatiite"
+
+#: ternary/qap.py:81
+msgid ""
+"syeno-\n"
+"granite"
+msgstr ""
+"syéno-\n"
+"granite"
+
+#: ternary/qap.py:82
+msgid ""
+"monzo-\n"
+"granite"
+msgstr ""
+"monzo-\n"
+"granite"
+
+#: ternary/qap.py:83
+msgid ""
+"quartz-\n"
+"syenite"
+msgstr ""
+"quartz-\n"
+"syénite"
+
+#: ternary/qap.py:84
+msgid ""
+"quartz-\n"
+"monzonite"
+msgstr ""
+"quartz-\n"
+"monzonite"
+
+#: ternary/qap.py:86
+msgid ""
+"quartz-\n"
+"monzodiorite"
+msgstr ""
+"quartz-\n"
+"monzodiorite"
+
+#: ternary/qap.py:89
+msgid "monzonite"
+msgstr "monzonite"
+
+#: ternary/qap.py:92 ternary/qap.py:107
+msgid ""
+"monzodiorite\n"
+"monzogabbro"
+msgstr ""
+"monzodiorite\n"
+"monzogabbro"
+
+#: ternary/qap.py:99
+msgid "rhyolite"
+msgstr "rhyolite"
+
+#: ternary/qap.py:100
+msgid ""
+"quartz-\n"
+"trachyte"
+msgstr ""
+"quartz-\n"
+"trachyte"
+
+#: ternary/qap.py:102
+msgid ""
+"quartz-\n"
+"latite"
+msgstr ""
+"quartz-\n"
+"latite"
+
+#: ternary/qap.py:104
+msgid ""
+"basalt\n"
+"andesite"
+msgstr ""
+"basalte\n"
+"andésite"
+
+#: ternary/qap.py:105
+msgid "trachyte"
+msgstr "trachyte"
+
+#: ternary/qap.py:106
+msgid "latite"
+msgstr "latite"
+
+#~ msgid "Grabbro"
+#~ msgstr "Gabbro"

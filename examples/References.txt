@@ -1,0 +1,24 @@
+Geochemical data and simplified lithologies of the used samples were randomly selected from the following references.
+
+
+Adadey, K., Clarke, B., Théveniaut, H., Urien, P., Delor, C., Roig, J., Feybesse, J., 2009. Geological map explanation-Map sheet 0503 B (1: 100 000), CGS/BRGM/Geoman. Geol. Surv. Dep. Ghana GSD.
+
+Bonzi, W.M.-E., Vanderhaeghe, O., Van Lichtervelde, M., Wenmenga, U., André-Mayer, A.-S., Salvi, S., Poujol, M., 2021. Petrogenetic links between rare metal-bearing pegmatites and TTG gneisses in the West African Craton: The Mangodara district of SW Burkina Faso. Precambrian Res. 364, 106359. https://doi.org/10.1016/j.precamres.2021.106359
+
+De Kock, G., Theveniaut, H., Botha, P., Gyapong, W., 2009. Geological Map Explanation, Map Sheet 0803B (1: 100 000). CGSBRGMGeoman Accra Ghana Ghana Geol. Surv. Dep.
+
+Doumbia, S., Pouclet, A., Kouamelan, A., Peucat, J., Vidal, M., Delor, C., 1998. Petrogenesis of juvenile-type Birimian (Paleoproterozoic) granitoids in Central Côte-d’Ivoire, West Africa: geochemistry and geochronology. Precambrian Res. 87, 33–63.
+
+Egal, E., Thiéblemont, D., Lahondère, D., Guerrot, C., Costea, C.A., Iliescu, D., Delor, C., Goujou, J.-C., Lafon, J.M., Tegyey, M., Diaby, S., Kolié, P., 2002. Late Eburnean granitization and tectonics along the western and northwestern margin of the Archean Kénéma–Man domain (Guinea, West African Craton). Precambrian Res. 117, 57–84. https://doi.org/10.1016/S0301-9268(02)00060-8
+
+Grenholm, M., Jessell, M.W., Thébaud, N., 2019. A geodynamic model for the Paleoproterozoic (ca. 2.27–1.96 Ga) Birimian Orogen of the southern West African Craton–Insights into an evolving accretionary-collisional orogenic system. Earth-Sci. Rev.
+
+Lambert-Smith, J.S., Lawrence, D.M., Müller, W., Treloar, P.J., 2016. Palaeotectonic setting of the south-eastern Kédougou-Kéniéba Inlier, West Africa: new insights from igneous trace element geochemistry and U-Pb zircon ages. Precambrian Res. 274, 110–135.
+
+Naba, S., 2007. Propriétés magnétiques et caractères structuraux des granites du Burkina Faso oriental (Craton Ouest Africain, 2, 2-2, 0 Ga): implications géodynamique.
+
+Sakyi, P.A., Su, B.-X., Anum, S., Kwayisi, D., Dampare, S.B., Anani, C.Y., Nude, P.M., 2014. New zircon U–Pb ages for erratic emplacement of 2213–2130Ma Paleoproterozoic calc-alkaline I-type granitoid rocks in the Lawra Volcanic Belt of Northwestern Ghana, West Africa. Precambrian Res. 254, 149–168. https://doi.org/10.1016/j.precamres.2014.08.009
+
+Siegfried, P., De Kock, G., Clarke, B., Agenbacht, A., Delor, C., Van Rooyen, R., 2009. Geological map explanation–map sheet 0903D (1: 100 000). Min. Sect. Support Programme CGS BRGM Geoman GSD Accra.
+
+Tapsoba, B., Lo, C.-H., Jahn, B.-M., Chung, S.-L., Wenmenga, U., Iizuka, Y., 2013. Chemical and Sr–Nd isotopic compositions and zircon U–Pb ages of the Birimian granitoids from NE Burkina Faso, West African Craton: Implications on the geodynamic setting and crustal evolution. Precambrian Res. 224, 364–396. https://doi.org/10.1016/j.precamres.2012.09.013
