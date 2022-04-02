@@ -22,6 +22,7 @@ class DiagramSpider(DiagramBase):
                  legend_fs="small", thick_legend_linewidth=False,
                  enclosed_in_bg=("",),
                  markersize=8,
+                 drawing_order = "zorder",
                  **kwargs
                  ):
 
@@ -46,8 +47,8 @@ class DiagramSpider(DiagramBase):
                 warnings.warn(msg)
             self.norm = res.compos["CI"]
         self.fillmode = fillmode
-
         self.enclosed_in_bg = enclosed_in_bg
+        self.drawing_order = drawing_order
         self.ylim = ylim
         self.markersize = markersize
         self.legend_fs = legend_fs
@@ -176,7 +177,7 @@ class DiagramSpider(DiagramBase):
                                                  )
 
                 if custom_fillmode in ("enclosed", "enclosed-lines", "mixed"):
-                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group["color"])[0],
+                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group["color"])[0], zorder=zorder,
                                          alpha=0.25)
 
                     # For legend
