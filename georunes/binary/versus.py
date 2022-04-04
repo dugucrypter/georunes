@@ -11,7 +11,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                  xlabel='', ylabel='',
                  annotation=None,
                  xscale='linear', yscale='linear',
-                 padding={"bottom": 0.20},
+                 padding=None,
                  marker='',
                  xmolar=False, ymolar=False,
                  alpha_color=0.4, alpha_edge_color=0.8,
@@ -19,9 +19,12 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                  markersize=70,
                  **kwargs
                  ):
+        config_padding = {"bottom": 0.20}
+        if padding:
+            config_padding.update(padding)
         DiagramBase.__init__(self, datasource=datasource,
                              title='Diagram ' + xlabel + " vs " + ylabel,
-                             padding=padding, markersize=markersize,
+                             padding=config_padding, markersize=markersize,
                              **kwargs)
 
         self.xlabel = xlabel
