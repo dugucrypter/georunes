@@ -22,8 +22,8 @@ class DiagramAnAbOr(DiagramTernaryBase, ArrowDrawerTernary):
 
     def set_decoration(self, ):
         _ = get_translator(self.lang_cfg)
-        # Order for points : Or, An, Ab
 
+        # Order for points : Or, An, Ab
         if self.decor_set == "blank":
             pass
 
