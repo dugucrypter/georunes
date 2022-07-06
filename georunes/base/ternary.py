@@ -64,7 +64,10 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         lw = 0 if no_ticks else 1
 
         if not no_ticks:
-            self.tax.ticks(multiple=10, axis='lbr', linewidth=lw, fontsize=10, linestyle='-', offset=0.02)
+            if no_ticks_label :
+                self.tax.ticks(multiple=10, axis='lbr', linewidth=lw, linestyle='-', tick_formats="")
+            else:
+                self.tax.ticks(multiple=10, axis='lbr', linewidth=lw, linestyle='-', fontsize=10, offset=0.02)
 
         if self.vertical_ticks:
             self.ax.set_xlim()
