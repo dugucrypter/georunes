@@ -59,7 +59,7 @@ def populate_file(file, sheet=0, group_name='group', cmap='viridis',
     if fext in (".xls", ".xlsx"):
         data = pd.read_excel(file, sheet_name=sheet)
     elif fext in (".csv", ".txt"):
-        data = pd.read_csv(file, sep, delimiter)
+        data = pd.read_csv(file, sep=sep, delimiter=delimiter)
     if group_name not in data.columns:
         raise ValueError("The specified 'group_name' parameter is not in the excel sheet.")
 
@@ -138,7 +138,7 @@ def populate_file_with_config(file, config, sheet=0, group_name='group', output_
     if fext in (".xls", ".xlsx"):
         data = pd.read_excel(file, sheet_name=sheet)
     elif fext in (".csv", ".txt"):
-        data = pd.read_csv(file, sep, delimiter)
+        data = pd.read_csv(file, sep=sep, delimiter=delimiter)
     if group_name not in data.columns:
         raise ValueError("The specified 'group_name' parameter is not in the excel sheet.")
 
