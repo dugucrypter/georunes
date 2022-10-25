@@ -1,7 +1,9 @@
 import warnings
+
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 from matplotlib import lines
+
 from georunes.plot.base import DiagramBase
 from georunes.tools.chemistry import val_ox_to_el_ppm, name_el_to_def_ox
 from georunes.tools.data import row_min, row_max
@@ -23,7 +25,7 @@ class DiagramSpider(DiagramBase):
                  enclosed_in_bg=("",),
                  markersize=8,
                  xlabel="", ylabel="",
-                 drawing_order = "zorder",
+                 drawing_order="zorder",
                  **kwargs
                  ):
 
@@ -49,7 +51,7 @@ class DiagramSpider(DiagramBase):
             self.norm = res.compos["CI"]
         self.fillmode = fillmode
         self.enclosed_in_bg = enclosed_in_bg
-        self.drawing_order = drawing_order
+        self.drawing_order = drawing_order if drawing_order in self.data.columns else None
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.ylim = ylim
@@ -183,7 +185,8 @@ class DiagramSpider(DiagramBase):
                                                  )
 
                 if custom_fillmode in ("enclosed", "enclosed-lines", "mixed"):
-                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group["color"])[0], zorder=zorder,
+                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group["color"])[0],
+                                         zorder=zorder,
                                          alpha=0.25)
 
                     # For legend

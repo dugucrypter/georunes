@@ -1,6 +1,8 @@
 import math
+
 import matplotlib.pyplot as plt
 import ternary
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer
 from georunes.tools.plotting import normalize_marker_size
@@ -64,7 +66,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         lw = 0 if no_ticks else 1
 
         if not no_ticks:
-            if no_ticks_label :
+            if no_ticks_label:
                 self.tax.ticks(multiple=10, axis='lbr', linewidth=lw, linestyle='-', tick_formats="")
             else:
                 self.tax.ticks(multiple=10, axis='lbr', linewidth=lw, linestyle='-', fontsize=10, offset=0.02)

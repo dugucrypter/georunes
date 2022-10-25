@@ -1,4 +1,5 @@
 import math
+
 import numpy as np
 from scipy import interpolate
 
@@ -16,13 +17,13 @@ def get_spline(x, y, prec=50):
     # resample it at smaller distance intervals
     interp_d = np.linspace(dist_along[0], dist_along[-1], prec)
     interp_x, interp_y = interpolate.splev(interp_d, spline)
-    return (interp_x, interp_y)
+    return interp_x, interp_y
 
 
 def tern_coords_to_bin_coords(rvar, tvar, lvar=None, scale=100):
     xvar = tvar / 2 + rvar
     yvar = tvar * sin60
-    return (xvar, yvar)
+    return xvar, yvar
 
 
 def normalize_marker_size(serie, val_max, val_min, size_max, size_min):
@@ -41,4 +42,4 @@ def normalize_marker_size(serie, val_max, val_min, size_max, size_min):
 
 def is_in_canvas(x, y, xlim, ylim):
     # Check if element is in canvas
-    return ((x > xlim[0]) and (x < xlim[1]) and (y > ylim[0]) and (y < ylim[1]))
+    return (x > xlim[0]) and (x < xlim[1]) and (y > ylim[0]) and (y < ylim[1])

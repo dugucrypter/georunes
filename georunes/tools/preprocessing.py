@@ -1,9 +1,11 @@
 import itertools
 import warnings
 from pathlib import Path
+
 import matplotlib.cm as cm
 import pandas as pd
 from matplotlib.colors import to_hex
+
 from georunes.tools.data import unique
 
 _vtc = ('color', 'marker', 'order', 'zorder', 'label',)
@@ -131,7 +133,8 @@ def populate_file_with_config(file, config, sheet=0, group_name='group', output_
     card = len(config['group'])
     for key in attribs:
         if key not in ('group', 'label') and len(config[key]) != card:
-            msg = "The length of the parameter '" + key + "' is different from the number of group defined in the config."
+            msg = "The length of the parameter '" + key + \
+                  "' is different from the number of group defined in the config."
             raise ValueError(msg)
 
     # Load data
