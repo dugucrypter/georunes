@@ -1,6 +1,6 @@
 import os
 import matplotlib.pyplot as plt
-from georunes.binary.versus import DiagramVs
+from georunes.plot.binary.versus import DiagramVs
 from georunes.tools.preprocessing import populate_file, populate_file_with_config
 from georunes.tools.language import format_chemical_formula as _fml
 

@@ -1,10 +1,12 @@
 import os
+
 import matplotlib.pyplot as plt
-from georunes.binary.ratiosversus import DiagramRatiosVs
-from georunes.binary.sialkali import DiagramSiAlkali
-from georunes.binary.versus import DiagramVs
+
+from georunes.plot.binary.pearce import DiagramPearceRYN
+from georunes.plot.binary.ratiosversus import DiagramRatiosVs
+from georunes.plot.binary.sialkali import DiagramSiAlkali
+from georunes.plot.binary.versus import DiagramVs
 from georunes.tools.language import format_chemical_formula
-from georunes.binary.pearce import DiagramPearceRYN
 
 directory = os.path.dirname(os.path.realpath("WAC_granitoids_comp.xls"))
 source = os.path.join(directory, "WAC_granitoids_comp.xls")
@@ -43,8 +45,8 @@ pearce_rynb = DiagramPearceRYN(datasource=source,
                                sheet=sheet,
                                group_name='Lithology',
                                legend_ncol=4,
-                               padding={"bottom":0.17}
-)
+                               padding={"bottom": 0.17}
+                               )
 
 cox.plot()
 ntzh.plot()

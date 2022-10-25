@@ -1,5 +1,5 @@
-from georunes.base.helpers import ArrowDrawerTernary
-from georunes.base.ternary import DiagramTernaryBase
+from georunes.plot.helpers import ArrowDrawerTernary
+from georunes.plot.ternary.ternbase import DiagramTernaryBase
 from georunes.tools.language import get_translator
 from georunes.tools.plotting import normalize_marker_size
 

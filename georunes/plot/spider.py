@@ -2,7 +2,7 @@ import warnings
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 from matplotlib import lines
-from georunes.base.base import DiagramBase
+from georunes.plot.base import DiagramBase
 from georunes.tools.chemistry import val_ox_to_el_ppm, name_el_to_def_ox
 from georunes.tools.data import row_min, row_max
 from georunes.tools.preprocessing import check_geochem_res

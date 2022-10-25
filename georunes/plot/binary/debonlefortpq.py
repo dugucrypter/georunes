@@ -1,6 +1,6 @@
 import numpy as np
-from georunes.base.base import DiagramBase
-from georunes.base.helpers import ArrowDrawer, LegendDrawer
+from georunes.plot.base import DiagramBase
+from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.chemistry import val_ox_to_mc
 
 

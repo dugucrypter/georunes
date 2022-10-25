@@ -1,7 +1,7 @@
 import math
 import numpy as np
-from georunes.base.helpers import ArrowDrawerTernary
-from georunes.base.ternary import DiagramTernaryBase
+from georunes.plot.helpers import ArrowDrawerTernary
+from georunes.plot.ternary.ternbase import DiagramTernaryBase
 from georunes.tools.chemistry import molar_ratio, molar_ratio_specified
 from georunes.tools.language import format_chemical_formula as _fml
 from georunes.tools.language import get_translator

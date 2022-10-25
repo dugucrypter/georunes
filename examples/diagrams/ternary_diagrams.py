@@ -1,8 +1,8 @@
 import os
 import matplotlib.pyplot as plt
-from georunes.ternary.anabor import DiagramAnAbOr
-from georunes.ternary.jensen import DiagramJensen
-from georunes.ternary.qap import DiagramQAP
+from georunes.plot.ternary.anabor import DiagramAnAbOr
+from georunes.plot.ternary.jensen import DiagramJensen
+from georunes.plot.ternary.qap import DiagramQAP
 
 # 'WAC_granitoids_pop2.csv' is created from WAC_granitoids.csv in the script preprocess_files.py
 directory = os.path.dirname(os.path.realpath("WAC_granitoids_pop2.csv"))

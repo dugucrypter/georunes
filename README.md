@@ -32,7 +32,7 @@ This code is written in **Python 3.6**, and depends on **matplotlib 3.3**, **pan
 
 ```python
 import matplotlib.pyplot as plt
-from georunes.binary.versus import DiagramVs
+from georunes.plot.binary.versus import DiagramVs
 
 # Initialize diagram class
 diag_nb_ta = DiagramVs(datasource="path/to/data.xls", sheet="sheet1",

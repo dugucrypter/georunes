@@ -1,6 +1,6 @@
 import os
 import matplotlib.pyplot as plt
-from georunes.base.spider import DiagramSpider
+from georunes.plot.spider import DiagramSpider
 
 # 'WAC_granitoids_pop2.csv' is created from WAC_granitoids.csv in the script preprocess_files.py
 directory = os.path.dirname(os.path.realpath("WAC_granitoids_pop2.csv"))

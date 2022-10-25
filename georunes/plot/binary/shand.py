@@ -1,5 +1,5 @@
-from georunes.base.base import DiagramBase
-from georunes.base.helpers import LegendDrawer, ArrowDrawer
+from georunes.plot.base import DiagramBase
+from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.chemistry import molar_ratio
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
 

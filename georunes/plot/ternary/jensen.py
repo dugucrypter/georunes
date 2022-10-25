@@ -1,5 +1,5 @@
-from georunes.base.helpers import ArrowDrawerTernary
-from georunes.base.ternary import DiagramTernaryBase
+from georunes.plot.helpers import ArrowDrawerTernary
+from georunes.plot.ternary.ternbase import DiagramTernaryBase
 from georunes.tools.chemistry import val_ox_to_el, val_ox_to_mc
 from georunes.tools.colors import darken_color
 from georunes.tools.language import get_translator

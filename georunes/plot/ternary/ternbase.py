@@ -1,8 +1,8 @@
 import math
 import matplotlib.pyplot as plt
 import ternary
-from georunes.base.base import DiagramBase
-from georunes.base.helpers import LegendDrawer
+from georunes.plot.base import DiagramBase
+from georunes.plot.helpers import LegendDrawer
 from georunes.tools.plotting import normalize_marker_size
 
 

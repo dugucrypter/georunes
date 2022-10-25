@@ -1,7 +1,7 @@
 import numpy as np
 
-from georunes.base.base import DiagramBase
-from georunes.base.helpers import LegendDrawer, ArrowDrawer
+from georunes.plot.base import DiagramBase
+from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import get_translator
 
 

@@ -1,46 +1,39 @@
 from matplotlib.colors import to_rgba
-from georunes.base.base import DiagramBase
-from georunes.base.helpers import LegendDrawer, ArrowDrawer
-from georunes.tools.chemistry import val_el_to_mol
+from georunes.plot.base import DiagramBase
+from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.plotting import normalize_marker_size
 
 
-class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
+class DiagramRatiosVs(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource,
-                 xvar, yvar, xlim=None, ylim=None,
-                 xlabel='', ylabel='',
-                 annotation=None,
+                 xnum, xdenom, ynum, ydenom, title=None, xlim=None, ylim=None,
                  xscale='linear', yscale='linear',
-                 padding=None,
-                 marker='',
-                 xmolar=False, ymolar=False,
-                 alpha_color=0.4, alpha_edge_color=0.8,
+                 padding={"bottom": 0.20},
+                 annotation=None,
+                 marker='', alpha_color=0.4, alpha_edge_color=0.8,
                  x_formatter=None, y_formatter=None,
-                 markersize=70,
                  **kwargs
                  ):
-        config_padding = {"bottom": 0.20}
-        if padding:
-            config_padding.update(padding)
-        DiagramBase.__init__(self, datasource=datasource,
-                             title='Diagram ' + xlabel + " vs " + ylabel,
-                             padding=config_padding, markersize=markersize,
-                             **kwargs)
+        DiagramBase.__init__(self, datasource=datasource, title=title, padding=padding, **kwargs)
 
-        self.xlabel = xlabel
-        self.ylabel = ylabel
+        self.xlabel = str(xnum) + "/" + str(xdenom)
+        self.ylabel = str(ynum) + "/" + str(ydenom)
+        if title:
+            self.title = title
+        else:
+            self.title = 'Diagram ' + self.xlabel + " vs " + self.ylabel
         self.xlim = xlim
         self.ylim = ylim
-        self.xvar = xvar
-        self.yvar = yvar
-        self.annotation = annotation
+        self.xnum = xnum
+        self.xdenom = xdenom
+        self.ynum = ynum
+        self.ydenom = ydenom
         self.xscale = xscale
         self.yscale = yscale
+        self.annotation = annotation
         self.marker = marker
         self.alpha_color = alpha_color
         self.alpha_edge_color = alpha_edge_color
-        self.xmolar = xmolar
-        self.ymolar = ymolar
         self.x_formatter = x_formatter
         self.y_formatter = y_formatter
 
@@ -50,10 +43,8 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
             self.ax.set_xlim(self.xlim)
         if self.ylim is not None:
             self.ax.set_ylim(self.ylim)
-
         if not self.no_title:
             self.ax.set_title(self.title, size=self.title_fs)
-
         self.ax.set_yscale(self.yscale)
         self.ax.set_xscale(self.xscale)
         self.ax.tick_params(axis='x', labelsize=self.fontsize)
@@ -69,12 +60,8 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         DiagramBase.plot_config(self)
         self.set_decorations()
 
-        # Categorize by group and marker
-        groups = self.data.groupby([self.group_name, "marker"])
+        groups = self.data.groupby(self.group_name)
         for name, group in groups:
-
-            if len(name) > 1:
-                name = name[0]
 
             if self.is_group_allowed(name):
                 if self.marker != '':
@@ -89,29 +76,19 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 else:
                     size = self.markersize
 
-                if self.xmolar:
-                    xvals = val_el_to_mol(group[self.xvar])
-                else:
-                    xvals = group[self.xvar]
+                xvals = group[self.xnum] / group[self.xdenom]
+                yvals = group[self.ynum] / group[self.ydenom]
 
-                if self.ymolar:
-                    yvals = val_el_to_mol(group[self.yvar])
-                else:
-                    yvals = group[self.yvar]
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
 
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
-                self.ax.scatter(
-                    xvals, yvals,
-                    edgecolors=edge_color,
-                    marker=mrk, label=name,
-                    facecolors=sample_color,
-                    s=size,
-                    zorder=zorder)
+                self.ax.scatter(xvals, yvals, edgecolors=edge_color,
+                                marker=mrk, label=name, facecolors=sample_color,
+                                s=size, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in xvals.iteritems():

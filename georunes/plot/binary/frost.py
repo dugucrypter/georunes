@@ -1,5 +1,5 @@
-from georunes.base.base import DiagramBase
-from georunes.base.helpers import ArrowDrawer, LegendDrawer
+from georunes.plot.base import DiagramBase
+from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
 
 # Frost BR, Barnes CG, Collins WJ, Arculus RJ, Ellis DJ, Frost CD.
