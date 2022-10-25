@@ -4,6 +4,11 @@ from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
 
 
+# Cox, K.G., Bell, J.D. and Pankhurst, R.J., 1979. Petrographic aspects of plutonic rocks. In The Interpretation of
+# Igneous Rocks (pp. 283-307). Springer, Dordrecht.
+# Le Maitre, R.W., Streckeisen, A., Zanettin, B., Le Bas, M.J., Bonin, B. and Bateman, P., 2005. Igneous Rocks: A
+# Classification and Glossary of Terms. Igneous Rocks: A Classification and Glossary of Terms, p.252.
+
 class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
 
     def __init__(self, datasource, decor_set="Cox", title="Total alkali versus silica diagram",

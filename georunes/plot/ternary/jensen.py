@@ -6,6 +6,9 @@ from georunes.tools.language import get_translator
 from georunes.tools.plotting import normalize_marker_size
 
 
+# Jensen, L.S., 1976. A new plot for classifying subalkalic volcanic rocks. Ontario Division of Mines,
+# Miscellaneous Paper, 66, pp.1-22.
+
 class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
     def __init__(self, datasource, title="Ternary plot of Jensen (1976)", **kwargs):
         DiagramTernaryBase.__init__(self, datasource=datasource, title=title,

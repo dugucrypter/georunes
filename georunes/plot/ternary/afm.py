@@ -4,6 +4,9 @@ from georunes.tools.language import get_translator
 from georunes.tools.plotting import normalize_marker_size
 
 
+# Irvine, T.N. and Baragar, W.R.A., 1971. A Guide to the Chemical Classification of the Common Volcanic Rocks.
+# Canadian Journal of Earth Sciences, 8(5), pp.523-548.
+
 class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
     def __init__(self, datasource, title="AFM diagram (Irvine and Baragar 1971)", **kwargs):
         DiagramTernaryBase.__init__(self, datasource=datasource,

@@ -6,6 +6,9 @@ from georunes.tools.language import get_translator
 from georunes.tools.plotting import get_spline
 
 
+# Debon, F. and Le Fort, P., 1983. A chemical–mineralogical classification of common plutonic rocks and associations.
+# Earth and Environmental Science Transactions of the Royal Society of Edinburgh, 73(3), pp.135-149.
+
 class DiagramBA(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="B-A multicationic classification (Debon and Le Fort 1983)",
                  annotation=None, decor_set="Debon", legend_loc="upper right", **kwargs):

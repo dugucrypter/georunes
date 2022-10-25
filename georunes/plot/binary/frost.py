@@ -2,8 +2,9 @@ from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
 
-# Frost BR, Barnes CG, Collins WJ, Arculus RJ, Ellis DJ, Frost CD.
-# A geochemical classification for granitic rocks. Journal of petrology. 2001 Nov 1;42(11)
+
+# Frost, B.R., Barnes, C.G., Collins, W.J., Arculus, R.J., Ellis, D.J. and Frost, C.D., 2001. A geochemical
+# classification for granitic rocks. Journal of petrology, 42(11), pp.2033-2048.
 
 class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title=_fml("SiO2 vs Fe# Frost diagram"), **kwargs):

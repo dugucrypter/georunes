@@ -1,9 +1,11 @@
 import numpy as np
-
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import get_translator
 
+
+# Pearce, J.A., Harris, N.B.W. and Tindle, A.G., 1984. Trace Element Discrimination Diagrams for the Tectonic
+# Interpretation of Granitic Rocks. Journal of Petrology, 25(4), pp.956-983.
 
 class PearceBase(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource,

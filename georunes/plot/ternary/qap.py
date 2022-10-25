@@ -4,6 +4,12 @@ from georunes.tools.language import get_translator
 from georunes.tools.plotting import normalize_marker_size
 
 
+# Streckeisen, A., 1974. Classification and nomenclature of plutonic rocks recommendations of the IUGS subcommission
+# on the systematics of igneous rocks. Geologische Rundschau, 63(2), pp.773-786.
+# Streckeisen, A., 1978. IUGS Subcommission on the Systematics of Igneous Rocks. Classification and Nomenclature of
+# Volcanic Rocks, Lamprophyres, Carbonatites and Melilite Rocks. Recommendations and Suggestions. Neues Jahrbuch fur
+# Mineralogie. Stuttgart. Abhandlungen, 143, pp.1-14.
+
 class DiagramQAP(DiagramTernaryBase, ArrowDrawerTernary):
     def __init__(self, datasource, title="QAP ternary diagram", decor_set="Plut", decor_text_col="#777777", **kwargs):
         if decor_set not in ("Plut", "Volc"):

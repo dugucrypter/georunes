@@ -5,6 +5,10 @@ from georunes.tools.chemistry import val_ox_to_mc
 from georunes.tools.language import get_translator
 
 
+# De la Roche, H.D., Leterrier, J.T., Grandclaude, P. and Marchal, M., 1980. A classification of volcanic and
+# plutonic rocks using R1R2-diagram and major-element analyses—its relationships with current nomenclature. Chemical
+# geology, 29(1-4), pp.183-210.
+
 class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="R1-R2 multicationic classification (De La Roche et al. 1980)",
                  padding={"bottom": 0.20}, annotation=None, **kwargs):

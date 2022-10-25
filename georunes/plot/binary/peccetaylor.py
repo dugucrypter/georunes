@@ -4,6 +4,9 @@ from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
 
 
+# Peccerillo, A. and Taylor, S.R., 1976. Geochemistry of Eocene calc-alkaline volcanic rocks from the Kastamonu area,
+# northern Turkey. Contributions to mineralogy and petrology, 58(1), pp.63-81.
+
 class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title=_fml("K2O vs SiO2") + "classification diagram (Peccerillo and Taylor 1976)",
                  padding={"bottom": 0.20}, annotation=None, **kwargs):

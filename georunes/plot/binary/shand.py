@@ -4,6 +4,9 @@ from georunes.tools.chemistry import molar_ratio
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
 
 
+# Shand, S.J., 1943. Eruptive rocks: their genesis, composition, and classification, with a chapter on meteorites. J.
+# Wiley & sons, Incorporated.
+
 class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="A/NK vs A/CNK diagram of Shand (1943)",
                  annotation=None,

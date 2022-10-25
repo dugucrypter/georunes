@@ -4,6 +4,9 @@ from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.chemistry import val_ox_to_mc
 
 
+# Debon, F. and Le Fort, P., 1983. A chemical–mineralogical classification of common plutonic rocks and associations.
+# Earth and Environmental Science Transactions of the Royal Society of Edinburgh, 73(3), pp.135-149.
+
 class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="P-Q multicationic classification (Debon and Le Fort 1983)",
                  padding={"bottom": 0.20}, annotation=None, **kwargs):

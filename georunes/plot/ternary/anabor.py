@@ -4,6 +4,11 @@ from georunes.tools.language import get_translator
 from georunes.tools.plotting import normalize_marker_size
 
 
+# Barker, F., 1979. Trondhjemite: definition, environment and hypotheses of origin. In Developments in petrology (
+# Vol. 6, pp. 1-12). Elsevier.
+# O'Connor, J.T., 1965. A classification of quartz-rich igneous rocks based on feldspar ratios.
+# US Geol. Surv. Prof. Paper, 82.
+
 class DiagramAnAbOr(DiagramTernaryBase, ArrowDrawerTernary):
     def __init__(self, datasource, title="Ternary feldspar plot (anorthite, albite and orthoclase)",
                  decor_set="Barker79", padding={"bottom": 0.124}, **kwargs):
