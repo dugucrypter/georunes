@@ -156,17 +156,18 @@ class RandomSearch(Optimizer):
             partitions = partitions.round(to_round)
 
             deviation = self.deviation(bulk_chem, np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100))
+            chem = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100).round(to_round)
             suppl.loc[idx_new_row, deviation_name] = deviation
+            suppl.loc[idx_new_row, "total_chem"] = sum(chem)
 
             if self.verbose:
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                chem = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100).round(to_round)
                 print([str(self.list_bulk_ox[i]) + " : " + str(chem[i]) for i in range(self.nb_oxides)])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)
-        suppl["Diff_total"] = partitions["Total"] - self.init_total
+        suppl["diff_total_chem"] = suppl["total_chem"] - self.init_total
 
         return partitions, suppl
