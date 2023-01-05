@@ -36,7 +36,7 @@ def random_part_in_hypercube(current_part, semiedge, max_minerals_prop=None, min
     return current_part
 
 
-def random_part_with_bounds(nb_minerals, max_minerals_prop=None, min_minerals_prop=None, total=1, verbose=0):
+def random_part_with_bounds(nb_minerals, max_minerals_prop=None, min_minerals_prop=None, total=1, unfillable_partitions_allowed=False, verbose=0, ):
     if not min_minerals_prop:
         min_minerals_prop = [0] * nb_minerals
     if not max_minerals_prop:
@@ -62,13 +62,15 @@ def random_part_with_bounds(nb_minerals, max_minerals_prop=None, min_minerals_pr
                 if new_partition[j] < min_minerals_prop[j]:
                     found = False
                     break
-        else:
+        elif not unfillable_partitions_allowed:
             new_partition = [i * total / new_total for i in new_partition]
             for j in range(nb_minerals):
                 if new_partition[j] > max_minerals_prop[j]:
                     found = False
                     break
-
+        print("unfillable allowed", unfillable_partitions_allowed)
+        print(new_partition)
+        print(max_minerals_prop)
         if k > 1000:
             raise Exception("The algorithm struggles to find a coherent random partition. Please check the entry data.")
     if verbose > 2:

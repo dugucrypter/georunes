@@ -19,8 +19,8 @@ class GradientDescent(Optimizer):
         return out
 
     def _compute(self, raw_data, skip_cols, raw_minerals_data, to_round=4,
-                 max_minerals=None, min_minerals=None, ignore_oxides=None, max_iter=int(1e6),
-                 learn_rate=None, tolerance=1e-08, starting_partition=None, force_totals=False):
+                 max_minerals=None, min_minerals=None, unfillable_partitions_allowed=True, ignore_oxides=None,
+                 max_iter=int(1e6), learn_rate=None, tolerance=1e-08, starting_partition=None, force_totals=False):
 
         if not learn_rate:
             learn_rate = 1 * pow(10, -to_round)
@@ -36,6 +36,9 @@ class GradientDescent(Optimizer):
         deviation_name = "deviation_" + self.dist_func
         suppl = DataFrame(columns=[deviation_name])
 
+        if unfillable_partitions_allowed and force_totals :
+            force_totals = False
+            print("WARNING : Partitions not completing to 100 % are allowed. Parameter force_totals set to False.")
         if force_totals:
             target_totals = self.init_total
         else:
@@ -75,9 +78,10 @@ class GradientDescent(Optimizer):
                     idx = list_minerals_i.index(key)
                     if idx:
                         min_minerals_prop[idx] = max(min_minerals_prop[idx], min_minerals[key])
-            if sum(max_minerals_prop) < 1.05:  # 5% tolerance
-                raise Exception("The authorized maximum proportions do not allow to fill the composition to 100. "
-                                "Check the entry data.")
+            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1.05:  # 5% tolerance
+                raise Exception("Problem in composition " + str(i)
+                                + ". The sum of the maximum proportions of minerals cannot complete to 100 "
+                                  "(found " + str(100 * sum(max_minerals_prop)) + str(")."))
 
             if self.verbose and unnecessary_minerals:
                 print("Unnecessary minerals :", *unnecessary_minerals)
@@ -87,7 +91,7 @@ class GradientDescent(Optimizer):
 
             # Starting value
             if isinstance(starting_partition, dict):
-                if sum(starting_partition.values()) != 100:
+                if not unfillable_partitions_allowed and sum(starting_partition.values()) != 100:
                     print("WARNING : The starting partition does not complete to 100. The calculations will be "
                           "started with a random composition.")
                     candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
@@ -104,12 +108,12 @@ class GradientDescent(Optimizer):
                                   "bounds data : Minerals =", list_minerals_i, ", Max =", max_minerals_prop, ", Min =",
                                   min_minerals_prop, "The calculations will be started with a random composition.")
                             candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                                verbose=self.verbose)
+                                                                unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
                     else:
                         print("WARNING : Some minerals in starting partition are not present in mineral chemistry "
                               "data. The calculations will be started with a random composition.")
                         candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                            verbose=self.verbose)
+                                                            unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
             else:
                 candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
                                                     verbose=self.verbose)

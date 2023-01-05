@@ -11,7 +11,7 @@ class BVLS(Optimizer):
         self.notif = ">>>>>> Bounded Variable Least Squares Method"
 
     def _compute(self, raw_data, skip_cols, raw_minerals_data, to_round=4, max_minerals=None, min_minerals=None,
-                 ignore_oxides=None):
+                 unfillable_partitions_allowed=True, ignore_oxides=None):
         if self.verbose > 1:
             print("Round digits :", to_round, " --  Oxides to ignore : " + str(ignore_oxides) if ignore_oxides else "")
         self.prepare_data(raw_data, skip_cols, raw_minerals_data, ignore_oxides)
@@ -52,9 +52,10 @@ class BVLS(Optimizer):
                     idx = list_minerals_i.index(key)
                     if idx:
                         min_minerals_prop[idx] = max(min_minerals_prop[idx], min_minerals[key])
-            if sum(max_minerals_prop) < 1.05:  # 5% tolerance
-                raise Exception("The authorized maximum proportions do not allow to fill the composition to 100. "
-                                "Check the entry data.")
+            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1.05:  # 5% tolerance
+                raise Exception("Problem in composition " + str(i)
+                                + ". The sum of the maximum proportions of minerals cannot complete to 100 "
+                                  "(found " + str(100 * sum(max_minerals_prop)) + str(")."))
 
             if self.verbose and unnecessary_minerals:
                 print("Unnecessary minerals :", *unnecessary_minerals)
