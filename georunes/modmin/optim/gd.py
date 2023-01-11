@@ -36,11 +36,11 @@ class GradientDescent(Optimizer):
         deviation_name = "deviation_" + self.dist_func
         suppl = DataFrame(columns=[deviation_name])
 
-        if unfillable_partitions_allowed and force_totals :
-            force_totals = False
-            print("WARNING : Partitions not completing to 100 % are allowed. Parameter force_totals set to False.")
         if force_totals:
             target_totals = self.init_total
+            if not unfillable_partitions_allowed:
+                unfillable_partitions_allowed = True
+                print("WARNING : Parameter force_totals is True. Parameter unfillable_partitions_allowed set to False.")
         else:
             target_totals = [100] * len(self.data.index)
 
@@ -113,9 +113,11 @@ class GradientDescent(Optimizer):
                         print("WARNING : Some minerals in starting partition are not present in mineral chemistry "
                               "data. The calculations will be started with a random composition.")
                         candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                            unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
+                                                            unfillable_partitions_allowed=unfillable_partitions_allowed,
+                                                            verbose=self.verbose)
             else:
                 candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
+                                                    unfillable_partitions_allowed=unfillable_partitions_allowed,
                                                     verbose=self.verbose)
 
             if self.verbose: print("Starting partition", dict(zip(list_minerals_i, candidate)))

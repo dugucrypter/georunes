@@ -105,15 +105,18 @@ class RandomSearch(Optimizer):
                                   "bounds data : Minerals ,", list_minerals_i, "Max ,", max_minerals_prop, "Min ,",
                                   min_minerals_prop, "The calculations will be started with a random composition.")
                             candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                                unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
+                                                                unfillable_partitions_allowed=unfillable_partitions_allowed,
+                                                                verbose=self.verbose)
                     else:
                         print("WARNING : Some minerals in starting partition are not present in mineral chemistry "
                               "data. The calculations will be started with a random composition.")
                         candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                            unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
+                                                            unfillable_partitions_allowed=unfillable_partitions_allowed,
+                                                            verbose=self.verbose)
             else:
                 candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                    unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
+                                                    unfillable_partitions_allowed=unfillable_partitions_allowed,
+                                                    verbose=self.verbose)
 
             if self.verbose: print("Starting partition", dict(zip(list_minerals_i, candidate)))
 
@@ -132,7 +135,7 @@ class RandomSearch(Optimizer):
 
                 else:
                     new_candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                            total=target_totals[i] / 100, verbose=self.verbose)
+                                                            total=target_totals[i] / 100, unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
 
                 corresp_chem = np.dot(minerals_data_i, new_candidate).round(decimals=to_round)
                 dist = self.deviation(bulk_chem, corresp_chem)
