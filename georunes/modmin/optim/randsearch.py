@@ -28,10 +28,10 @@ class RandomSearch(Optimizer):
         suppl = DataFrame(columns=[deviation_name])
 
         if force_totals:
+            if unfillable_partitions_allowed:
+                raise Exception("The parameter force_totals is True. The parameter unfillable_partitions_allowed "
+                                "should be set to False. Check the computing configuration.")
             target_totals = self.init_total
-            if not unfillable_partitions_allowed:
-                unfillable_partitions_allowed = True
-                print("WARNING : Parameter force_totals is True. Parameter unfillable_partitions_allowed set to False.")
         else:
             target_totals = [100] * len(self.data.index)
 
