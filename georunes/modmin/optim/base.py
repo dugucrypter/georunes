@@ -10,7 +10,7 @@ def is_in_bounds(partition, max_minerals_prop, min_minerals_prop):
 
 
 def random_part_in_hypercube(current_part, semiedge, max_minerals_prop=None, min_minerals_prop=None, total=1,
-                             max_iter=100, verbose=0):
+                             unfillable_partitions_allowed=True, max_iter=100, verbose=0):
     nb_minerals = len(current_part)
     if not min_minerals_prop:
         min_minerals_prop = [0] * nb_minerals
@@ -23,8 +23,11 @@ def random_part_in_hypercube(current_part, semiedge, max_minerals_prop=None, min
     prop = random()  # A random factor to allow smaller steps during the research of new values
     while it < max_iter:
         it += 1
-        dec = np.random.uniform(-semiedge * prop, semiedge * prop, nb_minerals - 1)
-        dec = np.append(dec, total - sum(current_part) - sum(dec))  # To make sure that sum(new_partition) = total
+        if unfillable_partitions_allowed :
+            dec = np.random.uniform(-semiedge * prop, semiedge * prop, nb_minerals)
+        else :
+            dec = np.random.uniform(-semiedge * prop, semiedge * prop, nb_minerals - 1)
+            dec = np.append(dec, total - sum(current_part) - sum(dec))  # To make sure that sum(new_partition) = total
         new_partition = [current_part[i] + dec[i] for i in range(nb_minerals)]
         if is_in_bounds(new_partition, max_minerals_prop, min_minerals_prop):
             # The new composition is found

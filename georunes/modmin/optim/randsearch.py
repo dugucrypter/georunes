@@ -27,11 +27,11 @@ class RandomSearch(Optimizer):
         deviation_name = "deviation_" + self.dist_func
         suppl = DataFrame(columns=[deviation_name])
 
-        if unfillable_partitions_allowed and force_totals:
-            force_totals = False
-            print("WARNING : Partitions not completing to 100 % are allowed. Parameter force_totals set to False.")
         if force_totals:
             target_totals = self.init_total
+            if not unfillable_partitions_allowed:
+                unfillable_partitions_allowed = True
+                print("WARNING : Parameter force_totals is True. Parameter unfillable_partitions_allowed set to False.")
         else:
             target_totals = [100] * len(self.data.index)
 
@@ -127,9 +127,13 @@ class RandomSearch(Optimizer):
                 elif search_semiedge_i < 1 and candidate:
                     new_candidate = random_part_in_hypercube(candidate, search_semiedge_i, max_minerals_prop,
                                                              min_minerals_prop, total=target_totals[i] / 100,
+                                                             unfillable_partitions_allowed=unfillable_partitions_allowed,
                                                              verbose=self.verbose)
                     if set(new_candidate) == set(candidate) and search_semiedge_i < 1:
                         search_semiedge_i = search_semiedge_i * scale_semiedge
+                        if search_semiedge_i < pow(10,-to_round):
+                            if self.verbose: print("Updated semiedge is inferior to the rounding precision. Search ended")
+                            break
                         if self.verbose > 0:
                             print("In iteration", k, ", search_semiedge_i changed to", search_semiedge_i)
 
