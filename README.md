@@ -63,4 +63,4 @@ W.M.-E. Bonzi, 2021.
 
 ### License
 
-This work is under GNU General Public License v3.0.
+This work is under MIT License.
