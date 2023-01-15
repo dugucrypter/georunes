@@ -1,11 +1,11 @@
 
-Georunes
+GeoRunes
 ----------
 [![License](https://img.shields.io/github/license/dugucrypter/georunes)]()
 
-georunes is a bunch of tools and classes written to generate geochemical diagrams using matplotlib. 
+GeoRunes is a bunch of tools and classes written to generate geochemical diagrams using matplotlib. 
 
-It assits the representation of geochemical data in binary diagrams, ternary diagrams and normalized spider diagrams. georunes uses plotting parameters (category, color, marker, label ...) defined in the data source file along with geochemical data to construct the required figures.
+It assits the representation of geochemical data in binary diagrams, ternary diagrams and normalized spider diagrams. GeoRunes uses plotting parameters (category, color, marker, label ...) defined in the data source file along with geochemical data to construct the required figures.
 
 ## Features
 
@@ -20,13 +20,13 @@ It assits the representation of geochemical data in binary diagrams, ternary dia
 
 ## Installation
 
-georunes is currently only available on github:
+GeoRunes is currently only available on github:
 
     $ git clone https://github.com/dugucrypter/georunes.git
 
 This code is written in **Python 3.6**, and depends on **matplotlib 3.3**, **pandas 1.1.5** and **scipy 1.1**.
 
-## Working with georunes
+## Working with GeoRunes
 
 ### Short example
 
