@@ -1,9 +1,11 @@
 import itertools
 import warnings
 from pathlib import Path
+
 import matplotlib.cm as cm
 import pandas as pd
 from matplotlib.colors import to_hex
+
 from georunes.tools.data import unique
 
 _vtc = ('color', 'marker', 'order', 'zorder', 'label',)
@@ -59,7 +61,7 @@ def populate_file(file, sheet=0, group_name='group', cmap='viridis',
     if fext in (".xls", ".xlsx"):
         data = pd.read_excel(file, sheet_name=sheet)
     elif fext in (".csv", ".txt"):
-        data = pd.read_csv(file, sep, delimiter)
+        data = pd.read_csv(file, sep=sep, delimiter=delimiter)
     if group_name not in data.columns:
         raise ValueError("The specified 'group_name' parameter is not in the excel sheet.")
 
@@ -131,14 +133,15 @@ def populate_file_with_config(file, config, sheet=0, group_name='group', output_
     card = len(config['group'])
     for key in attribs:
         if key not in ('group', 'label') and len(config[key]) != card:
-            msg = "The length of the parameter '" + key + "' is different from the number of group defined in the config."
+            msg = "The length of the parameter '" + key + \
+                  "' is different from the number of group defined in the config."
             raise ValueError(msg)
 
     # Load data
     if fext in (".xls", ".xlsx"):
         data = pd.read_excel(file, sheet_name=sheet)
     elif fext in (".csv", ".txt"):
-        data = pd.read_csv(file, sep, delimiter)
+        data = pd.read_csv(file, sep=sep, delimiter=delimiter)
     if group_name not in data.columns:
         raise ValueError("The specified 'group_name' parameter is not in the excel sheet.")
 

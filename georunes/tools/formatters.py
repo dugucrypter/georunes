@@ -9,7 +9,6 @@ class LogStandardFormatter(LogFormatter):
         self.min_num = min_num
         LogFormatter.__init__(self, **kwargs)
 
-
     def _num_to_string(self, x, vmin, vmax):
         if x > self.max_num:
             s = '%1.0e' % x

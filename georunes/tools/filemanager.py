@@ -39,7 +39,7 @@ class FileManager:
             if fext in (".xls", ".xlsx"):
                 data = pd.read_excel(datasource, sheet_name=sheet_name, index_col=index)
             elif fext in (".csv", ".txt"):
-                data = pd.read_csv(datasource, sep, delimiter, index_col=index)
+                data = pd.read_csv(datasource, sep=sep, delimiter=delimiter, index_col=index)
             else:
                 msg = "Extension file " + fext + " not recognized."
                 raise Exception(msg)
