@@ -6,7 +6,8 @@ setup(
     install_requires=["matplotlib",
                       "numpy",
                       "scipy",
-                      "pandas"],
+                      "pandas",
+                      "python-ternary"],
     include_package_data=True,
     package_data={"georunes": ["data/*.txt", "data/*.csv"]}
 )
