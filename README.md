@@ -5,26 +5,46 @@ GeoRunes
 
 GeoRunes is a bunch of tools and classes written to generate geochemical diagrams using matplotlib. 
 
-It assits the representation of geochemical data in binary diagrams, ternary diagrams and normalized spider diagrams. GeoRunes uses plotting parameters (category, color, marker, label ...) defined in the data source file along with geochemical data to construct the required figures.
+**georunes.plot** assits the representation of geochemical data in binary diagrams, ternary diagrams and normalized spider diagrams. It uses plotting parameters (category, color, marker, label ...) defined in the data source file along with geochemical data to construct the required figures.
+
+**georunes.modmin** estimates the modal mineralogy of some whole rock compositions, provided a list of minerals with their composition.
 
 ## Features
 
 - Data source supported formats: .csv, .xls or .xlsx,
 - Data loaded as pandas DataFrames,
 - Plotting parameters (color, marker, label, drawing order ...) configurable automatically (see examples/preprocess_files.py),
-- Support of axes scaling, layout padding, figure ratio, transparency of markers, sizing of markers, legend configuration, etc.,
+- Support scaling of axes, layout padding, adjusting figure ratio, transparency and size of markers, configuring legends,
 - Chemical conversion from wt.% oxide to element (in millications or ppm),
 - Ternary diagram (based on the package **python-ternary**),
 - Inner geochemical normalization and multiple plotting style in spider diagrams,
-- Handling of translation (uses gettext, pass the lang_cfg parameter as a dict{'lang', 'domain' if different, 'locales' if different})...
+- Handling of translations (using gettext, pass the lang_cfg parameter as a dict{'lang', 'domain' if different, 'locales' if different}),
+- CIPW norm calculation and estimation (optimization) of modal mineralogy from whole rock and mineral compositions,
+- Available methods for estimation of modal mineralogy : bounded-variable least squares, non-negative least squares, gradient descent, or a random research,
+- Components of a solid solution can be fixed for estimation a mineralogy,
+
+## Dependencies
+
+- matplotlib
+- pandas
+- numpy
+- scipy
+- python-ternary
 
 ## Installation
 
-GeoRunes is currently only available on github:
+* Install stable version with pip command:
 
-    $ git clone https://github.com/dugucrypter/georunes.git
+        pip install georunes
 
-This code is written in **Python 3.6**, and depends on **matplotlib 3.3**, **pandas 1.1.5** and **scipy 1.1**.
+* Install updated version from github:
+
+        git clone https://github.com/dugucrypter/georunes.git
+        cd georunes
+        python setup.py install --user
+
+
+This code was tested with **Python 3.10**, **matplotlib 3.5.1**, **pandas 1.4.1** and **scipy 1.8.0**.
 
 ## Working with GeoRunes
 
@@ -59,7 +79,7 @@ Supplementary whole-rocks and mineral-based geochemical diagrams will be added i
 
 ### Author
 
-W.M.-E. Bonzi, 2021.
+W.M.-E. Bonzi, 2021-2023.
 
 ### License
 
