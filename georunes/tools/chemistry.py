@@ -122,16 +122,28 @@ molar_mass = {
 }
 
 el_molar_mass = {
-    'F': 18.9984,  # a
-    'O': 15.9994,  # a
+    'H': 1.00794,  # b
+    'Li': 6.941,  # b
+    'C': 12.0107,  # b
+    'O': 15.9994,  # b
+    'F': 18.9984032,  # b
+    'Na': 22.989770,  # b
+    'Mg': 24.3050,  # b
+    'Al': 26.981538,  # b
+    'Si': 28.0855,  # b
+    'P': 30.973761,  # b
+    'S': 32.065,  # b
     'Cl': 35.4527,  # a
-    'S': 32.066,  # a
-    'Nb': 92.90638,
-    'Ta': 180.9479,
-    'Nb_Ta': 92.90638 / 180.9479,
-    'K': 39.0983,
-    'Rb': 85.4678,
-    'K_Rb': 39.0983 / 85.4678
+    'K': 39.0983,  # b
+    'Ca': 40.078,  # b
+    'Ti': 47.867,  # b
+    'Mn': 54.938049,  # b
+    'Fe': 55.845,  # b
+    'Rb': 85.4678,  # b
+    'Nb': 92.90638,  # b
+    'Ta': 180.9479,  # b
+    'Nb_Ta': 92.90638 / 180.9479,  # b
+    'K_Rb': 39.0983 / 85.4678  # b
 }
 
 all_elts = ("H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne",
@@ -168,3 +180,6 @@ def molar_ratio_specified(group, group_name):
 
 # a. Verma, S.P., Torres-Alvarado, I.S. and Velasco-Tapia, F., 2003.
 # A revised CIPW norm. Swiss Bulletin of Mineralogy and Petrology, 83(2), pp.197-216.
+# b. De Laeter, J. R., Böhlke, J. K., De Bievre, P., Hidaka, H., Peiser, H. S., Rosman, K. J. R., & Taylor, P. D. P. 
+# (2003). Atomic weights of the elements. Review 2000 (IUPAC Technical Report). Pure and applied chemistry, 75(6), 
+# 683-800.

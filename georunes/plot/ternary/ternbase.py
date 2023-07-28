@@ -13,7 +13,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                  top_var='', left_var='', right_var='',
                  top_label='', left_label='', right_label='',
                  tscale='linear', left_scale='linear', right_scale='linear',
-                 padding={"bottom": 0.14},
+                 padding=None,
                  marker='', annotation=None,
                  alpha_color=0.8, legend_ncol=4,
                  no_ticks=False, no_ticks_label=False,
@@ -22,6 +22,11 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                  **kwargs
                  ):
         self.scale = scale
+        if padding is None:
+            padding = {"bottom": 0.14}
+        self.fig = None
+        self.ax = None
+        self.tax = None
         DiagramBase.__init__(self, datasource=datasource, h_ratio=h_ratio, legend_ncol=legend_ncol, padding=padding,
                              **kwargs)
         self.annotation = annotation
@@ -61,7 +66,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         if not self.no_title:
             if self.title == "":
                 self.title = 'Triangular diagram'
-            self.tax.set_title(self.title, pad=25)
+            self.tax.set_title(self.title)
 
         lw = 0 if no_ticks else 1
 
