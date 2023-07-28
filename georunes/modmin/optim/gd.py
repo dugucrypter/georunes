@@ -19,8 +19,9 @@ class GradientDescent(Optimizer):
         return out
 
     def _compute(self, raw_data, skip_cols, raw_minerals_data, to_round=4,
-                 max_minerals=None, min_minerals=None, ignore_oxides=None, max_iter=int(1e6),
-                 learn_rate=None, tolerance=1e-08, starting_partition=None, force_totals=False):
+                 max_minerals=None, min_minerals=None, unfillable_partitions_allowed=True, ignore_oxides=None,
+                 max_iter=int(1e6), learn_rate=None, tolerance=1e-08, starting_partition=None, force_totals=False,
+                 residual_in_suppl=False):
 
         if not learn_rate:
             learn_rate = 1 * pow(10, -to_round)
@@ -35,8 +36,13 @@ class GradientDescent(Optimizer):
         partitions = DataFrame(columns=self.list_minerals)
         deviation_name = "deviation_" + self.dist_func
         suppl = DataFrame(columns=[deviation_name])
+        bulk_chems = [0]*len(self.data.index)
+        found_chems = [0]*len(self.data.index)
 
         if force_totals:
+            if unfillable_partitions_allowed:
+                raise Exception("The parameter force_totals is True. The parameter unfillable_partitions_allowed "
+                                "should be set to False. Check the computing configuration.")
             target_totals = self.init_total
         else:
             target_totals = [100] * len(self.data.index)
@@ -46,7 +52,7 @@ class GradientDescent(Optimizer):
             if self.verbose: print(">>> Composition", i)
             list_minerals_i = self.list_minerals.copy()
             minerals_data_i = self.minerals_data.copy()
-            bulk_chem = self.data.iloc[i].to_numpy()
+            bulk_chems[i] = self.data.iloc[i].to_numpy()
 
             # Get maximum possible proportion for each mineral
             max_minerals_prop = []
@@ -75,9 +81,10 @@ class GradientDescent(Optimizer):
                     idx = list_minerals_i.index(key)
                     if idx:
                         min_minerals_prop[idx] = max(min_minerals_prop[idx], min_minerals[key])
-            if sum(max_minerals_prop) < 1.05:  # 5% tolerance
-                raise Exception("The authorized maximum proportions do not allow to fill the composition to 100. "
-                                "Check the entry data.")
+            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1.05:  # 5% tolerance
+                raise Exception("Problem in composition " + str(i)
+                                + ". The sum of the maximum proportions of minerals cannot complete to 100 "
+                                  "(found " + str(100 * sum(max_minerals_prop)) + str(")."))
 
             if self.verbose and unnecessary_minerals:
                 print("Unnecessary minerals :", *unnecessary_minerals)
@@ -87,7 +94,7 @@ class GradientDescent(Optimizer):
 
             # Starting value
             if isinstance(starting_partition, dict):
-                if sum(starting_partition.values()) != 100:
+                if not unfillable_partitions_allowed and sum(starting_partition.values()) != 100:
                     print("WARNING : The starting partition does not complete to 100. The calculations will be "
                           "started with a random composition.")
                     candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
@@ -104,14 +111,16 @@ class GradientDescent(Optimizer):
                                   "bounds data : Minerals =", list_minerals_i, ", Max =", max_minerals_prop, ", Min =",
                                   min_minerals_prop, "The calculations will be started with a random composition.")
                             candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
-                                                                verbose=self.verbose)
+                                                                unfillable_partitions_allowed=unfillable_partitions_allowed, verbose=self.verbose)
                     else:
                         print("WARNING : Some minerals in starting partition are not present in mineral chemistry "
                               "data. The calculations will be started with a random composition.")
                         candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
+                                                            unfillable_partitions_allowed=unfillable_partitions_allowed,
                                                             verbose=self.verbose)
             else:
                 candidate = random_part_with_bounds(nb_minerals_i, max_minerals_prop, min_minerals_prop,
+                                                    unfillable_partitions_allowed=unfillable_partitions_allowed,
                                                     verbose=self.verbose)
 
             if self.verbose: print("Starting partition", dict(zip(list_minerals_i, candidate)))
@@ -119,7 +128,7 @@ class GradientDescent(Optimizer):
             # Loop
             for k in range(max_iter):
                 diff = -learn_rate * np.array(
-                    self.grad(candidate, bulk_chem, minerals_data_i, total=target_totals[i] / 100))
+                    self.grad(candidate, bulk_chems[i], minerals_data_i, total=target_totals[i] / 100))
                 new_candidate = candidate + diff
                 new_candidate = np.where(new_candidate < min_minerals_prop, min_minerals_prop, new_candidate)
                 new_candidate = np.where(new_candidate > max_minerals_prop, max_minerals_prop, new_candidate)
@@ -134,7 +143,7 @@ class GradientDescent(Optimizer):
                     print("New solution at iteration", k)
                     print(dict(zip(list_minerals_i, candidate)))
                     corresp_chem = np.dot(minerals_data_i, candidate).round(decimals=to_round)
-                    print("New deviation :", self.deviation(bulk_chem, corresp_chem),
+                    print("New deviation :", self.deviation(bulk_chems[i], corresp_chem),
                           "%" if self.dist_func == "SMAPE" else "")
 
             dict_res = {list_minerals_i[i]: round(candidate[i], to_round) for i in range(len(list_minerals_i))}
@@ -146,18 +155,25 @@ class GradientDescent(Optimizer):
             partitions.iloc[idx_new_row] = 100 * partitions.iloc[idx_new_row]
             partitions = partitions.round(to_round)
 
-            deviation = self.deviation(bulk_chem, np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100.))
+            deviation = self.deviation(bulk_chems[i], np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100.))
+            found_chems[i] = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100.).round(to_round)
             suppl.loc[idx_new_row, deviation_name] = deviation
+            suppl.loc[idx_new_row, "total_chem"] = sum(found_chems[i])
 
             if self.verbose:
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                chem = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100.).round(to_round)
-                print([str(self.list_bulk_ox[i]) + " : " + str(chem[i]) for i in range(self.nb_oxides)])
+                print([str(self.list_bulk_ox[p]) + " : " + str(found_chems[i]) for p in range(self.nb_oxides)])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)
-        suppl["Diff_total"] = partitions["Total"] - self.init_total
+        suppl["diff_total_chem"] = suppl["total_chem"] - self.init_total
+        if residual_in_suppl:
+            residuals = np.subtract(bulk_chems, found_chems)
+            t_residuals = list(map(list, zip(*residuals)))  # Transposition
+            for p, ox in enumerate(self.list_bulk_ox):
+                print(t_residuals[p])
+                suppl["resid_" + str(ox)] = t_residuals[p]
 
         return partitions, suppl

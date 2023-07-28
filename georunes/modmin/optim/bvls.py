@@ -11,19 +11,21 @@ class BVLS(Optimizer):
         self.notif = ">>>>>> Bounded Variable Least Squares Method"
 
     def _compute(self, raw_data, skip_cols, raw_minerals_data, to_round=4, max_minerals=None, min_minerals=None,
-                 ignore_oxides=None):
+                 unfillable_partitions_allowed=True, ignore_oxides=None, residual_in_suppl=False):
         if self.verbose > 1:
             print("Round digits :", to_round, " --  Oxides to ignore : " + str(ignore_oxides) if ignore_oxides else "")
         self.prepare_data(raw_data, skip_cols, raw_minerals_data, ignore_oxides)
         partitions = DataFrame(columns=self.list_minerals)
         deviation_name = "deviation_" + self.dist_func
         suppl = DataFrame(columns=[deviation_name])
+        bulk_chems = [0] * len(self.data.index)
+        found_chems = [0] * len(self.data.index)
 
         for i in self.data.index:
             if self.verbose: print(">>> Composition", i)
             list_minerals_i = self.list_minerals.copy()
             minerals_data_i = self.minerals_data.copy()
-            bulk_chem = self.data.iloc[i].to_numpy()
+            bulk_chems[i] = self.data.iloc[i].to_numpy()
 
             # Get maximum possible proportion for each mineral
             max_minerals_prop = []
@@ -52,15 +54,16 @@ class BVLS(Optimizer):
                     idx = list_minerals_i.index(key)
                     if idx:
                         min_minerals_prop[idx] = max(min_minerals_prop[idx], min_minerals[key])
-            if sum(max_minerals_prop) < 1.05:  # 5% tolerance
-                raise Exception("The authorized maximum proportions do not allow to fill the composition to 100. "
-                                "Check the entry data.")
+            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1.05:  # 5% tolerance
+                raise Exception("Problem in composition " + str(i)
+                                + ". The sum of the maximum proportions of minerals cannot complete to 100 "
+                                  "(found " + str(100 * sum(max_minerals_prop)) + str(")."))
 
             if self.verbose and unnecessary_minerals:
                 print("Unnecessary minerals :", *unnecessary_minerals)
 
             # Direct calculation of the result
-            result = lsq_linear(minerals_data_i, bulk_chem, (min_minerals_prop, max_minerals_prop), method='bvls',
+            result = lsq_linear(minerals_data_i, bulk_chems[i], (min_minerals_prop, max_minerals_prop), method='bvls',
                                 verbose=min(self.verbose, 2))
             dict_res = {list_minerals_i[i]: result.x[i] for i in range(len(list_minerals_i))}
 
@@ -71,18 +74,25 @@ class BVLS(Optimizer):
             partitions.iloc[idx_new_row] = 100 * partitions.iloc[idx_new_row]
             partitions = partitions.round(to_round)
 
-            deviation = self.deviation(bulk_chem, np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100))
+            deviation = self.deviation(bulk_chems[i], np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100))
+            found_chems[i] = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100).round(to_round)
             suppl.loc[idx_new_row, deviation_name] = deviation
+            suppl.loc[idx_new_row, "total_chem"] = sum(found_chems[i])
 
             if self.verbose:
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                chem = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100).round(to_round)
-                print([str(self.list_bulk_ox[i]) + " : " + str(chem[i]) for i in range(self.nb_oxides)])
+                print([str(self.list_bulk_ox[p]) + " : " + str(found_chems[i]) for p in range(self.nb_oxides)])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)
-        suppl["Diff_total"] = partitions["Total"] - self.init_total
+        suppl["diff_total_chem"] = suppl["total_chem"] - self.init_total
+        if residual_in_suppl:
+            residuals = np.subtract(bulk_chems, found_chems)
+            t_residuals = list(map(list, zip(*residuals)))  # Transposition
+            for p, ox in enumerate(self.list_bulk_ox):
+                print(t_residuals[p])
+                suppl["resid_" + str(ox)] = t_residuals[p]
 
         return partitions, suppl
