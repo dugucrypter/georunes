@@ -38,6 +38,9 @@ class FileManager:
         else:
             if fext in (".xls", ".xlsx"):
                 data = pd.read_excel(datasource, sheet_name=sheet_name, index_col=index)
+                # If multiples sheets in excel file and the sheet name is not provided, the first one will be taken.
+                if isinstance(data, dict):
+                    data = next(iter(data.items()))[1]
             elif fext in (".csv", ".txt"):
                 data = pd.read_csv(datasource, sep=sep, delimiter=delimiter, index_col=index)
             else:
