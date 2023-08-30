@@ -1,3 +1,5 @@
+import re
+
 name_ox_to_el = {
     'SiO2': 'Si',
     'TiO2': 'Ti',
@@ -68,29 +70,6 @@ ratio_el_to_ox = {
     'SO3': 0.400504,
 }
 
-nb_cation = {
-    'SiO2': 1,
-    'TiO2': 1,
-    'Al2O3': 2,
-    'Fe2O3': 2,
-    'Fe2O3t': 2,
-    'FeO': 1,
-    'FeOt': 1,
-    'MnO': 1,
-    'MgO': 1,
-    'CaO': 1,
-    'Li2O': 2,
-    'Na2O': 2,
-    'K2O': 2,
-    'Rb2O': 2,
-    'Cs2O': 2,
-    'BaO': 1,
-    'Cr2O3': 2,
-    'P2O5': 2,
-    'SnO': 1,
-    'Ta2O5': 2
-}
-
 molar_mass = {
     'SiO2': 60.0843,  # a
     'TiO2': 79.8658,  # a
@@ -118,7 +97,8 @@ molar_mass = {
     'CO2': 44.0095,  # a
     'SO3': 80.0642,  # a
     'SnO': 134.689,
-    'Ta2O5': 441.891
+    'Ta2O5': 441.891,
+    'H2O': 18.0154
 }
 
 el_molar_mass = {
@@ -164,7 +144,7 @@ def val_ox_to_el_ppm(ox_val, ox_formula):
 
 
 def val_ox_to_mc(group):
-    return (1000 * group / molar_mass[group.name]) * nb_cation[group.name]
+    return (1000 * group / molar_mass[group.name]) * number_cation_in_oxide(group.name)
 
 
 def val_el_to_mol(group):
@@ -177,6 +157,38 @@ def molar_ratio(group):
 
 def molar_ratio_specified(group, group_name):
     return group / molar_mass[group_name]
+
+
+def get_cation(oxide):
+    items = re.findall(r"([A-Z][a-z]*)\d*O\d*", oxide)
+    if items:
+        cation = items[0]
+        return cation
+
+def get_nb_cation_oxygen(oxide):
+    items = re.findall(r"[A-Z][a-z]*(\d*)O(\d*)", oxide)
+    if items:
+        nb_cations, nb_oxygen = items[0][0], items[0][1]
+        if not nb_cations:
+            nb_cations = 1
+        if not nb_oxygen:
+            nb_oxygen = 1
+        return int(nb_cations), int(nb_oxygen)
+
+
+def number_cations_per_oxygen(oxide):
+    nb_cat, nb_oxygen = get_nb_cation_oxygen(oxide)
+    return nb_cat / nb_oxygen
+
+
+def number_cation_in_oxide(oxide):
+    nb_cation, _ = get_nb_cation_oxygen(oxide)
+    return nb_cation
+
+
+def number_oxygen_in_oxide(oxide):
+    _, nb_oxygen = get_nb_cation_oxygen(oxide)
+    return nb_oxygen
 
 # a. Verma, S.P., Torres-Alvarado, I.S. and Velasco-Tapia, F., 2003.
 # A revised CIPW norm. Swiss Bulletin of Mineralogy and Petrology, 83(2), pp.197-216.
