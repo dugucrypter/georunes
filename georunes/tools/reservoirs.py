@@ -1,4 +1,6 @@
+import warnings
 import pandas as pd
+from georunes.tools.preprocessing import check_geochem_res
 
 try:
     import importlib.resources as pkg_resources
@@ -63,3 +65,17 @@ class Reservoirs:
 def chondrite_val(element):
     res = Reservoirs.get_instance()
     return res.get_chondrite_compo(element)
+
+
+def get_reservoir_norm(norm_slug, default="CI"):
+    res = Reservoirs.get_instance()
+    if isinstance(norm_slug, dict) and check_geochem_res(norm_slug):
+        norm = res.register_model(norm_slug)
+    elif norm_slug in res.model_list:
+        norm = res.compos[norm_slug]
+    else:
+        if norm_slug is not None:
+            msg = "The data of reservoir " + norm_slug + " are not found. Check the figure configuration."
+            warnings.warn(msg)
+        norm = res.compos[default]
+    return norm

@@ -68,13 +68,13 @@ class DiagramBase:
         if padding:
             self.padding_config = True
             for side in padding.keys():
-                if side is "left":
+                if side == "left":
                     self.padding_left = padding["left"]
-                if side is "top":
+                if side == "top":
                     self.padding_top = padding["top"]
-                if side is "bottom":
+                if side == "bottom":
                     self.padding_bottom = padding["bottom"]
-                if side is "right":
+                if side == "right":
                     self.padding_right = padding["right"]
 
     def adjust_padding(self):
@@ -113,7 +113,7 @@ class DiagramBase:
 
     def plot_config(self):
         if hasattr(self, "window_title"):
-            self.fig.canvas.set_window_title(self.window_title)
+            self.fig.canvas.setWindowTitle(self.window_title)
 
         if self.padding_config:
             self.adjust_padding()

@@ -1,14 +1,10 @@
-import warnings
-
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 from matplotlib import lines
-
 from georunes.plot.base import DiagramBase
 from georunes.tools.chemistry import val_ox_to_el_ppm, name_el_to_def_ox
 from georunes.tools.data import row_min, row_max
-from georunes.tools.preprocessing import check_geochem_res
-from georunes.tools.reservoirs import Reservoirs
+from georunes.tools.reservoirs import Reservoirs, get_reservoir_norm
 
 listing_ree = ["La", "Ce", "Pr", "Nd", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu"]
 
@@ -38,17 +34,7 @@ class DiagramSpider(DiagramBase):
         self.listing = listing
         self.show_reservoirs = (*show_reservoirs,)
 
-        res = Reservoirs.get_instance()
-
-        if isinstance(norm, dict) and check_geochem_res(norm):
-            self.norm = res.register_model(norm)
-        elif norm in res.model_list:
-            self.norm = res.compos[norm]
-        else:
-            if norm is not None:
-                msg = "The data of reservoir " + norm + " are not found. Check the figure configuration."
-                warnings.warn(msg)
-            self.norm = res.compos["CI"]
+        self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode
         self.enclosed_in_bg = enclosed_in_bg
         self.drawing_order = drawing_order if drawing_order in self.data.columns else None
@@ -176,8 +162,8 @@ class DiagramSpider(DiagramBase):
                                                  markeredgewidth=marker_edge_w,
                                                  alpha=0.8,
                                                  label=label,
-                                                 markersize=self.markersize
-                                                 , zorder=zorder)
+                                                 markersize=self.markersize,
+                                                 zorder=zorder)
 
                     elif custom_fillmode == "enclosed":  # Fake draw to deal with figure canvas
                         last, = self.ax.semilogy(self.listing, vals,

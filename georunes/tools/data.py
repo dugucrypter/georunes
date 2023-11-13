@@ -72,3 +72,15 @@ def unique(list1):
         if x not in unique_list:
             unique_list.append(x)
     return unique_list
+
+
+def linspace(start, stop, num, round_to=3):
+    lns = np.linspace(start, stop, num)
+    return [round(val, round_to) for val in lns]
+
+# Get the key from a value in a dictionary
+def get_key(dictionary, value):
+    key_list = list(dictionary.keys())
+    val_list = list(dictionary.values())
+    position = val_list.index(value)
+    return key_list[position]
