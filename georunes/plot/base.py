@@ -113,7 +113,7 @@ class DiagramBase:
 
     def plot_config(self):
         if hasattr(self, "window_title"):
-            self.fig.canvas.setWindowTitle(self.window_title)
+            self.fig.canvas.manager.set_window_title(self.window_title)
 
         if self.padding_config:
             self.adjust_padding()
