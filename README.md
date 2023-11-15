@@ -44,7 +44,7 @@ GeoRunes is a bunch of tools and classes written to generate geochemical diagram
         python setup.py install --user
 
 
-This code was tested with **Python 3.10**, **matplotlib 3.5.1**, **pandas 1.4.1** and **scipy 1.8.0**.
+This code was tested with **Python 3.11**, **matplotlib 3.7.2**, **pandas 2.1.0**, **numpy 1.24.3**, and **scipy 1.10.0**.
 
 ## Working with GeoRunes
 

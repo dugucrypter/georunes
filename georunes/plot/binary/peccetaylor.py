@@ -68,7 +68,7 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
                                 alpha=0.9, zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in group["SiO2"].iteritems():
+                    for i, sample in group["SiO2"].items():
                         self.ax.annotate(group[self.annotation].get(i), (group["SiO2"].get(i), group["K2O"].get(i)),
                                          fontsize='xx-small')
 

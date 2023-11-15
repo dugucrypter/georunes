@@ -114,7 +114,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                     zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in xvals.iteritems():
+                    for i, sample in xvals.items():
                         self.ax.annotate(group[self.annotation].get(i), (xvals.get(i), yvals[i]), fontsize='xx-small')
 
         self.plot_arrows()

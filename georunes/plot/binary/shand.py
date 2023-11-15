@@ -82,7 +82,7 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
                                 alpha=0.7, zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in acnk.iteritems():
+                    for i, sample in acnk.items():
                         self.ax.annotate(group[self.annotation].get(i), (acnk.get(i), ank.get(i)), fontsize='xx-small')
 
         self.plot_arrows()

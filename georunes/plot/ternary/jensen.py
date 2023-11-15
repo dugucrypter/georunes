@@ -107,7 +107,7 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
                     size = self.markersize
 
                 # Convert points to tuples
-                points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in top_var.iteritems()]
+                points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in top_var.items()]
 
                 zorder = 4
                 if self.drawing_order:
@@ -118,7 +118,7 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
                                  alpha=self.alpha_color, zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in top_var.iteritems():
+                    for i, sample in top_var.items():
                         self.tax.annotate(group[self.annotation].get(i), (norm_x.get(i), norm_y.get(i)),
                                           fontsize='xx-small')
 

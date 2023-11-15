@@ -63,7 +63,7 @@ class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
                     size = self.markersize
 
                 points = []
-                for i, sample in top_var.iteritems():
+                for i, sample in top_var.items():
                     pos = (norm_x.get(i), norm_y.get(i), norm_z.get(i))
                     points.append(pos)
 
@@ -76,7 +76,7 @@ class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
                                  alpha=self.alpha_color, zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in top_var.iteritems():
+                    for i, sample in top_var.items():
                         self.tax.annotate(group[self.annotation].get(i), (norm_x.get(i), norm_y.get(i)),
                                           fontsize='xx-small')
 

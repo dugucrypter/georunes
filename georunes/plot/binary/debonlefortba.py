@@ -124,7 +124,7 @@ class DiagramBA(DiagramBase, ArrowDrawer, LegendDrawer):
                                 alpha=0.7, zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in param_B.iteritems():
+                    for i, sample in param_B.items():
                         self.ax.annotate(group[self.annotation].get(i), (param_B.get(i), param_A[i]),
                                          fontsize='xx-small')
 

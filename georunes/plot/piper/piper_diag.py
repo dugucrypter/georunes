@@ -100,7 +100,7 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                 # Convert points to tuples
                 points = [(group["Ca"].get(i), group["Mg"].get(i), group["Na"].get(i), group["K"].get(i),
                            group["HCO3"].get(i), group["CO3"].get(i), group["SO4"].get(i), group["Cl"].get(i))
-                          for i, sample in group["Ca"].iteritems()]
+                          for i, sample in group["Ca"].items()]
 
                 self.pax.scatter(points, edgecolors=group["color"],
                                  marker=mrk, label=name, facecolors=group["color"], s=size,

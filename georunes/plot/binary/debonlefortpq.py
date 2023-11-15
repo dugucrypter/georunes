@@ -108,7 +108,7 @@ class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
                                 alpha=0.9, zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in param_P.iteritems():
+                    for i, sample in param_P.items():
                         self.ax.annotate(group[self.annotation].get(i), (param_P.get(i), param_Q[i]),
                                          fontsize='xx-small')
 

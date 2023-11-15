@@ -115,7 +115,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
 
                 # Convert points to tuples
                 points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in
-                          group[self.top_var].iteritems()]
+                          group[self.top_var].items()]
 
                 self.tax.scatter(points, edgecolors=group["color"],
                                  marker=mrk, label=name, facecolors=group["color"], s=size,
