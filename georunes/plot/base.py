@@ -1,6 +1,6 @@
 import warnings
 import matplotlib.pyplot as plt
-from georunes.tools.preprocessing import check_data
+from georunes.tools.preprocessing import check_data, data_create_graphic_preset, data_set_graphic_preset
 from georunes.tools.filemanager import FileManager
 
 
@@ -22,6 +22,7 @@ class DiagramBase:
                  custom_zorder={},
                  fontsize='medium', title_fs='medium', legend_fs='medium',
                  legend_ms=[50], markersize=None,
+                 auto_graphic_preset=True, graphic_preset=None,
                  ):
 
         filemanager = FileManager.get_instance()
@@ -61,6 +62,12 @@ class DiagramBase:
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,
                        ignore_checking_markers=ignore_checking_markers)
+
+        if auto_graphic_preset and 'color' not in self.data.columns:  # If color is missing, no graphic preset is provided
+                if graphic_preset:
+                    self.data = data_set_graphic_preset(self.data, graphic_preset, group_name=group_name)
+                else:
+                    self.data = data_create_graphic_preset(self.data, group_name=group_name)
 
     def init_padding(self, padding):
         self.padding_left, self.padding_right, self.padding_top, self.padding_bottom = None, None, None, None
