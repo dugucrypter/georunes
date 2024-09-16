@@ -109,6 +109,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                 else:
                     size = self.markersize
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = None
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
@@ -118,7 +119,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                           group[self.top_var].items()]
 
                 self.tax.scatter(points, edgecolors=group["color"],
-                                 marker=mrk, label=name, facecolors=group["color"], s=size,
+                                 marker=mrk, label=label, facecolors=group["color"], s=size,
                                  alpha=self.alpha_color, zorder=zorder)
 
         self.plot_legend()

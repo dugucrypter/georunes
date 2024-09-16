@@ -58,6 +58,7 @@ class DiagramBase:
         self.legend_fs = legend_fs
         self.legend_ms = legend_ms
         self.markersize = markersize
+        self.label_defined = True if 'label' in self.data.columns else False
         self.drawing_order = drawing_order if drawing_order in self.data.columns else None
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,

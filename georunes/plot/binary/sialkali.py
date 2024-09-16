@@ -177,12 +177,13 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
             if self.exclude_groups and name not in self.exclude_groups:
                 nak = group["Na2O"] + group["K2O"]
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(group["SiO2"], nak, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.9, zorder=zorder)
 

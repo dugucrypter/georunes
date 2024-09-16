@@ -82,12 +82,13 @@ class DiagramRatiosVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(xvals, yvals, edgecolors=edge_color,
-                                marker=mrk, label=name, facecolors=sample_color,
+                                marker=mrk, label=label, facecolors=sample_color,
                                 s=size, zorder=zorder)
 
                 if self.annotation:

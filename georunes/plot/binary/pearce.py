@@ -95,12 +95,13 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Nb"] + group["Y"]
                 vy = group["Rb"]
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.9, zorder=zorder)
         self.plot_arrows()
@@ -162,12 +163,13 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Ta"] + group["Yb"]
                 vy = group["Rb"]
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.9, zorder=zorder)
 
@@ -224,12 +226,13 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Y"]
                 vy = group["Nb"]
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize, alpha=0.9, zorder=zorder)
 
         self.plot_arrows()
@@ -294,12 +297,13 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Yb"]
                 vy = group["Ta"]
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize, alpha=0.9, zorder=zorder)
 
         self.plot_legend()

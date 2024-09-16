@@ -67,12 +67,13 @@ class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
                     pos = (norm_x.get(i), norm_y.get(i), norm_z.get(i))
                     points.append(pos)
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.tax.scatter(points, edgecolors=group["color"],
-                                 marker=mrk, label=name, facecolors=group["color"], s=size,
+                                 marker=mrk, label=label, facecolors=group["color"], s=size,
                                  alpha=self.alpha_color, zorder=zorder)
 
                 if self.annotation:

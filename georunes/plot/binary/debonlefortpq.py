@@ -98,12 +98,13 @@ class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
                 param_P = k - (na + ca)
                 param_Q = si / 3 - (k + na + 2 * ca / 3)
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(param_P, param_Q, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.9, zorder=zorder)
 

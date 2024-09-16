@@ -45,12 +45,13 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 fenb = group["FeO"] / (group["FeO"] + group["MgO"])
                 si = (group["SiO2"])
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(si, fenb, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.7, zorder=zorder)
 
@@ -105,12 +106,13 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 fenb = group["FeOt"] / (group["FeOt"] + group["MgO"])
                 si = (group["SiO2"])
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(si, fenb, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.7, zorder=zorder)
 
@@ -162,12 +164,13 @@ class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
                 mali = group["Na2O"] + group["K2O"] - group["CaO"]
                 si = (group["SiO2"])
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(si, mali, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.7, zorder=zorder)
 

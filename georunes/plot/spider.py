@@ -86,8 +86,6 @@ class DiagramSpider(DiagramBase):
         DiagramBase.plot_config(self)
         self.set_decoration()
 
-        label_defined = True if 'label' in self.data.columns else False
-
         d_min = dict()
         d_max = dict()
 
@@ -105,7 +103,7 @@ class DiagramSpider(DiagramBase):
                     custom_fillmode = self.fillmode
 
                 last = None
-                label = list(group['label'])[0] if label_defined else name
+                label = list(group['label'])[0] if self.label_defined else name
                 min_vals = [None] * len(self.listing)  # Trick to deal with missing value
                 max_vals = [None] * len(self.listing)
                 lw = 0.3  # Linewidth

@@ -93,6 +93,7 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                 else:
                     size = self.markersize
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = None
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
@@ -103,7 +104,7 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                           for i, sample in group["Ca"].items()]
 
                 self.pax.scatter(points, edgecolors=group["color"],
-                                 marker=mrk, label=name, facecolors=group["color"], s=size,
+                                 marker=mrk, label=label, facecolors=group["color"], s=size,
                                  alpha=self.alpha_color, zorder=zorder)
 
         self.plot_legend()

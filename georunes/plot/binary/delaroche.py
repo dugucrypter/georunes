@@ -223,12 +223,13 @@ class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
                 param_R1 = 4 * si - 11 * (na + k) - 2 * (fe + ti)
                 param_R2 = 6 * ca + 2 * mg + al
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(param_R1, param_R2, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.9, zorder=zorder)
 

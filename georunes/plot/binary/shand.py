@@ -72,12 +72,13 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
                         molar_ratio(group["Na2O"]) + molar_ratio(group["K2O"]) + molar_ratio(group["CaO"]))
                 ank = molar_ratio(group["Al2O3"]) / (molar_ratio(group["Na2O"]) + molar_ratio(group["K2O"]))
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
                 self.ax.scatter(acnk, ank, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=name, facecolors=group["color"],
+                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
                                 s=self.markersize,
                                 alpha=0.7, zorder=zorder)
 

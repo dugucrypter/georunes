@@ -99,6 +99,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 else:
                     yvals = group[self.yvar]
 
+                label = list(group['label'])[0] if self.label_defined else name
                 zorder = 4
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
@@ -108,7 +109,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 self.ax.scatter(
                     xvals, yvals,
                     edgecolors=edge_color,
-                    marker=mrk, label=name,
+                    marker=mrk, label=label,
                     facecolors=sample_color,
                     s=size,
                     zorder=zorder)
