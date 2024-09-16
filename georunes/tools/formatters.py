@@ -2,7 +2,7 @@ from matplotlib.ticker import LogFormatter
 
 
 class LogStandardFormatter(LogFormatter):
-    def __init__(self, max_num=1000000, min_num=0.001,
+    def __init__(self, max_num=1000000, min_num=0.0001,
                  **kwargs
                  ):
         self.max_num = max_num
@@ -22,10 +22,10 @@ class LogStandardFormatter(LogFormatter):
         # If the number is not too big and it's an int, format it as an int.
         if abs(x) < self.max_num and x == int(x):
             return '%d' % x
-        fmt = ('%1.3e' if d < 1e-2 else
-               '%1.3f' if d <= 1 else
-               '%1.2f' if d <= 10 else
-               '%1.1f' if d <= 1e5 else
+        fmt = ('%1.3e' if x < 1e-3 else
+               '%1.3f' if x <= 1 else
+               '%1.2f' if x <= 10 else
+               '%1.1f' if x <= 1e5 else
                '%1.1e')
         s = fmt % x
         tup = s.split('e')
