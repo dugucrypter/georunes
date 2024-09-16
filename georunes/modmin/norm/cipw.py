@@ -718,7 +718,7 @@ class CIPWNorm(BaseOptimizer):
                     n_phase.loc[i, 'Wo'] = n_phase.loc[i, 'Wop']
 
         # Steps of 36a and 36f, obligatory for this algorithm
-        if self.verbose > 1: print("     Obilgatory 36a, 36f and Fe-Mg distribution in olivine")
+        if self.verbose > 1: print("Obligatory 36a, 36f and Fe-Mg distribution in olivine")
         n_phase['Hy-fe'] = n_phase['Hy'] * prop['xFe']
         n_phase['Hy-mg'] = n_phase['Hy'] * prop['xMg']
         n_phase['Di-fe'] = n_phase['Di'] * prop['xFe']
