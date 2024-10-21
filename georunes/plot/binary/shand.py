@@ -1,3 +1,5 @@
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.chemistry import molar_ratio
@@ -10,7 +12,9 @@ from georunes.tools.language import format_chemical_formula as _fml, get_transla
 class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="A/NK vs A/CNK diagram of Shand (1943)",
                  annotation=None,
-                 xlim=None, ylim=None, **kwargs):
+                 xlim=None, ylim=None,
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 **kwargs):
 
         DiagramBase.__init__(self, datasource=datasource, title=title, **kwargs)
 
@@ -26,6 +30,8 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
 
         self.xlabel = _fml("Al2O3/(NaO + K2O + CaO)")
         self.ylabel = _fml("Al2O3/(NaO + K2O)")
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
         _ = get_translator(self.lang_cfg)
@@ -77,10 +83,12 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(acnk, ank, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(acnk, ank, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.7, zorder=zorder)
+                                zorder=zorder)
 
                 if self.annotation:
                     for i, sample in acnk.items():

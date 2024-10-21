@@ -1,4 +1,6 @@
 import numpy as np
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.chemistry import val_ox_to_mc
@@ -9,12 +11,17 @@ from georunes.tools.chemistry import val_ox_to_mc
 
 class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="P-Q multicationic classification (Debon and Le Fort 1983)",
-                 padding={"bottom": 0.20}, annotation=None, **kwargs):
+                 padding={"bottom": 0.20},
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 annotation=None,
+                 **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, padding=padding, **kwargs)
 
         self.annotation = annotation
         self.xlabel = "P = K - (Na+Ca)"
         self.ylabel = "Q = Si/3 - (K+Na+2Ca/3)"
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decorations(self):
 
@@ -103,10 +110,12 @@ class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(param_P, param_Q, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(param_P, param_Q, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.9, zorder=zorder)
+                                zorder=zorder)
 
                 if self.annotation:
                     for i, sample in param_P.items():

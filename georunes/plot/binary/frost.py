@@ -1,3 +1,5 @@
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
@@ -7,12 +9,16 @@ from georunes.tools.language import format_chemical_formula as _fml, get_transla
 # classification for granitic rocks. Journal of petrology, 42(11), pp.2033-2048.
 
 class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
-    def __init__(self, datasource, title=_fml("SiO2 vs Fe# Frost diagram"), **kwargs):
+    def __init__(self, datasource, title=_fml("SiO2 vs Fe# Frost diagram"),
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, **kwargs)
         if 'FeO' not in self.data.keys():
             raise Exception("FeO data missing. Check the table.")
         self.xlabel = _fml("SiO2 (wt %)")
         self.ylabel = "FeO/(FeO + MgO)"
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
         if not self.no_title:
@@ -50,17 +56,21 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(si, fenb, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(si, fenb, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.7, zorder=zorder)
+                                zorder=zorder)
 
         self.plot_arrows()
         self.plot_legend()
 
 
 class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
-    def __init__(self, datasource, title=_fml("SiO2 vs Fe* Frost diagram"), calc_total_Fe=False, **kwargs):
+    def __init__(self, datasource, title=_fml("SiO2 vs Fe* Frost diagram"),
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 calc_total_Fe=False, **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, **kwargs)
         if 'FeOt' not in self.data.keys():
             if calc_total_Fe:
@@ -74,6 +84,8 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 raise Exception("FeOt data missing. Check the table.")
         self.xlabel = _fml("SiO2 (wt %)")
         self.ylabel = "FeO$^{tot}$/(FeO$^{tot}$ + MgO)"
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
         if not self.no_title:
@@ -111,20 +123,26 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(si, fenb, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(si, fenb, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.7, zorder=zorder)
+                                zorder=zorder)
 
         self.plot_arrows()
         self.plot_legend()
 
 
 class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
-    def __init__(self, datasource, title=_fml("SiO2 vs modified alkali-lime index Frost diagram"), **kwargs):
+    def __init__(self, datasource, title=_fml("SiO2 vs modified alkali-lime index Frost diagram"),
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, **kwargs)
         self.xlabel = _fml("SiO2 (wt %)")
         self.ylabel = _fml("Na2O + K2O - CaO (wt %)")
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
         if not self.no_title:
@@ -169,10 +187,12 @@ class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(si, mali, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(si, mali, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.7, zorder=zorder)
+                                zorder=zorder)
 
         self.plot_arrows()
         self.plot_legend()

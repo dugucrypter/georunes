@@ -84,3 +84,6 @@ def get_key(dictionary, value):
     val_list = list(dictionary.values())
     position = val_list.index(value)
     return key_list[position]
+
+def repeat_list(lst, n):
+    return [lst] * n

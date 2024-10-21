@@ -2,6 +2,7 @@ import math
 
 import matplotlib.pyplot as plt
 import ternary
+from matplotlib.colors import to_rgba
 
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer
@@ -15,7 +16,8 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                  tscale='linear', left_scale='linear', right_scale='linear',
                  padding=None,
                  marker='', annotation=None,
-                 alpha_color=0.8, legend_ncol=4,
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 legend_ncol=4,
                  no_ticks=False, no_ticks_label=False,
                  h_ratio=None, vertical_ticks=False,
                  scale=100,
@@ -41,6 +43,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         self.right_scale = right_scale
         self.marker = marker
         self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
         self.no_ticks = no_ticks
         self.no_ticks_label = no_ticks_label
         self.vertical_ticks = vertical_ticks
@@ -118,8 +121,11 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                 points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in
                           group[self.top_var].items()]
 
-                self.tax.scatter(points, edgecolors=group["color"],
-                                 marker=mrk, label=label, facecolors=group["color"], s=size,
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.tax.scatter(points, edgecolors=edge_color,
+                                 marker=mrk, label=label, facecolors=sample_color,
+                                 s=size,
                                  alpha=self.alpha_color, zorder=zorder)
 
         self.plot_legend()

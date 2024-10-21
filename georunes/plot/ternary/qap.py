@@ -1,3 +1,5 @@
+from matplotlib.colors import to_rgba
+
 from georunes.plot.helpers import ArrowDrawerTernary
 from georunes.plot.ternary.ternbase import DiagramTernaryBase
 from georunes.tools.language import get_translator
@@ -160,9 +162,11 @@ class DiagramQAP(DiagramTernaryBase, ArrowDrawerTernary):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.tax.scatter(points, edgecolors=group["color"],
-                                 marker=mrk, label=label, facecolors=group["color"], s=size,
-                                 alpha=self.alpha_color, zorder=zorder)
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.tax.scatter(points, edgecolors=edge_color,
+                                 marker=mrk, label=label, facecolors=sample_color, s=size,
+                                 zorder=zorder)
 
                 if self.annotation:
                     for i, sample in group[self.top_var].items():

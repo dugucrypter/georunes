@@ -1,4 +1,6 @@
 import numpy as np
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import get_translator
@@ -10,6 +12,7 @@ from georunes.tools.language import get_translator
 class PearceBase(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource,
                  x_formatter=None, y_formatter=None,
+                 alpha_color=0.4, alpha_edge_color=0.8,
                  padding=None,
                  **kwargs
                  ):
@@ -20,6 +23,8 @@ class PearceBase(DiagramBase, ArrowDrawer, LegendDrawer):
         DiagramBase.__init__(self, datasource=datasource, padding=config_padding, **kwargs)
         self.ax.set_xscale('log')
         self.ax.set_yscale('log')
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
         self.x_formatter = x_formatter
         self.y_formatter = y_formatter
 
@@ -100,10 +105,13 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(vx, vy, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label,
+                                facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.9, zorder=zorder)
+                                zorder=zorder)
         self.plot_arrows()
         self.plot_legend()
         self.adjust_padding()
@@ -168,10 +176,12 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(vx, vy, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.9, zorder=zorder)
+                                zorder=zorder)
 
         self.plot_arrows()
         self.plot_legend()
@@ -231,9 +241,11 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
-                                s=self.markersize, alpha=0.9, zorder=zorder)
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(vx, vy, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
+                                s=self.markersize, zorder=zorder)
 
         self.plot_arrows()
         self.plot_legend()
@@ -302,8 +314,11 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(vx, vy, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
-                                s=self.markersize, alpha=0.9, zorder=zorder)
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(vx, vy, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
+                                s=self.markersize,
+                                zorder=zorder)
 
         self.plot_legend()

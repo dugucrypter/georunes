@@ -1,4 +1,6 @@
 import numpy as np
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
@@ -12,7 +14,9 @@ from georunes.tools.language import format_chemical_formula as _fml, get_transla
 class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
 
     def __init__(self, datasource, decor_set="Cox", title="Total alkali versus silica diagram",
-                 padding={"bottom": 0.20}, annotation=None, classi_line=True, **kwargs):
+                 padding={"bottom": 0.20}, annotation=None, classi_line=True,
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 **kwargs):
 
         if decor_set not in ("Cox", "TAS"):
             raise ValueError("Parameter 'decor_set' must be 'TAS' or 'Cox'")
@@ -23,12 +27,13 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
         self.annotation = annotation
         self.xlabel = _fml("SiO2 (wt%)")
         self.ylabel = _fml("Na2O + K2O (wt%)")
-
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
         self.decor_set = decor_set
 
     def set_decorations(self):
         _ = get_translator(self.lang_cfg)
-        self.ax.set_xlim(34, 80)
+        self.ax.set_xlim(35, 80)
         self.ax.set_ylim(1, 17)
 
         if not self.no_title:
@@ -182,10 +187,12 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(group["SiO2"], nak, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(group["SiO2"], nak, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.9, zorder=zorder)
+                                zorder=zorder)
 
                 if self.annotation:
                     for i, sample in group["SiO2"].items():

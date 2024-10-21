@@ -1,4 +1,6 @@
 import numpy as np
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
@@ -9,12 +11,17 @@ from georunes.tools.language import format_chemical_formula as _fml, get_transla
 
 class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title=_fml("K2O vs SiO2") + "classification diagram (Peccerillo and Taylor 1976)",
-                 padding={"bottom": 0.20}, annotation=None, **kwargs):
+                 padding={"bottom": 0.20},
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 annotation=None,
+                 **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, padding=padding, **kwargs)
 
         self.xlabel = _fml("SiO2 (wt%)")
         self.ylabel = _fml("K2O (wt%)")
         self.annotation = annotation
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
         if not self.no_title:
@@ -62,10 +69,12 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(group["SiO2"], group["K2O"], edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(group["SiO2"], group["K2O"], edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.9, zorder=zorder)
+                                 zorder=zorder)
 
                 if self.annotation:
                     for i, sample in group["SiO2"].items():

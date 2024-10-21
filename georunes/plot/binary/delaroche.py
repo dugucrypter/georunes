@@ -1,4 +1,6 @@
 import numpy as np
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.chemistry import val_ox_to_mc
@@ -11,11 +13,16 @@ from georunes.tools.language import get_translator
 
 class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="R1-R2 multicationic classification (De La Roche et al. 1980)",
-                 padding={"bottom": 0.20}, annotation=None, **kwargs):
+                 padding={"bottom": 0.20},
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 annotation=None,
+                 **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, padding=padding, **kwargs)
         self.annotation = annotation
         self.xlabel = "R1=4Si-11(Na+K)-2(Fe+Ti)"
         self.ylabel = "R2=6Ca+2Mg+Al"
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decorations(self):
         _ = get_translator(self.lang_cfg)
@@ -228,10 +235,12 @@ class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(param_R1, param_R2, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(param_R1, param_R2, edgecolors=sample_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=edge_color,
                                 s=self.markersize,
-                                alpha=0.9, zorder=zorder)
+                                zorder=zorder)
 
                 if self.annotation:
                     for i, sample in param_R1.items():

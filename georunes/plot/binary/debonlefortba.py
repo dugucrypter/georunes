@@ -1,4 +1,6 @@
 import numpy as np
+from matplotlib.colors import to_rgba
+
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.chemistry import val_ox_to_mc
@@ -11,13 +13,18 @@ from georunes.tools.plotting import get_spline
 
 class DiagramBA(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource, title="B-A multicationic classification (Debon and Le Fort 1983)",
-                 annotation=None, decor_set="Debon", legend_loc="upper right", **kwargs):
+                 annotation=None, decor_set="Debon",
+                 legend_loc="upper right",
+                 alpha_color=0.4, alpha_edge_color=0.8,
+                 **kwargs):
         DiagramBase.__init__(self, datasource=datasource, title=title, legend_loc=legend_loc, **kwargs)
 
         self.decor_set = decor_set
         self.annotation = annotation
         self.xlabel = "B = Fe + Mg + Ti"
         self.ylabel = "A = Al - (Na+ K + 2Ca)"
+        self.alpha_color = alpha_color
+        self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
         _ = get_translator(self.lang_cfg)
@@ -119,10 +126,12 @@ class DiagramBA(DiagramBase, ArrowDrawer, LegendDrawer):
                 if self.drawing_order:
                     zorder = list(group[self.drawing_order])[0]
 
-                self.ax.scatter(param_B, param_A, edgecolors=group["color"],
-                                marker=list(group["marker"])[0], label=label, facecolors=group["color"],
+                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                self.ax.scatter(param_B, param_A, edgecolors=edge_color,
+                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                alpha=0.7, zorder=zorder)
+                                zorder=zorder)
 
                 if self.annotation:
                     for i, sample in param_B.items():
