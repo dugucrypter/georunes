@@ -34,7 +34,14 @@ class DiagramSpider(DiagramBase):
         self.thick_legend_linewidth = thick_legend_linewidth
         self.listing = listing
         self.show_reservoirs = (*show_reservoirs,)
-        self.label_reservoirs = label_reservoirs #todo verify if reservoirs asked, and if all label are given
+        self.label_reservoirs = label_reservoirs
+        missing_res = []
+        for res in show_reservoirs:
+            if res != '' and res not in label_reservoirs.keys():
+                missing_res.append(res)
+        if len(missing_res)>=1 :
+            raise ValueError("Label missing for the reservoir(s) : "+ str(res)+".")
+
         self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode
         self.enclosed_in_bg = enclosed_in_bg
