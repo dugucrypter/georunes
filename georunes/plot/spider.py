@@ -13,6 +13,7 @@ class DiagramSpider(DiagramBase):
     def __init__(self, datasource,
                  listing=listing_ree,
                  show_reservoirs=["", ],
+                 label_reservoirs=None,
                  norm="CI",
                  h_ratio=1. / 2,
                  fillmode="marked-lines",
@@ -33,7 +34,7 @@ class DiagramSpider(DiagramBase):
         self.thick_legend_linewidth = thick_legend_linewidth
         self.listing = listing
         self.show_reservoirs = (*show_reservoirs,)
-
+        self.label_reservoirs = label_reservoirs #todo verify if reservoirs asked, and if all label are given
         self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode
         self.enclosed_in_bg = enclosed_in_bg
@@ -201,6 +202,11 @@ class DiagramSpider(DiagramBase):
             if model in res.model_list:
                 compo = res.compos[model]
 
+                if self.label_reservoirs :
+                    label = self.label_reservoirs[model]
+                else :
+                    label = res.get_label(model)
+
                 vals = []
                 for val in self.listing:
                     vals.append(compo[val] / self.norm[val])
@@ -208,11 +214,11 @@ class DiagramSpider(DiagramBase):
                 last, = self.ax.semilogy(self.listing, vals,
                                          c=res.get_color(model), marker="o", markersize=2,
                                          linewidth=1.5, alpha=0.8,
-                                         label=res.get_label(model))
+                                         label=label)
                 if model not in legend_list:
                     legend_cfg.append(last)
                     legend_list.append(model)
-                    legend_cfg_labels.append(res.get_label(model))
+                    legend_cfg_labels.append(label)
 
     def plot_legend(self, legend_cfg, legend_cfg_labels):
 

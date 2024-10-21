@@ -37,7 +37,7 @@ class Reservoirs:
             self.compos[model] = data.loc[data['alias'] == model].squeeze()  # Convert to a Series
 
     def get_models_list(self):
-        return self.model_list
+        return self.model_list if self.model_list else None
 
     def get_label(self, model):
         return self.compos[model]["reservoir"]
