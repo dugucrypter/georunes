@@ -83,7 +83,7 @@ class BVLS(Optimizer):
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                print([str(self.list_bulk_ox[p]) + " : " + str(found_chems[i]) for p in range(self.nb_oxides)])
+                print([ str(a) + " : " + str(b) for a,b in zip(self.list_bulk_ox , found_chems[i])])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)
