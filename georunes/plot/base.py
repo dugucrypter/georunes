@@ -10,7 +10,7 @@ class DiagramBase:
                  no_marker=False,
                  no_title=False, no_legend=False,
                  title="", window_title=None, h_ratio=None,
-                 group_name='group', exclude_groups=("",),
+                 group_name='group', exclude_groups=("",), extra_exclude=None,
                  supp_group=None,  # Second group for classification data
                  ignore_checkings=False, ignore_checking_markers=False,
                  decor_text_col="k", decor_line_col="k",
@@ -36,6 +36,14 @@ class DiagramBase:
             self.exclude_groups = ("",)
         else:
             self.exclude_groups = exclude_groups
+        if isinstance(extra_exclude, dict):
+            for col, value in extra_exclude.items():
+                if isinstance(value, (list, tuple)):
+                    for e in value:
+                        self.data = self.data[self.data[col] != e]
+                        print(e)
+                else:
+                    self.data = self.data[self.data[col] != value]
 
         self.window_title = window_title if window_title else title
         self.no_title = no_title
