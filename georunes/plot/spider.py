@@ -37,10 +37,11 @@ class DiagramSpider(DiagramBase):
         self.label_reservoirs = label_reservoirs
         missing_res = []
         for res in show_reservoirs:
-            if res != '' and res not in label_reservoirs.keys():
+            if res != '' and res not in self.label_reservoirs.keys():
+                self.label_reservoirs[res] = res
                 missing_res.append(res)
         if len(missing_res)>=1 :
-            raise ValueError("Label missing for the reservoir(s) : "+ str(res)+".")
+            warnings.warn("Label missing for the reservoir(s) : "+ str(res)+". Default values will be used.")
 
         self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode
