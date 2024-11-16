@@ -26,7 +26,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         if title is None:
             title = "Diagram " + xlabel + " vs " + ylabel
         DiagramBase.__init__(self, datasource=datasource,
-                             title='Diagram ' + xlabel + " vs " + ylabel,
+                             title=title,
                              padding=config_padding, markersize=markersize,
                              **kwargs)
 
