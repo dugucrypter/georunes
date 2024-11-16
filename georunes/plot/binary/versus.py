@@ -23,6 +23,8 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         config_padding = {"bottom": 0.20}
         if padding:
             config_padding.update(padding)
+        if title is None:
+            title = "Diagram " + xlabel + " vs " + ylabel
         DiagramBase.__init__(self, datasource=datasource,
                              title='Diagram ' + xlabel + " vs " + ylabel,
                              padding=config_padding, markersize=markersize,
