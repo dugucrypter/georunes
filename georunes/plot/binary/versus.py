@@ -9,6 +9,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource,
                  xvar, yvar, xlim=None, ylim=None,
                  xlabel='', ylabel='',
+                 title=None,
                  annotation=None,
                  xscale='linear', yscale='linear',
                  padding=None,
