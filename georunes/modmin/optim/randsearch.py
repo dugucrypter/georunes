@@ -53,6 +53,7 @@ class RandomSearch(Optimizer):
             # Get maximum possible proportion for each mineral
             max_minerals_prop = []
             unnecessary_minerals = []
+            #print("min prop ", list(max_oxides_prop), "\n", mineral_prop)  # todo code to check if values present in all lines of a table, if there are doublond
             for mineral in self.list_minerals:
                 # Maximum proportion for each oxide equals Ox wt% in bulk chemistry / ox wt% in mineral composition
                 max_oxides_prop = self.data.iloc[i] / minerals_data_i[mineral].transpose()

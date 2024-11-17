@@ -41,7 +41,6 @@ class DiagramBase:
                 if isinstance(value, (list, tuple)):
                     for e in value:
                         self.data = self.data[self.data[col] != e]
-                        print(e)
                 else:
                     self.data = self.data[self.data[col] != value]
 
@@ -73,6 +72,7 @@ class DiagramBase:
         self.label_defined = True if label_column in self.data.columns else False
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,
+                       color_column=self.color_column, marker_column=self.marker_column, zorder_column=self.zorder_column,
                        ignore_checking_markers=ignore_checking_markers)
 
         if auto_graphic_preset and color_column not in self.data.columns:  # If color is missing, no graphic preset is provided
