@@ -101,9 +101,9 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                 norm_y = 100 * group[self.top_var] / var_sum
 
                 if self.marker != '':
-                    mrk = self.marker
+                    marker = self.marker
                 else:
-                    mrk = list(group["marker"])[0]
+                    marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
                     size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
@@ -112,19 +112,19 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                 else:
                     size = self.markersize
 
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = None
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
                 # Convert points to tuples
                 points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in
                           group[self.top_var].items()]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.tax.scatter(points, edgecolors=edge_color,
-                                 marker=mrk, label=label, facecolors=sample_color,
+                                 marker=marker, label=label, facecolors=sample_color,
                                  s=size,
                                  alpha=self.alpha_color, zorder=zorder)
 

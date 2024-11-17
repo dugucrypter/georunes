@@ -22,14 +22,14 @@ class DiagramSpider(DiagramBase):
                  enclosed_in_bg=("",),
                  markersize=8,
                  xlabel="", ylabel="",
-                 drawing_order="zorder",
+                 zorder_column="zorder",
                  **kwargs
                  ):
 
         if fillmode not in ("lines", "marked-lines", "enclosed", "enclosed-lines", "mixed"):
             raise ValueError("Incorrect parameter 'fillmode'")
 
-        DiagramBase.__init__(self, datasource=datasource, h_ratio=h_ratio, **kwargs)
+        DiagramBase.__init__(self, datasource=datasource, h_ratio=h_ratio, zorder_column=zorder_column, **kwargs)
 
         self.thick_legend_linewidth = thick_legend_linewidth
         self.listing = listing
@@ -46,7 +46,6 @@ class DiagramSpider(DiagramBase):
         self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode
         self.enclosed_in_bg = enclosed_in_bg
-        self.drawing_order = drawing_order if drawing_order in self.data.columns else None
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.ylim = ylim
@@ -112,7 +111,7 @@ class DiagramSpider(DiagramBase):
                     custom_fillmode = self.fillmode
 
                 last = None
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 min_vals = [None] * len(self.listing)  # Trick to deal with missing value
                 max_vals = [None] * len(self.listing)
                 lw = 0.3  # Linewidth
@@ -140,20 +139,20 @@ class DiagramSpider(DiagramBase):
                                 d_max[elt] = calc_val
 
                     zorder = None
-                    if self.drawing_order:
-                        zorder = list(group[self.drawing_order])[0]
+                    if self.zorder_column:
+                        zorder = list(group[self.zorder_column])[0]
                     if custom_fillmode in ("enclosed-lines", "mixed", "enclosed"):
                         min_vals = row_min(min_vals, vals)
                         max_vals = row_max(max_vals, vals)
-                    mark = list(group["marker"])[0]
+                    mark = list(group[self.marker_column])[0]
                     marker_edge_w = None
                     if mark in ("+", "x"):
                         marker_edge_w = 3
 
                     if custom_fillmode in ("enclosed-lines", "lines"):
                         last, = self.ax.semilogy(self.listing, vals, markersize=0,
-                                                 c=drow['color'],
-                                                 mec=drow['color'],
+                                                 c=drow[self.color_column],
+                                                 mec=drow[self.color_column],
                                                  linewidth=lw,
                                                  alpha=0.8,
                                                  label=label, zorder=zorder
@@ -162,8 +161,8 @@ class DiagramSpider(DiagramBase):
                     elif custom_fillmode in ('marked-lines', 'mixed'):
                         last, = self.ax.semilogy(self.listing,
                                                  vals,
-                                                 c=drow['color'],
-                                                 mec=drow['color'],
+                                                 c=drow[self.color_column],
+                                                 mec=drow[self.color_column],
                                                  marker=mark,
                                                  linewidth=lw,
                                                  markeredgewidth=marker_edge_w,
@@ -178,13 +177,13 @@ class DiagramSpider(DiagramBase):
                                                  )
 
                 if custom_fillmode in ("enclosed", "enclosed-lines", "mixed"):
-                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group["color"])[0],
+                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group[self.color_column])[0],
                                          zorder=zorder,
                                          alpha=0.25)
 
                     # For legend
-                    pseudo_square = patches.Rectangle((0, 0), 0, 0, facecolor=list(group["color"])[0], alpha=0.25)
-                    pseudo_line = lines.Line2D((0, 0), (0, 0), linewidth=lw * 1.8, c=drow['color'], )
+                    pseudo_square = patches.Rectangle((0, 0), 0, 0, facecolor=list(group[self.color_column])[0], alpha=0.25)
+                    pseudo_line = lines.Line2D((0, 0), (0, 0), linewidth=lw * 1.8, c=drow[self.color_column], )
 
                 if name not in legend_list:
                     legend_cfg_labels.append(label)

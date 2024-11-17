@@ -11,12 +11,12 @@ class DiagramBase:
                  no_title=False, no_legend=False,
                  title="", window_title=None, h_ratio=None,
                  group_name='group', exclude_groups=("",), extra_exclude=None,
+                 marker_column='marker', color_column='color', zorder_column=None,
                  supp_group=None,  # Second group for classification data
                  ignore_checkings=False, ignore_checking_markers=False,
                  decor_text_col="k", decor_line_col="k",
                  legend_ncol=1, legend_loc="lower center", legend_in_axs=False,
                  label_column = 'label',
-                 drawing_order=None,
                  arrows=None,
                  padding=None,
                  lang_cfg=None,
@@ -49,6 +49,9 @@ class DiagramBase:
         self.no_title = no_title
         self.no_legend = no_legend
         self.group_name = group_name
+        self.color_column= color_column
+        self.marker_column = marker_column
+        self.zorder_column = zorder_column
         self.supp_group = supp_group
         self.datasource = datasource
         self.no_marker = no_marker
@@ -68,12 +71,11 @@ class DiagramBase:
         self.legend_ms = legend_ms
         self.markersize = markersize
         self.label_defined = True if label_column in self.data.columns else False
-        self.drawing_order = drawing_order if drawing_order in self.data.columns else None
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,
                        ignore_checking_markers=ignore_checking_markers)
 
-        if auto_graphic_preset and 'color' not in self.data.columns:  # If color is missing, no graphic preset is provided
+        if auto_graphic_preset and color_column not in self.data.columns:  # If color is missing, no graphic preset is provided
                 if graphic_preset:
                     self.data = data_set_graphic_preset(self.data, graphic_preset, group_name=group_name)
                 else:

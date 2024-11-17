@@ -100,15 +100,15 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Nb"] + group["Y"]
                 vy = group["Rb"]
 
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group["marker"])[0], label=label,
+                                marker=list(group[self.marker_column])[0], label=label,
                                 facecolors=sample_color,
                                 s=self.markersize,
                                 zorder=zorder)
@@ -171,15 +171,15 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Ta"] + group["Yb"]
                 vy = group["Rb"]
 
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
+                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
                                 zorder=zorder)
 
@@ -236,15 +236,15 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Y"]
                 vy = group["Nb"]
 
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
+                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
                                 s=self.markersize, zorder=zorder)
 
         self.plot_arrows()
@@ -309,15 +309,15 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
                 vx = group["Yb"]
                 vy = group["Ta"]
 
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
+                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
                                 zorder=zorder)
 

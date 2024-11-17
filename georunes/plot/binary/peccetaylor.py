@@ -64,17 +64,17 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
         for name, group in groups:
 
             if self.exclude_groups and name not in self.exclude_groups:
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(group["SiO2"], group["K2O"], edgecolors=edge_color,
-                                marker=list(group["marker"])[0], label=label, facecolors=sample_color,
+                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
                                 s=self.markersize,
-                                 zorder=zorder)
+                                zorder=zorder)
 
                 if self.annotation:
                     for i, sample in group["SiO2"].items():

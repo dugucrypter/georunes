@@ -6,18 +6,20 @@ import matplotlib.cm as cm
 from matplotlib.colors import to_hex
 from georunes.tools.data import unique
 
-_vtc = ('color', 'marker', 'order', 'zorder', 'label',)
 
 _markers = ("o", "s", "p", "*", "<", ">", "^", "8", "h", "H", "+",
             "x", "X", "D", "d", "v", "1", "2" "3", "4", "|", "_", ".", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
 
 
-def check_data(dataset, group_name="group", supp_group=None, supp_vtc=None, ignore_checking_markers=False):
+def check_data(dataset, group_name="group", supp_group=None, supp_vtc=None,
+               color_column='color', marker_column='marker', zorder_column='zorder', label_column='label',
+               ignore_checking_markers=False):
     if supp_group:
         list_group = [group_name, *supp_group]
     else:
         list_group = group_name
 
+    _vtc = (color_column, marker_column, 'order', zorder_column, label_column,) #todo what about order ?
     if supp_vtc:
         vtc = itertools.chain(_vtc, supp_vtc)
     else:
@@ -75,7 +77,7 @@ def _save_file(data, file, sheet=0, output_suffix="_updated", sep=","):
     print("Edited file saved as '" + new_fname + "'")
 
 
-def _check_graphic_preset(preset):
+def _check_graphic_preset(preset): #TODO handle the custom group and label columns
     # Check configuration
     attribs = preset.keys()
     if 'group' not in attribs:
@@ -96,6 +98,7 @@ def _check_graphic_preset(preset):
 
 
 def _find_graphics_preset(data, category_sequence, categories, cmap='viridis', pop_marker=True, pop_zorder=False,
+                          color_column='color', marker_column='marker', zorder_column='zorder', label_column='label',
                           pop_label=False):
     # Colors data to add
     i_cmap = cm.get_cmap(cmap, len(categories))
@@ -125,41 +128,42 @@ def _find_graphics_preset(data, category_sequence, categories, cmap='viridis', p
             label_data.append(dict_labels[cat])
 
     # Populate columns data
-    data['color'] = color_data
+    data[color_column] = color_data
     if pop_marker:
-        data['marker'] = marker_data
+        data[marker_column] = marker_data
     if pop_zorder:
-        data['zorder'] = zorder_data
+        data[zorder_column] = zorder_data
     if pop_label:
-        data['label'] = label_data
+        data[label_column] = label_data
 
     return data
 
 
-def _data_from_sequence(data, preset, category_sequence, ):
+def _data_from_sequence(data, preset, category_sequence,
+                        group_name='group', color_column='color', marker_column='marker', zorder_column='zorder', label_column='label', ):
     attribs = preset.keys()
-    categories = preset['group']
+    categories = preset[group_name]
 
     # Data to add
-    if not all([x in preset['group'] for x in unique(category_sequence)]):
+    if not all([x in preset[group_name] for x in unique(category_sequence)]):
         raise ValueError("Some groups existing in data file miss their configuration.")
-    if 'color' in attribs:
-        colors = preset['color']
-    if 'marker' in attribs:
-        markers = preset['marker']
-    if 'zorder' in attribs:
-        zorders = preset['zorder']
-    if 'label' in attribs:
-        labels = preset['label']
+    if color_column in attribs:
+        colors = preset[color_column]
+    if marker_column in attribs:
+        markers = preset[marker_column]
+    if zorder_column in attribs:
+        zorders = preset[zorder_column]
+    if label_column in attribs:
+        labels = preset[label_column]
 
     # Create dictionaries for data attribution
-    if 'color' in attribs:
+    if color_column in attribs:
         dict_colors = dict(zip(categories, colors[0:len(categories)]))
-    if 'marker' in attribs:
+    if marker_column in attribs:
         dict_markers = dict(zip(categories, markers))
-    if 'zorder' in attribs:
+    if zorder_column in attribs:
         dict_zorders = dict(zip(categories, zorders))
-    if 'labels' in attribs:
+    if label_column in attribs:
         if labels == 'auto' or labels is None:
             dict_labels = dict(zip(categories, categories))
         else:
@@ -168,24 +172,24 @@ def _data_from_sequence(data, preset, category_sequence, ):
     # Create the new contents of the columns to edit
     color_data, marker_data, zorder_data, label_data = [], [], [], []
     for unit in category_sequence:
-        if 'color' in attribs:
+        if color_column in attribs:
             color_data.append(dict_colors[unit])
-        if 'marker' in attribs:
+        if marker_column in attribs:
             marker_data.append(dict_markers[unit])
-        if 'zorder' in attribs:
+        if zorder_column in attribs:
             zorder_data.append(dict_zorders[unit])
-        if 'labels' in attribs:
+        if label_column in attribs:
             label_data.append(dict_labels[unit])
 
     # Populate columns data
-    if 'color' in attribs:
-        data['color'] = color_data
-    if 'marker' in attribs:
-        data['marker'] = marker_data
-    if 'zorder' in attribs:
-        data['zorder'] = zorder_data
-    if 'labels' in attribs:
-        data['label'] = label_data
+    if color_column in attribs:
+        data[color_column] = color_data
+    if marker_column in attribs:
+        data[marker_column] = marker_data
+    if zorder_column in attribs:
+        data[zorder_column] = zorder_data
+    if label_column in attribs:
+        data[label_column] = label_data
 
     return data
 

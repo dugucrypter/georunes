@@ -86,9 +86,9 @@ class DiagramPiper(DiagramBase, LegendDrawer):
             if self.is_group_allowed(name):
 
                 if self.marker != '':
-                    mrk = self.marker
+                    marker = self.marker
                 else:
-                    mrk = list(group["marker"])[0]
+                    marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
                     size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
@@ -97,20 +97,20 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                 else:
                     size = self.markersize
 
-                label = list(group['label'])[0] if self.label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = None
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
                 # Convert points to tuples
                 points = [(group["Ca"].get(i), group["Mg"].get(i), group["Na"].get(i), group["K"].get(i),
                            group["HCO3"].get(i), group["CO3"].get(i), group["SO4"].get(i), group["Cl"].get(i))
                           for i, sample in group["Ca"].items()]
 
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.pax.scatter(points, edgecolors=edge_color,
-                                 marker=mrk, label=label, facecolors=sample_color, s=size,
+                                 marker=marker, label=label, facecolors=sample_color, s=size,
                                  zorder=zorder)
 
         self.plot_legend()
