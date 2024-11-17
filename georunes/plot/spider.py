@@ -1,3 +1,4 @@
+import warnings
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 from matplotlib import lines
@@ -34,7 +35,7 @@ class DiagramSpider(DiagramBase):
         self.thick_legend_linewidth = thick_legend_linewidth
         self.listing = listing
         self.show_reservoirs = (*show_reservoirs,)
-        self.label_reservoirs = label_reservoirs
+        self.label_reservoirs = label_reservoirs if label_reservoirs is not None else {}
         missing_res = []
         for res in show_reservoirs:
             if res != '' and res not in self.label_reservoirs.keys():
