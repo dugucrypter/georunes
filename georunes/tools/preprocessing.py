@@ -19,16 +19,14 @@ def check_data(dataset, group_name="group", supp_group=None, supp_vtc=None,
     else:
         list_group = group_name
 
-    _vtc = (color_column, marker_column, 'order', zorder_column, label_column,) #todo what about order ?
+    _vtc = (color_column, marker_column, zorder_column, label_column,)
     if supp_vtc:
         vtc = itertools.chain(_vtc, supp_vtc)
     else:
         vtc = _vtc
 
     if ignore_checking_markers:
-        a = list(vtc)
-        a.remove('marker')
-        vtc = tuple(a)
+        vtc = tuple(x for x in vtc if x != marker_column)
 
     if group_name not in dataset.keys():
         raise ValueError("Group name '" + str(group_name) + "' not found in dataset")
