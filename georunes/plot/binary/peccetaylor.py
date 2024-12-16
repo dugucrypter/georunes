@@ -47,7 +47,7 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
         self.ax.plot(lx3, ly3, color=self.decor_line_col, linewidth=0.6)
 
         txt_series = [
-            [58, 0.2, _("low-K tholeite")],
+            [58, 0.2, _("low-K tholeiite")],
             [53, 1, _("medium-K calc-alkaline")],
             [56, 2.6, _("high-K calc-alkaline")],
             [52, 3.6, _("shoshonitic")]
