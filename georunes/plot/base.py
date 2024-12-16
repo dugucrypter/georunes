@@ -69,7 +69,12 @@ class DiagramBase:
         self.legend_fs = legend_fs
         self.legend_ms = legend_ms
         self.markersize = markersize
-        self.label_defined = True if label_column in self.data.columns else False
+        if label_column in self.data.columns :
+            self.label_column = label_column
+            self.label_defined = True
+        else :
+            self.label_column = None
+            self.label_defined = False
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,
                        color_column=self.color_column, marker_column=self.marker_column, zorder_column=self.zorder_column,
@@ -133,7 +138,7 @@ class DiagramBase:
     def plot_config(self):
         if hasattr(self, "window_title"):
             self.fig.canvas.manager.set_window_title(self.window_title)
-
+        print(hasattr(self, "window_title"))
         if self.padding_config:
             self.adjust_padding()
 
