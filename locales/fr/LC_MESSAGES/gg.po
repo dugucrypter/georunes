@@ -1,37 +1,40 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-12-21 14:20+0000\n"
-"PO-Revision-Date: 2021-12-21 14:20+0000\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-16 17:23+0000\n"
+"PO-Revision-Date: 2024-12-16 22:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
-"X-Poedit-Basepath: ../../../geoglyph\n"
-"X-Poedit-KeywordsList: _\n"
-"X-Poedit-SearchPath-0: .\n"
+"Generated-By: Babel 2.14.0\n"
+"X-Generator: Poedit 3.5\n"
 
-#: binary/delaroche.py:177 ternary/qap.py:90
+#: georunes/plot/binary/debonlefortba.py:72
+msgid "felsic"
+msgstr "felsique"
+
+#: georunes/plot/binary/delaroche.py:184 georunes/plot/ternary/qap.py:110
 msgid "granodiorite"
 msgstr "granodiorite"
 
-#: binary/delaroche.py:178 ternary/qap.py:80
+#: georunes/plot/binary/delaroche.py:185 georunes/plot/ternary/qap.py:100
 msgid "granite"
 msgstr "granite"
 
-#: binary/delaroche.py:179 ternary/qap.py:91
+#: georunes/plot/binary/delaroche.py:186 georunes/plot/ternary/qap.py:111
 msgid "tonalite"
 msgstr "tonalite"
 
-#: binary/delaroche.py:180
+#: georunes/plot/binary/delaroche.py:187
 msgid "diorite"
 msgstr "diorite"
 
-#: binary/delaroche.py:181
+#: georunes/plot/binary/delaroche.py:188
 msgid ""
 "monzo\n"
 "-diorite"
@@ -39,7 +42,7 @@ msgstr ""
 "monzo\n"
 "-diorite"
 
-#: binary/delaroche.py:182
+#: georunes/plot/binary/delaroche.py:189
 msgid ""
 "monzo-\n"
 "nite"
@@ -47,11 +50,11 @@ msgstr ""
 "monzo-\n"
 "nite"
 
-#: binary/delaroche.py:184
+#: georunes/plot/binary/delaroche.py:191
 msgid "gabbrodiorite"
 msgstr "gabbrodiorite"
 
-#: binary/delaroche.py:185
+#: georunes/plot/binary/delaroche.py:192
 msgid ""
 "monzo-\n"
 "gabbro"
@@ -59,31 +62,31 @@ msgstr ""
 "monzo-\n"
 "gabbro"
 
-#: binary/delaroche.py:186
+#: georunes/plot/binary/delaroche.py:193
 msgid "gabbro-norite"
 msgstr "gabbro-norite"
 
-#: binary/delaroche.py:187
+#: georunes/plot/binary/delaroche.py:194
 msgid "gabbro"
 msgstr "gabbro"
 
-#: binary/delaroche.py:188
+#: georunes/plot/binary/delaroche.py:195
 msgid "theralite"
 msgstr "théralite"
 
-#: binary/delaroche.py:189
+#: georunes/plot/binary/delaroche.py:196
 msgid "melteigite"
 msgstr "meltéigite"
 
-#: binary/delaroche.py:191
+#: georunes/plot/binary/delaroche.py:198
 msgid "essexite"
 msgstr "essexite"
 
-#: binary/delaroche.py:192
+#: georunes/plot/binary/delaroche.py:199
 msgid "ijolite"
 msgstr "ijolite"
 
-#: binary/delaroche.py:194
+#: georunes/plot/binary/delaroche.py:201
 msgid ""
 "quartz\n"
 "monzonite"
@@ -91,7 +94,7 @@ msgstr ""
 "quartz\n"
 "monzonite"
 
-#: binary/delaroche.py:195
+#: georunes/plot/binary/delaroche.py:202
 msgid ""
 "quartz\n"
 "syenite"
@@ -99,11 +102,11 @@ msgstr ""
 "quartz\n"
 "syenite"
 
-#: binary/delaroche.py:196 ternary/qap.py:88
+#: georunes/plot/binary/delaroche.py:203 georunes/plot/ternary/qap.py:108
 msgid "syenite"
 msgstr "syénite"
 
-#: binary/delaroche.py:197
+#: georunes/plot/binary/delaroche.py:204
 msgid ""
 "nepheline\n"
 "syenite"
@@ -111,11 +114,11 @@ msgstr ""
 "syénite à/\n"
 "népheline"
 
-#: binary/delaroche.py:198
+#: georunes/plot/binary/delaroche.py:205
 msgid "ultramafic rock"
 msgstr "roche ultramafique"
 
-#: binary/delaroche.py:199
+#: georunes/plot/binary/delaroche.py:206
 msgid ""
 "syeno-\n"
 "gabbro"
@@ -123,11 +126,11 @@ msgstr ""
 "syéno-\n"
 "gabbro"
 
-#: binary/delaroche.py:200
+#: georunes/plot/binary/delaroche.py:207
 msgid "alkali-gabbro"
 msgstr "gabbro alcalin"
 
-#: binary/delaroche.py:201
+#: georunes/plot/binary/delaroche.py:208
 msgid ""
 "syeno-\n"
 "diorite"
@@ -135,67 +138,108 @@ msgstr ""
 "syéno-\n"
 "diorite"
 
-#: binary/delaroche.py:202
+#: georunes/plot/binary/delaroche.py:209
 msgid "alkali-granite"
 msgstr "granite alcalin"
 
-#: binary/diagramba.py:67
-msgid "felsic"
-msgstr "felsique"
+#: georunes/plot/binary/frost.py:38 georunes/plot/binary/frost.py:105
+msgid "ferroan"
+msgstr "ferreux"
 
-#: binary/peccetaylor.py:46
-msgid "low-K tholeite"
-msgstr "tholéite K-pauvre"
+#: georunes/plot/binary/frost.py:39 georunes/plot/binary/frost.py:106
+msgid "magnesian"
+msgstr "magnésien"
 
-#: binary/peccetaylor.py:47
+#: georunes/plot/binary/frost.py:167
+msgid "alkalic"
+msgstr "alcalin"
+
+#: georunes/plot/binary/frost.py:168
+msgid "alkali-calcic"
+msgstr "alcalin-calcique"
+
+#: georunes/plot/binary/frost.py:169
+msgid "calc-alkalic"
+msgstr "calc-alcalin"
+
+#: georunes/plot/binary/frost.py:170
+msgid "calcic"
+msgstr "calcique"
+
+#: georunes/plot/binary/pearce.py:85 georunes/plot/binary/pearce.py:156
+#: georunes/plot/binary/pearce.py:222 georunes/plot/binary/pearce.py:294
+msgid "Syn-COLG"
+msgstr "Syn-COLG"
+
+#: georunes/plot/binary/pearce.py:86 georunes/plot/binary/pearce.py:157
+#: georunes/plot/binary/pearce.py:223 georunes/plot/binary/pearce.py:295
+msgid "WPG"
+msgstr "GIP"
+
+#: georunes/plot/binary/pearce.py:87 georunes/plot/binary/pearce.py:158
+#: georunes/plot/binary/pearce.py:222 georunes/plot/binary/pearce.py:296
+msgid "VAG"
+msgstr "GAV"
+
+#: georunes/plot/binary/pearce.py:88 georunes/plot/binary/pearce.py:159
+#: georunes/plot/binary/pearce.py:224 georunes/plot/binary/pearce.py:297
+msgid "ORG"
+msgstr "GRO"
+
+#: georunes/plot/binary/peccetaylor.py:50
+msgid "low-K tholeiite"
+msgstr "tholéiite à K faible"
+
+#: georunes/plot/binary/peccetaylor.py:51
 msgid "medium-K calc-alkaline"
-msgstr "calco-alcalin K-moyen"
+msgstr "calco-alcalin à K moyen"
 
-#: binary/peccetaylor.py:48
+#: georunes/plot/binary/peccetaylor.py:52
 msgid "high-K calc-alkaline"
-msgstr "calco-alcalin K-élevé"
+msgstr "calco-alcalin à K élevé"
 
-#: binary/peccetaylor.py:49
+#: georunes/plot/binary/peccetaylor.py:53
 msgid "shoshonitic"
 msgstr "shoshonitique"
 
-#: binary/shand.py:56
+#: georunes/plot/binary/shand.py:64
 msgid "Peralkaline"
-msgstr "Péralcalin"
+msgstr "Peralcalin"
 
-#: binary/shand.py:57
+#: georunes/plot/binary/shand.py:65
 msgid "Metaluminous"
 msgstr "Métalumineux"
 
-#: binary/shand.py:58
+#: georunes/plot/binary/shand.py:66
 msgid "Peraluminous"
 msgstr "Peralumineux"
 
-#: binary/sialkali.py:99 ternary/barker.py:47 ternary/barker.py:76
+#: georunes/plot/binary/sialkali.py:107 georunes/plot/ternary/anabor.py:60
+#: georunes/plot/ternary/anabor.py:88
 msgid "Granite"
 msgstr "Granite"
 
-#: binary/sialkali.py:100
+#: georunes/plot/binary/sialkali.py:108
 msgid "Quartz diorite"
 msgstr "Diorite à quartz"
 
-#: binary/sialkali.py:101
+#: georunes/plot/binary/sialkali.py:109
 msgid "Diorite"
 msgstr "Diorite"
 
-#: binary/sialkali.py:102 binary/sialkali.py:106
+#: georunes/plot/binary/sialkali.py:110 georunes/plot/binary/sialkali.py:114
 msgid "Gabbro"
 msgstr "Gabbro"
 
-#: binary/sialkali.py:103 binary/sialkali.py:108
+#: georunes/plot/binary/sialkali.py:111 georunes/plot/binary/sialkali.py:116
 msgid "Syenite"
 msgstr "Syénite"
 
-#: binary/sialkali.py:104
+#: georunes/plot/binary/sialkali.py:112
 msgid "Syenodiorite"
 msgstr "Syénodiorite"
 
-#: binary/sialkali.py:105
+#: georunes/plot/binary/sialkali.py:113
 msgid ""
 "Nepheline\n"
 "syenite"
@@ -203,19 +247,19 @@ msgstr ""
 "Syénite à/\n"
 "népheline"
 
-#: binary/sialkali.py:107
+#: georunes/plot/binary/sialkali.py:115
 msgid "Ijolite"
 msgstr "Ijolite"
 
-#: binary/sialkali.py:113
+#: georunes/plot/binary/sialkali.py:121
 msgid "Alkaline"
 msgstr "Alcalin"
 
-#: binary/sialkali.py:114
+#: georunes/plot/binary/sialkali.py:122
 msgid "Subalkaline"
 msgstr "Sub-alcalin"
 
-#: binary/sialkali.py:148
+#: georunes/plot/binary/sialkali.py:156
 msgid ""
 "picro-\n"
 "basalt"
@@ -223,11 +267,11 @@ msgstr ""
 "picro-\n"
 "basalte"
 
-#: binary/sialkali.py:149
+#: georunes/plot/binary/sialkali.py:157
 msgid "basalt"
 msgstr "basalte"
 
-#: binary/sialkali.py:150
+#: georunes/plot/binary/sialkali.py:158
 msgid ""
 "basaltic\n"
 "andesite"
@@ -235,15 +279,15 @@ msgstr ""
 "andésite\n"
 "basaltique"
 
-#: binary/sialkali.py:151
+#: georunes/plot/binary/sialkali.py:159
 msgid "andesite"
 msgstr "andésite"
 
-#: binary/sialkali.py:152 ternary/qap.py:103
+#: georunes/plot/binary/sialkali.py:160 georunes/plot/ternary/qap.py:123
 msgid "dacite"
 msgstr "dacite"
 
-#: binary/sialkali.py:153
+#: georunes/plot/binary/sialkali.py:161
 msgid ""
 "trachy-\n"
 "basalt"
@@ -251,7 +295,7 @@ msgstr ""
 "trachy-\n"
 "basalte"
 
-#: binary/sialkali.py:154
+#: georunes/plot/binary/sialkali.py:162
 msgid ""
 "basaltic\n"
 "trachy-\n"
@@ -261,7 +305,7 @@ msgstr ""
 "andésite\n"
 "basaltique"
 
-#: binary/sialkali.py:155
+#: georunes/plot/binary/sialkali.py:163
 msgid ""
 "trachy-\n"
 "andesite"
@@ -269,7 +313,7 @@ msgstr ""
 "trachy-\n"
 "andésite"
 
-#: binary/sialkali.py:156
+#: georunes/plot/binary/sialkali.py:164
 msgid ""
 "trachyte/\n"
 "trachydacite"
@@ -277,7 +321,7 @@ msgstr ""
 "trachyte/\n"
 "trachydacite"
 
-#: binary/sialkali.py:157
+#: georunes/plot/binary/sialkali.py:165
 msgid ""
 "tephrite/\n"
 "basanite"
@@ -285,99 +329,153 @@ msgstr ""
 "téphrite/\n"
 "basanite"
 
-#: binary/sialkali.py:158
+#: georunes/plot/binary/sialkali.py:166
 msgid "phonotephrite"
 msgstr "phonotéphrite"
 
-#: binary/sialkali.py:159
+#: georunes/plot/binary/sialkali.py:167
 msgid "tephriphonolite"
 msgstr "téphriphonolite"
 
-#: binary/sialkali.py:160
+#: georunes/plot/binary/sialkali.py:168
 msgid "phonolite"
 msgstr "phonolite"
 
-#: binary/sialkali.py:161
+#: georunes/plot/binary/sialkali.py:169
 msgid "foidite"
 msgstr "foidite"
 
-#: ternary/afm.py:28
+#: georunes/plot/ternary/afm.py:34
 msgid "Tholeiite series"
-msgstr "Série tholéique"
+msgstr "Série tholéiitique"
 
-#: ternary/afm.py:29
+#: georunes/plot/ternary/afm.py:35
 msgid "Calc-alkaline series"
 msgstr "Série calco-alcaline"
 
-#: ternary/barker.py:48 ternary/barker.py:77
+#: georunes/plot/ternary/anabor.py:61 georunes/plot/ternary/anabor.py:89
 msgid "Tonalite"
 msgstr "Tonalite"
 
-#: ternary/barker.py:49 ternary/barker.py:78
+#: georunes/plot/ternary/anabor.py:62 georunes/plot/ternary/anabor.py:90
 msgid "Granodiorite"
 msgstr "Granodiorite"
 
-#: ternary/barker.py:50 ternary/barker.py:75
+#: georunes/plot/ternary/anabor.py:63 georunes/plot/ternary/anabor.py:87
 msgid "Trondhjemite"
 msgstr "Trondhjémite"
 
-#: ternary/barker.py:79
+#: georunes/plot/ternary/anabor.py:91
 msgid "Quartz monzonite"
 msgstr "Monzonite à quartz"
 
-#: ternary/jensen.py:62
+#: georunes/plot/ternary/jensen.py:64
 msgid "TH"
 msgstr "TH"
 
-#: ternary/jensen.py:64 ternary/jensen.py:73
+#: georunes/plot/ternary/jensen.py:66 georunes/plot/ternary/jensen.py:75
 msgid "Dacite"
 msgstr "Dacite"
 
-#: ternary/jensen.py:65
+#: georunes/plot/ternary/jensen.py:67
 msgid ""
 "High-Fe\n"
 "tholeiite\n"
 "basalt"
 msgstr ""
 "Basalt\n"
-"tholéitique\n"
-"Fe-riche"
+"tholéiitique\n"
+"riche en Fe"
 
-#: ternary/jensen.py:67 ternary/jensen.py:72
+#: georunes/plot/ternary/jensen.py:69 georunes/plot/ternary/jensen.py:74
 msgid "Andesite"
 msgstr "Andésite"
 
-#: ternary/jensen.py:68
+#: georunes/plot/ternary/jensen.py:70
 msgid "Rhyolite"
 msgstr "Rhyolite"
 
-#: ternary/jensen.py:70
+#: georunes/plot/ternary/jensen.py:72
 msgid "CA"
 msgstr "CA"
 
-#: ternary/jensen.py:74
+#: georunes/plot/ternary/jensen.py:76
 msgid "Basalt"
 msgstr "Basalte"
 
-#: ternary/jensen.py:75
+#: georunes/plot/ternary/jensen.py:77
 msgid ""
 "High-Mg\n"
 "tholeiite\n"
 "basalt"
 msgstr ""
-"Basalt\n"
-"tholéitique\n"
-"Mg-riche"
+"Basalte\n"
+"tholéiitique\n"
+"riche en Mg"
 
-#: ternary/jensen.py:77
+#: georunes/plot/ternary/jensen.py:79
 msgid "Komatiitic basalt"
 msgstr "Basalte komatiitique"
 
-#: ternary/jensen.py:78
+#: georunes/plot/ternary/jensen.py:80
 msgid "Komatiite"
 msgstr "Komatiite"
 
-#: ternary/qap.py:81
+#: georunes/plot/ternary/nesbitt_young.py:49
+msgid ""
+"Weak\n"
+"weathering"
+msgstr "Altération faible"
+
+#: georunes/plot/ternary/nesbitt_young.py:50
+msgid ""
+"Intermediate\n"
+"weathering"
+msgstr "Altération moyenne"
+
+#: georunes/plot/ternary/nesbitt_young.py:52
+msgid ""
+"Strong\n"
+"weathering"
+msgstr "Altération forte"
+
+#: georunes/plot/ternary/nesbitt_young.py:53
+msgid "Hornblende"
+msgstr "Hornblende"
+
+#: georunes/plot/ternary/nesbitt_young.py:54
+msgid "Pyroxene"
+msgstr "Pyroxène"
+
+#: georunes/plot/ternary/nesbitt_young.py:55
+msgid "Plagioclase"
+msgstr "Plagioclase"
+
+#: georunes/plot/ternary/nesbitt_young.py:56
+msgid "Smectite"
+msgstr "Smectite"
+
+#: georunes/plot/ternary/nesbitt_young.py:57
+msgid "Kaolinite, gibbsite, chlorite"
+msgstr "Kaolinite, gibbsite, chlorite"
+
+#: georunes/plot/ternary/nesbitt_young.py:58
+msgid "Illite"
+msgstr "Illite"
+
+#: georunes/plot/ternary/nesbitt_young.py:59
+msgid "Muscovite"
+msgstr "Muscovite"
+
+#: georunes/plot/ternary/nesbitt_young.py:60
+msgid "Biotite"
+msgstr "Biotite"
+
+#: georunes/plot/ternary/nesbitt_young.py:61
+msgid "K-feldspar"
+msgstr "K-feldspath"
+
+#: georunes/plot/ternary/qap.py:101
 msgid ""
 "syeno-\n"
 "granite"
@@ -385,7 +483,7 @@ msgstr ""
 "syéno-\n"
 "granite"
 
-#: ternary/qap.py:82
+#: georunes/plot/ternary/qap.py:102
 msgid ""
 "monzo-\n"
 "granite"
@@ -393,7 +491,7 @@ msgstr ""
 "monzo-\n"
 "granite"
 
-#: ternary/qap.py:83
+#: georunes/plot/ternary/qap.py:103
 msgid ""
 "quartz-\n"
 "syenite"
@@ -401,7 +499,7 @@ msgstr ""
 "quartz-\n"
 "syénite"
 
-#: ternary/qap.py:84
+#: georunes/plot/ternary/qap.py:104
 msgid ""
 "quartz-\n"
 "monzonite"
@@ -409,7 +507,7 @@ msgstr ""
 "quartz-\n"
 "monzonite"
 
-#: ternary/qap.py:86
+#: georunes/plot/ternary/qap.py:106
 msgid ""
 "quartz-\n"
 "monzodiorite"
@@ -417,11 +515,11 @@ msgstr ""
 "quartz-\n"
 "monzodiorite"
 
-#: ternary/qap.py:89
+#: georunes/plot/ternary/qap.py:109
 msgid "monzonite"
 msgstr "monzonite"
 
-#: ternary/qap.py:92 ternary/qap.py:107
+#: georunes/plot/ternary/qap.py:112 georunes/plot/ternary/qap.py:127
 msgid ""
 "monzodiorite\n"
 "monzogabbro"
@@ -429,11 +527,11 @@ msgstr ""
 "monzodiorite\n"
 "monzogabbro"
 
-#: ternary/qap.py:99
+#: georunes/plot/ternary/qap.py:119
 msgid "rhyolite"
 msgstr "rhyolite"
 
-#: ternary/qap.py:100
+#: georunes/plot/ternary/qap.py:120
 msgid ""
 "quartz-\n"
 "trachyte"
@@ -441,7 +539,7 @@ msgstr ""
 "quartz-\n"
 "trachyte"
 
-#: ternary/qap.py:102
+#: georunes/plot/ternary/qap.py:122
 msgid ""
 "quartz-\n"
 "latite"
@@ -449,7 +547,7 @@ msgstr ""
 "quartz-\n"
 "latite"
 
-#: ternary/qap.py:104
+#: georunes/plot/ternary/qap.py:124
 msgid ""
 "basalt\n"
 "andesite"
@@ -457,11 +555,11 @@ msgstr ""
 "basalte\n"
 "andésite"
 
-#: ternary/qap.py:105
+#: georunes/plot/ternary/qap.py:125
 msgid "trachyte"
 msgstr "trachyte"
 
-#: ternary/qap.py:106
+#: georunes/plot/ternary/qap.py:126
 msgid "latite"
 msgstr "latite"
 
