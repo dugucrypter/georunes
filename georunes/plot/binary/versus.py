@@ -73,7 +73,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         self.set_decorations()
 
         # Categorize by group and marker
-        groups = self.data.groupby([self.group_name, "marker"])
+        groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
             if len(name) > 1:
