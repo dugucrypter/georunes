@@ -30,8 +30,8 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                              padding=config_padding, markersize=markersize,
                              **kwargs)
 
-        self.xlabel = xlabel
-        self.ylabel = ylabel
+        self.xlabel = xlabel if xlabel else str(xvar)
+        self.ylabel = ylabel if ylabel else str(yvar)
         self.xlim = xlim
         self.ylim = ylim
         self.xvar = xvar
