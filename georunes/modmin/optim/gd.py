@@ -83,7 +83,7 @@ class GradientDescent(Optimizer):
                     idx = list_minerals_i.index(key)
                     if idx:
                         min_minerals_prop[idx] = max(min_minerals_prop[idx], min_minerals[key])
-            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1.05:  # 5% tolerance
+            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1+self.filling_tolerance:  # % tolerance, default 5
                 raise Exception("Problem in composition " + str(i)
                                 + ". The sum of the maximum proportions of minerals cannot complete to 100 "
                                   "(found " + str(100 * sum(max_minerals_prop)) + str(")."))
