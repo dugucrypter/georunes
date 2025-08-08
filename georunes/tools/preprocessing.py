@@ -246,7 +246,7 @@ def data_set_graphic_preset(data, preset, group_name='group', ):
     return data
 
 
-def check_geochem_res(reservoir, listing=None):  # Listing for eventually required oxels
+def check_geochem_res(reservoir, listing=None):  # Listing for eventually required oxide/element
     chklist = ['alias', 'color']
     if listing is not None:
         chklist = chklist.append(*listing)
