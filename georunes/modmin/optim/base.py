@@ -222,3 +222,7 @@ class Optimizer(BaseOptimizer):
         print(partitions.to_string())
         print(">>> Supplementary data")
         print(suppl.to_string())
+
+    def set_verbose(self, verbose):
+        self.verbose = verbose
+        print("verbose now is", self.verbose)
