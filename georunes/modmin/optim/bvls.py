@@ -33,6 +33,7 @@ class BVLS(Optimizer):
             for mineral in self.list_minerals:
                 # Maximum proportion for each oxide equals Ox wt% in bulk chemistry / Ox wt% in mineral composition
                 max_oxides_prop = self.data.iloc[i] / minerals_data_i[mineral].transpose()
+                max_oxides_prop = max_oxides_prop.replace(-np.inf, np.nan) # To solve unespected negative infinity in calculated ratio
                 mineral_prop = max_oxides_prop.min()
                 if np.isinf(mineral_prop) or mineral_prop == 0:
                     minerals_data_i = minerals_data_i.drop(columns=mineral)
