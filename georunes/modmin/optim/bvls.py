@@ -26,7 +26,6 @@ class BVLS(Optimizer):
             list_minerals_i = self.list_minerals.copy()
             minerals_data_i = self.minerals_data.copy()
             bulk_chems[i] = self.data.iloc[i].to_numpy()
-
             # Get maximum possible proportion for each mineral
             max_minerals_prop = []
             unnecessary_minerals = []
