@@ -42,8 +42,8 @@ class NNLS(Optimizer):
                 print("Unnecessary minerals :", *unnecessary_minerals)
 
             # Direct calculation of the result
-            result = nnls(minerals_data_i, bulk_chems[i], max_iter)
-            dict_res = {list_minerals_i[i]: result[0][i] for i in range(len(list_minerals_i))}
+            result, rnorm = nnls(minerals_data_i, bulk_chems[i])
+            dict_res = {list_minerals_i[i]: result[i] for i in range(len(list_minerals_i))}
 
             idx_new_row = len(partitions)
             for miner, prop in dict_res.items():
