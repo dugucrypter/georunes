@@ -51,7 +51,6 @@ class NNLS(Optimizer):
             partitions = partitions.fillna(0)
             partitions.iloc[idx_new_row] = 100 * partitions.iloc[idx_new_row]
             partitions = partitions.round(to_round)
-
             deviation = self.deviation(bulk_chems[i], np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100))
             found_chems[i] = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100).round(to_round)
             suppl.loc[idx_new_row, deviation_name] = deviation
