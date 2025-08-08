@@ -75,7 +75,7 @@ def _save_file(data, file, sheet=0, output_suffix="_updated", sep=","):
     print("Edited file saved as '" + new_fname + "'")
 
 
-def _check_graphic_preset(preset): #TODO handle the custom group and label columns
+def _check_graphic_preset(preset):
     # Check configuration
     attribs = preset.keys()
     if 'group' not in attribs:
