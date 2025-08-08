@@ -216,7 +216,8 @@ class Optimizer(BaseOptimizer):
 
         return partitions, suppl
 
-    def show_results(self, partitions, suppl):
+    @staticmethod
+    def show_results(partitions, suppl):
         print(">>> Final compositions (wt %)")
         print(partitions.to_string())
         print(">>> Supplementary data")

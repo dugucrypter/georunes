@@ -10,7 +10,8 @@ class GradientDescent(Optimizer):
         self.dist_func = dist_func
         self.notif = ">>>>>> Gradient Descent method / deviation function : " + dist_func
 
-    def grad(self, x, y, A, total=1):
+    @staticmethod
+    def grad(x, y, A, total=1):
         B = A.copy()
         B.loc[len(B.index)] = np.array([1] * len(x))  # Row added to minerals_data (A) to keep a sum equals to total
         Bt = B.transpose()
