@@ -5,9 +5,10 @@ from georunes.modmin.optim.base import Optimizer, is_in_bounds, random_part_with
 
 class GradientDescent(Optimizer):
 
-    def __init__(self, dist_func="euclidian", **kwargs):
+    def __init__(self, dist_func="euclidian", filling_tolerance=0.05, **kwargs):
         Optimizer.__init__(self, **kwargs)
         self.dist_func = dist_func
+        self.filling_tolerance = filling_tolerance
         self.notif = ">>>>>> Gradient Descent method / deviation function : " + dist_func
 
     @staticmethod
