@@ -146,7 +146,6 @@ class Optimizer(BaseOptimizer):
         raw_minerals_data = raw_minerals_data.set_index(raw_minerals_data.keys()[0])
         self.data = raw_data.iloc[:, skip_cols:].copy()
         self.list_bulk_ox = self.data.keys().tolist()
-        self.nb_oxides = len(self.list_bulk_ox)
         raw_minerals_data = raw_minerals_data[[*list(self.list_bulk_ox)]]  # Order oxides as in source
         self.minerals_data = raw_minerals_data.transpose()
         self.list_minerals = self.minerals_data.keys().tolist()
