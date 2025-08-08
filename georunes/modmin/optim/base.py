@@ -120,7 +120,7 @@ class BaseOptimizer:
 class Optimizer(BaseOptimizer):
     def __init__(self, **kwargs):
         BaseOptimizer.__init__(self, **kwargs)
-        # self.dist_func defined in children classes
+        # self.norm defined in children classes
 
     def prepare_data(self, raw_data, skip_cols, raw_minerals_data, ignore_oxides):
         raw_data = raw_data.fillna(0)

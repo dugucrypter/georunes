@@ -91,8 +91,8 @@ class CIPWNorm(BaseOptimizer):
             if self.verbose > 1:
                 print('CO2 proportion in calcite : ', co2_calcite, ' --- CO2 proportion in cancrinite:', co2_cancrinite)
 
-        # 3 / Conversion of trace elements units
-        if self.verbose > 1: print("Step 3 - Conversion of trace elements units")
+        # 3 / Conversion of trace oxide/element units
+        if self.verbose > 1: print("Step 3 - Conversion of trace oxide/element units")
 
         if minor_included:
             data_keys = data.keys()
@@ -104,8 +104,8 @@ class CIPWNorm(BaseOptimizer):
                 elif oxel in ['F', 'Cl', 'S']:
                     data[oxel] = data[oxel] / 10000
 
-            # If some minor elements does not exist in data, add the corresponding oxide with zero values for
-            # treatment. Also add other required elements that are missing.
+            # If some minor oxide/element does not exist in data, add the corresponding oxide with zero values for
+            # treatment. Also add other required oxels that are missing.
 
             data_keys = data.keys()
             for ox in list_ox_from_minor_el:
