@@ -3,6 +3,7 @@ import numpy as np
 from pandas import Series
 from georunes.tools.chemistry import ratio_el_to_ox, molar_mass, el_molar_mass
 from georunes.modmin.optim.base import BaseOptimizer
+from georunes.tools.warnings import DataIntegrityWarning
 
 list_major_ox = ['SiO2', 'Na2O', 'K2O', 'CaO', 'MnO', 'FeO', 'Fe2O3', 'MgO', 'TiO2', 'Al2O3', 'P2O5']
 list_minor_el = ['F', 'Cl', 'S', 'Ni', 'Co', 'Ba', 'Sr', 'Rb', 'Cs', 'Li', 'Zr', 'Cr', 'V']
@@ -60,7 +61,7 @@ class CIPWNorm(BaseOptimizer):
         if 'Total' in raw_data_keys or 'Sum' in raw_data_keys:
             data['Total'] = raw_data['Total']
         else:
-            warnings.warn("Total column not found.")
+            warnings.warn("Total column not found.", DataIntegrityWarning)
 
         data_keys = data.keys()
         filtered_columns = [oxel for oxel in raw_data_keys if oxel not in data_keys]

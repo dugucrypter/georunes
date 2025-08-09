@@ -2,6 +2,7 @@ import warnings
 import matplotlib.pyplot as plt
 from georunes.tools.preprocessing import check_data, data_create_graphic_preset, data_set_graphic_preset
 from georunes.tools.filemanager import FileManager
+from georunes.tools.warnings import FunctionParameterWarning
 
 
 class DiagramBase:
@@ -155,7 +156,7 @@ class DiagramBase:
                     markersize['size_min'] = None
                 return True
             else:
-                warnings.warn("Key parameters missing for configuration of markersize")
+                warnings.warn("Key parameters missing for configuration of markersize", FunctionParameterWarning)
         return False
 
     def check_parameters(self):
