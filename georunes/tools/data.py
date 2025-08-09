@@ -74,9 +74,34 @@ def unique(list1):
     return unique_list
 
 
+def float_or_zero(value):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return 0
+
+
 def linspace(start, stop, num, round_to=3):
     lns = np.linspace(start, stop, num)
     return [round(val, round_to) for val in lns]
+
+
+def linspace_to_end(b, x, ndigits=5):
+    if x <= 1:
+        return [b] if x == 1 else []
+    step = b / x  # divide into x equal parts, so we skip the 0
+    return [round((i + 1) * step, ndigits) for i in range(x)]
+
+
+def round_ceil_n_digits(value, n):
+    multiplier = 10 ** n
+    return math.ceil(value * multiplier) / multiplier
+
+
+def round_floor_n_digits(value, n):
+    multiplier = 10 ** n
+    return math.floor(value * multiplier) / multiplier
+
 
 # Get the key from a value in a dictionary
 def get_key(dictionary, value):
@@ -84,6 +109,7 @@ def get_key(dictionary, value):
     val_list = list(dictionary.values())
     position = val_list.index(value)
     return key_list[position]
+
 
 def repeat_list(lst, n):
     return [lst] * n
