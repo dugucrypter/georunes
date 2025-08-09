@@ -42,7 +42,7 @@ class DiagramSpider(DiagramBase):
                 self.label_reservoirs[res] = res
                 missing_res.append(res)
         if len(missing_res)>=1 :
-            warnings.warn("Label missing for the reservoir(s) : "+ str(res)+". Default values will be used.")
+            warnings.warn("Label missing for the reservoir(s) : "+ str(res) +". Default values will be used.")
 
         self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode

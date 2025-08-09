@@ -1,6 +1,8 @@
+import warnings
 import numpy as np
 from pandas import DataFrame
 from georunes.modmin.optim.base import Optimizer, is_in_bounds, random_part_with_bounds
+from georunes.tools.warnings import FunctionParameterWarning
 
 
 class GradientDescent(Optimizer):
