@@ -103,7 +103,6 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 zorder = 4
                 if self.zorder_column:
                     zorder = list(group[self.zorder_column])[0]
-
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(
