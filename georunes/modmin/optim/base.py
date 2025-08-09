@@ -142,7 +142,7 @@ class Optimizer(BaseOptimizer):
             if ox in raw_data.keys():
                 raw_data = raw_data.drop(columns=ox)
 
-        raw_minerals_data = raw_minerals_data.fillna(0)
+        raw_minerals_data = raw_minerals_data.fillna(0).infer_objects(copy=False)
         raw_minerals_data = raw_minerals_data.set_index(raw_minerals_data.keys()[0])
         self.data = raw_data.iloc[:, skip_cols:].copy()
         self.list_bulk_ox = self.data.keys().tolist()

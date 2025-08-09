@@ -48,7 +48,7 @@ class NNLS(Optimizer):
             idx_new_row = len(partitions)
             for miner, prop in dict_res.items():
                 partitions.loc[idx_new_row, miner] = prop
-            partitions = partitions.fillna(0)
+            partitions = partitions.fillna(0).infer_objects(copy=False) # infer_objects prevent the downcasting of object dtype
             partitions.iloc[idx_new_row] = 100 * partitions.iloc[idx_new_row]
             partitions = partitions.round(to_round)
             deviation = self.deviation(bulk_chems[i], np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100))
