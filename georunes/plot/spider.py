@@ -23,7 +23,7 @@ class DiagramSpider(DiagramBase):
                  enclosed_in_bg=("",),
                  markersize=8,
                  xlabel="", ylabel="",
-                 zorder_column="zorder",
+                 zorder_column=None,
                  **kwargs
                  ):
 
