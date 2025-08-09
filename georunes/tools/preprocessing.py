@@ -206,12 +206,13 @@ def file_create_graphic_preset(file, sheet=0, group_name='group', cmap='viridis'
     _save_file(data, file, sheet=sheet, output_suffix=output_suffix)
 
 
-def data_create_graphic_preset(data, group_name='group', cmap='viridis', pop_marker=True, pop_zorder=False,
-                               pop_label=False):
+def data_create_graphic_preset(data, group_name='group', cmap='viridis', color_column='color', pop_marker=True,
+                               pop_zorder=False, pop_label=False):
     category_sequence = data[group_name].tolist()  # Column of categories
     categories = unique(category_sequence)  # All the categories to update in file
 
-    data = _find_graphics_preset(data, category_sequence, categories, cmap, pop_marker, pop_zorder, pop_label)
+    data = _find_graphics_preset(data, category_sequence, categories, cmap=cmap, color_column=color_column,
+                                 pop_marker=pop_marker, pop_zorder=pop_zorder, pop_label=pop_label)
 
     return data
 
