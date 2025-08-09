@@ -45,8 +45,8 @@ class GradientDescent(Optimizer):
 
         if force_totals:
             if unfillable_partitions_allowed:
-                raise Exception("The parameter force_totals is True. The parameter unfillable_partitions_allowed "
-                                "should be set to False. Check the computing configuration.")
+                warnings.warn("The parameter force_totals is True. Then, the parameter unfillable_partitions_allowed "
+                                "will be set to False.", FunctionParameterWarning)
             target_totals = self.init_total
         else:
             target_totals = [100] * len(self.data.index)
