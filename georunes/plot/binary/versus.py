@@ -76,9 +76,6 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if len(name) > 1:
-                name = name[0]
-
             if self.is_group_allowed(name):
                 if self.marker != '':
                     marker = self.marker
