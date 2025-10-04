@@ -42,16 +42,15 @@ class NNLS(Optimizer):
                 print("Unnecessary minerals :", *unnecessary_minerals)
 
             # Direct calculation of the result
-            result = nnls(minerals_data_i, bulk_chems[i], max_iter)
-            dict_res = {list_minerals_i[i]: result[0][i] for i in range(len(list_minerals_i))}
+            result, rnorm = nnls(minerals_data_i, bulk_chems[i])
+            dict_res = {list_minerals_i[i]: result[i] for i in range(len(list_minerals_i))}
 
             idx_new_row = len(partitions)
             for miner, prop in dict_res.items():
                 partitions.loc[idx_new_row, miner] = prop
-            partitions = partitions.fillna(0)
+            partitions = partitions.fillna(0).infer_objects(copy=False) # infer_objects prevent the downcasting of object dtype
             partitions.iloc[idx_new_row] = 100 * partitions.iloc[idx_new_row]
             partitions = partitions.round(to_round)
-
             deviation = self.deviation(bulk_chems[i], np.dot(self.minerals_data, partitions.iloc[idx_new_row] / 100))
             found_chems[i] = np.dot(self.minerals_data, partitions.loc[idx_new_row] / 100).round(to_round)
             suppl.loc[idx_new_row, deviation_name] = deviation
@@ -61,7 +60,7 @@ class NNLS(Optimizer):
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                print([str(self.list_bulk_ox[p]) + " : " + str(found_chems[i]) for p in range(self.nb_oxides)])
+                print([ str(a) + " : " + str(b) for a,b in zip(self.list_bulk_ox , found_chems[i])])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)

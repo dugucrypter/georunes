@@ -1,3 +1,5 @@
+from matplotlib.colors import to_rgba
+
 from georunes.plot.helpers import ArrowDrawerTernary
 from georunes.plot.ternary.ternbase import DiagramTernaryBase
 from georunes.tools.chemistry import val_ox_to_el, val_ox_to_mc
@@ -95,9 +97,9 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
                 norm_y = 100 * top_var / var_sum
 
                 if self.marker != '':
-                    mrk = self.marker
+                    marker = self.marker
                 else:
-                    mrk = list(group["marker"])[0]
+                    marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
                     size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
@@ -107,18 +109,21 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
                     size = self.markersize
 
                 # Convert points to tuples
-                points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in top_var.iteritems()]
+                points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in top_var.items()]
 
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
 
-                self.tax.scatter(points, edgecolors=group["color"],
-                                 marker=mrk, label=name, facecolors=group["color"], s=size,
-                                 alpha=self.alpha_color, zorder=zorder)
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
+                self.tax.scatter(points, edgecolors=edge_color,
+                                 marker=marker, label=label, facecolors=sample_color, s=size,
+                                 zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in top_var.iteritems():
+                    for i, sample in top_var.items():
                         self.tax.annotate(group[self.annotation].get(i), (norm_x.get(i), norm_y.get(i)),
                                           fontsize='xx-small')
 

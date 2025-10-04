@@ -9,6 +9,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
     def __init__(self, datasource,
                  xvar, yvar, xlim=None, ylim=None,
                  xlabel='', ylabel='',
+                 title=None,
                  annotation=None,
                  xscale='linear', yscale='linear',
                  padding=None,
@@ -22,13 +23,15 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         config_padding = {"bottom": 0.20}
         if padding:
             config_padding.update(padding)
+        if title is None:
+            title = "Diagram " + xlabel + " vs " + ylabel
         DiagramBase.__init__(self, datasource=datasource,
-                             title='Diagram ' + xlabel + " vs " + ylabel,
+                             title=title,
                              padding=config_padding, markersize=markersize,
                              **kwargs)
 
-        self.xlabel = xlabel
-        self.ylabel = ylabel
+        self.xlabel = xlabel if xlabel else str(xvar)
+        self.ylabel = ylabel if ylabel else str(yvar)
         self.xlim = xlim
         self.ylim = ylim
         self.xvar = xvar
@@ -70,17 +73,14 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         self.set_decorations()
 
         # Categorize by group and marker
-        groups = self.data.groupby([self.group_name, "marker"])
+        groups = self.data.groupby(self.group_name)
         for name, group in groups:
-
-            if len(name) > 1:
-                name = name[0]
 
             if self.is_group_allowed(name):
                 if self.marker != '':
-                    mrk = self.marker
+                    marker = self.marker
                 else:
-                    mrk = list(group["marker"])[0]
+                    marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
                     size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
@@ -99,22 +99,22 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 else:
                     yvals = group[self.yvar]
 
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
-                if self.drawing_order:
-                    zorder = list(group[self.drawing_order])[0]
-
-                sample_color = to_rgba(list(group["color"])[0], alpha=self.alpha_color)
-                edge_color = to_rgba(list(group["color"])[0], alpha=self.alpha_edge_color)
+                if self.zorder_column:
+                    zorder = list(group[self.zorder_column])[0]
+                sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
+                edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(
                     xvals, yvals,
                     edgecolors=edge_color,
-                    marker=mrk, label=name,
+                    marker=marker, label=label,
                     facecolors=sample_color,
                     s=size,
                     zorder=zorder)
 
                 if self.annotation:
-                    for i, sample in xvals.iteritems():
+                    for i, sample in xvals.items():
                         self.ax.annotate(group[self.annotation].get(i), (xvals.get(i), yvals[i]), fontsize='xx-small')
 
         self.plot_arrows()

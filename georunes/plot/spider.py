@@ -1,3 +1,4 @@
+import warnings
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 from matplotlib import lines
@@ -13,6 +14,7 @@ class DiagramSpider(DiagramBase):
     def __init__(self, datasource,
                  listing=listing_ree,
                  show_reservoirs=["", ],
+                 label_reservoirs=None,
                  norm="CI",
                  h_ratio=1. / 2,
                  fillmode="marked-lines",
@@ -21,23 +23,30 @@ class DiagramSpider(DiagramBase):
                  enclosed_in_bg=("",),
                  markersize=8,
                  xlabel="", ylabel="",
-                 drawing_order="zorder",
+                 zorder_column=None,
                  **kwargs
                  ):
 
         if fillmode not in ("lines", "marked-lines", "enclosed", "enclosed-lines", "mixed"):
             raise ValueError("Incorrect parameter 'fillmode'")
 
-        DiagramBase.__init__(self, datasource=datasource, h_ratio=h_ratio, **kwargs)
+        DiagramBase.__init__(self, datasource=datasource, h_ratio=h_ratio, zorder_column=zorder_column, **kwargs)
 
         self.thick_legend_linewidth = thick_legend_linewidth
         self.listing = listing
         self.show_reservoirs = (*show_reservoirs,)
+        self.label_reservoirs = label_reservoirs if label_reservoirs is not None else {}
+        missing_res = []
+        for res in show_reservoirs:
+            if res != '' and res not in self.label_reservoirs.keys():
+                self.label_reservoirs[res] = res
+                missing_res.append(res)
+        if len(missing_res)>=1 :
+            warnings.warn("Label missing for the reservoir(s) : "+ str(res) +". Default values will be used.")
 
         self.norm = get_reservoir_norm(norm, default="CI")
         self.fillmode = fillmode
         self.enclosed_in_bg = enclosed_in_bg
-        self.drawing_order = drawing_order if drawing_order in self.data.columns else None
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.ylim = ylim
@@ -86,8 +95,6 @@ class DiagramSpider(DiagramBase):
         DiagramBase.plot_config(self)
         self.set_decoration()
 
-        label_defined = True if 'label' in self.data.columns else False
-
         d_min = dict()
         d_max = dict()
 
@@ -105,7 +112,7 @@ class DiagramSpider(DiagramBase):
                     custom_fillmode = self.fillmode
 
                 last = None
-                label = list(group['label'])[0] if label_defined else name
+                label = list(group[self.label_column])[0] if self.label_defined else name
                 min_vals = [None] * len(self.listing)  # Trick to deal with missing value
                 max_vals = [None] * len(self.listing)
                 lw = 0.3  # Linewidth
@@ -133,20 +140,20 @@ class DiagramSpider(DiagramBase):
                                 d_max[elt] = calc_val
 
                     zorder = None
-                    if self.drawing_order:
-                        zorder = list(group[self.drawing_order])[0]
+                    if self.zorder_column:
+                        zorder = list(group[self.zorder_column])[0]
                     if custom_fillmode in ("enclosed-lines", "mixed", "enclosed"):
                         min_vals = row_min(min_vals, vals)
                         max_vals = row_max(max_vals, vals)
-                    mark = list(group["marker"])[0]
+                    mark = list(group[self.marker_column])[0]
                     marker_edge_w = None
                     if mark in ("+", "x"):
                         marker_edge_w = 3
 
                     if custom_fillmode in ("enclosed-lines", "lines"):
                         last, = self.ax.semilogy(self.listing, vals, markersize=0,
-                                                 c=drow['color'],
-                                                 mec=drow['color'],
+                                                 c=drow[self.color_column],
+                                                 mec=drow[self.color_column],
                                                  linewidth=lw,
                                                  alpha=0.8,
                                                  label=label, zorder=zorder
@@ -155,8 +162,8 @@ class DiagramSpider(DiagramBase):
                     elif custom_fillmode in ('marked-lines', 'mixed'):
                         last, = self.ax.semilogy(self.listing,
                                                  vals,
-                                                 c=drow['color'],
-                                                 mec=drow['color'],
+                                                 c=drow[self.color_column],
+                                                 mec=drow[self.color_column],
                                                  marker=mark,
                                                  linewidth=lw,
                                                  markeredgewidth=marker_edge_w,
@@ -171,13 +178,13 @@ class DiagramSpider(DiagramBase):
                                                  )
 
                 if custom_fillmode in ("enclosed", "enclosed-lines", "mixed"):
-                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group["color"])[0],
+                    self.ax.fill_between(self.listing, min_vals, max_vals, facecolor=list(group[self.color_column])[0],
                                          zorder=zorder,
                                          alpha=0.25)
 
                     # For legend
-                    pseudo_square = patches.Rectangle((0, 0), 0, 0, facecolor=list(group["color"])[0], alpha=0.25)
-                    pseudo_line = lines.Line2D((0, 0), (0, 0), linewidth=lw * 1.8, c=drow['color'], )
+                    pseudo_square = patches.Rectangle((0, 0), 0, 0, facecolor=list(group[self.color_column])[0], alpha=0.25)
+                    pseudo_line = lines.Line2D((0, 0), (0, 0), linewidth=lw * 1.8, c=drow[self.color_column], )
 
                 if name not in legend_list:
                     legend_cfg_labels.append(label)
@@ -203,6 +210,11 @@ class DiagramSpider(DiagramBase):
             if model in res.model_list:
                 compo = res.compos[model]
 
+                if self.label_reservoirs :
+                    label = self.label_reservoirs[model]
+                else :
+                    label = res.get_label(model)
+
                 vals = []
                 for val in self.listing:
                     vals.append(compo[val] / self.norm[val])
@@ -210,11 +222,11 @@ class DiagramSpider(DiagramBase):
                 last, = self.ax.semilogy(self.listing, vals,
                                          c=res.get_color(model), marker="o", markersize=2,
                                          linewidth=1.5, alpha=0.8,
-                                         label=res.get_label(model))
+                                         label=label)
                 if model not in legend_list:
                     legend_cfg.append(last)
                     legend_list.append(model)
-                    legend_cfg_labels.append(res.get_label(model))
+                    legend_cfg_labels.append(label)
 
     def plot_legend(self, legend_cfg, legend_cfg_labels):
 

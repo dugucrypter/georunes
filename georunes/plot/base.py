@@ -1,7 +1,8 @@
 import warnings
 import matplotlib.pyplot as plt
-from georunes.tools.preprocessing import check_data
+from georunes.tools.preprocessing import check_data, data_create_graphic_preset, data_set_graphic_preset
 from georunes.tools.filemanager import FileManager
+from georunes.tools.warnings import FunctionParameterWarning
 
 
 class DiagramBase:
@@ -10,18 +11,20 @@ class DiagramBase:
                  no_marker=False,
                  no_title=False, no_legend=False,
                  title="", window_title=None, h_ratio=None,
-                 group_name='group', exclude_groups=("",),
+                 group_name='group', exclude_groups=("",), extra_exclude=None,
+                 marker_column='marker', color_column='color', zorder_column=None,
                  supp_group=None,  # Second group for classification data
                  ignore_checkings=False, ignore_checking_markers=False,
                  decor_text_col="k", decor_line_col="k",
                  legend_ncol=1, legend_loc="lower center", legend_in_axs=False,
-                 drawing_order=None,
+                 label_column = 'label',
                  arrows=None,
                  padding=None,
                  lang_cfg=None,
                  custom_zorder={},
                  fontsize='medium', title_fs='medium', legend_fs='medium',
                  legend_ms=[50], markersize=None,
+                 auto_graphic_preset=True, graphic_preset=None,
                  ):
 
         filemanager = FileManager.get_instance()
@@ -34,11 +37,21 @@ class DiagramBase:
             self.exclude_groups = ("",)
         else:
             self.exclude_groups = exclude_groups
+        if isinstance(extra_exclude, dict):
+            for col, value in extra_exclude.items():
+                if isinstance(value, (list, tuple)):
+                    for e in value:
+                        self.data = self.data[self.data[col] != e]
+                else:
+                    self.data = self.data[self.data[col] != value]
 
         self.window_title = window_title if window_title else title
         self.no_title = no_title
         self.no_legend = no_legend
         self.group_name = group_name
+        self.color_column= color_column
+        self.marker_column = marker_column
+        self.zorder_column = zorder_column
         self.supp_group = supp_group
         self.datasource = datasource
         self.no_marker = no_marker
@@ -57,10 +70,22 @@ class DiagramBase:
         self.legend_fs = legend_fs
         self.legend_ms = legend_ms
         self.markersize = markersize
-        self.drawing_order = drawing_order if drawing_order in self.data.columns else None
+        if label_column in self.data.columns :
+            self.label_column = label_column
+            self.label_defined = True
+        else :
+            self.label_column = None
+            self.label_defined = False
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,
+                       color_column=self.color_column, marker_column=self.marker_column, zorder_column=self.zorder_column,
                        ignore_checking_markers=ignore_checking_markers)
+
+        if auto_graphic_preset and color_column not in self.data.columns:  # If color is missing, no graphic preset is provided
+                if graphic_preset:
+                    self.data = data_set_graphic_preset(self.data, graphic_preset, group_name=group_name)
+                else:
+                    self.data = data_create_graphic_preset(self.data, group_name=group_name)
 
     def init_padding(self, padding):
         self.padding_left, self.padding_right, self.padding_top, self.padding_bottom = None, None, None, None
@@ -113,8 +138,7 @@ class DiagramBase:
 
     def plot_config(self):
         if hasattr(self, "window_title"):
-            self.fig.canvas.setWindowTitle(self.window_title)
-
+            self.fig.canvas.manager.set_window_title(self.window_title)
         if self.padding_config:
             self.adjust_padding()
 
@@ -132,7 +156,7 @@ class DiagramBase:
                     markersize['size_min'] = None
                 return True
             else:
-                warnings.warn("Key parameters missing for configuration of markersize")
+                warnings.warn("Key parameters missing for configuration of markersize", FunctionParameterWarning)
         return False
 
     def check_parameters(self):

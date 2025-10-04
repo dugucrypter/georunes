@@ -120,7 +120,7 @@ class BaseOptimizer:
 class Optimizer(BaseOptimizer):
     def __init__(self, **kwargs):
         BaseOptimizer.__init__(self, **kwargs)
-        # self.dist_func defined in children classes
+        # self.norm defined in children classes
 
     def prepare_data(self, raw_data, skip_cols, raw_minerals_data, ignore_oxides):
         raw_data = raw_data.fillna(0)
@@ -142,11 +142,10 @@ class Optimizer(BaseOptimizer):
             if ox in raw_data.keys():
                 raw_data = raw_data.drop(columns=ox)
 
-        raw_minerals_data = raw_minerals_data.fillna(0)
+        raw_minerals_data = raw_minerals_data.fillna(0).infer_objects(copy=False)
         raw_minerals_data = raw_minerals_data.set_index(raw_minerals_data.keys()[0])
         self.data = raw_data.iloc[:, skip_cols:].copy()
         self.list_bulk_ox = self.data.keys().tolist()
-        self.nb_oxides = len(self.list_bulk_ox)
         raw_minerals_data = raw_minerals_data[[*list(self.list_bulk_ox)]]  # Order oxides as in source
         self.minerals_data = raw_minerals_data.transpose()
         self.list_minerals = self.minerals_data.keys().tolist()
@@ -217,8 +216,13 @@ class Optimizer(BaseOptimizer):
 
         return partitions, suppl
 
-    def show_results(self, partitions, suppl):
+    @staticmethod
+    def show_results(partitions, suppl):
         print(">>> Final compositions (wt %)")
         print(partitions.to_string())
         print(">>> Supplementary data")
         print(suppl.to_string())
+
+    def set_verbose(self, verbose):
+        self.verbose = verbose
+        print("verbose now is", self.verbose)

@@ -1,6 +1,7 @@
 from matplotlib import pyplot
 from georunes.plot.piper import helpers as pip
 from georunes.plot.piper.helpers import split_by_field
+from georunes.tools.data import repeat_list
 
 
 def scatter(points, delta, ax=None, edgecolors=None, facecolors=None, **kwargs):
@@ -25,7 +26,7 @@ def scatter(points, delta, ax=None, edgecolors=None, facecolors=None, **kwargs):
     if not ax:
         fig, ax = pyplot.subplots()
     xs, ys = pip.project_sequence(points, delta=delta)
-    ax.scatter(xs, ys, edgecolors=list(edgecolors)*3, facecolors=list(facecolors)*3,  **kwargs)
+    ax.scatter(xs, ys, edgecolors=repeat_list(edgecolors, len(xs)), facecolors=repeat_list(facecolors,  len(xs)),  **kwargs)
     return ax
 
 

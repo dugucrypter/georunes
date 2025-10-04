@@ -31,12 +31,11 @@ def normalize_marker_size(serie, val_max, val_min, size_max, size_min):
         size_max = 100
     if size_min is None:
         size_min = 1
-
+    serie = np.clip(serie, a_min=val_min, a_max=None)
+    serie = np.clip(serie, a_min=None, a_max=val_max)
     a = (size_max - size_min) / (val_max - val_min)
-
     b = size_max - a * val_max
     size_serie = serie * a + b
-
     return size_serie
 
 

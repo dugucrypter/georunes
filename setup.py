@@ -7,7 +7,8 @@ setup(
                       "numpy",
                       "scipy",
                       "pandas",
-                      "python-ternary"],
+                      "python-ternary",
+                      "xlsxwriter"],
     include_package_data=True,
     package_data={"georunes": ["data/*.txt", "data/*.csv"]}
 )

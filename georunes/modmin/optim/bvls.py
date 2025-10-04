@@ -26,13 +26,13 @@ class BVLS(Optimizer):
             list_minerals_i = self.list_minerals.copy()
             minerals_data_i = self.minerals_data.copy()
             bulk_chems[i] = self.data.iloc[i].to_numpy()
-
             # Get maximum possible proportion for each mineral
             max_minerals_prop = []
             unnecessary_minerals = []
             for mineral in self.list_minerals:
                 # Maximum proportion for each oxide equals Ox wt% in bulk chemistry / Ox wt% in mineral composition
                 max_oxides_prop = self.data.iloc[i] / minerals_data_i[mineral].transpose()
+                max_oxides_prop = max_oxides_prop.replace(-np.inf, np.nan) # To solve unespected negative infinity in calculated ratio
                 mineral_prop = max_oxides_prop.min()
                 if np.isinf(mineral_prop) or mineral_prop == 0:
                     minerals_data_i = minerals_data_i.drop(columns=mineral)
@@ -83,7 +83,7 @@ class BVLS(Optimizer):
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                print([str(self.list_bulk_ox[p]) + " : " + str(found_chems[i]) for p in range(self.nb_oxides)])
+                print([ str(a) + " : " + str(b) for a,b in zip(self.list_bulk_ox , found_chems[i])])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)

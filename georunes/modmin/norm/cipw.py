@@ -3,6 +3,7 @@ import numpy as np
 from pandas import Series
 from georunes.tools.chemistry import ratio_el_to_ox, molar_mass, el_molar_mass
 from georunes.modmin.optim.base import BaseOptimizer
+from georunes.tools.warnings import DataIntegrityWarning
 
 list_major_ox = ['SiO2', 'Na2O', 'K2O', 'CaO', 'MnO', 'FeO', 'Fe2O3', 'MgO', 'TiO2', 'Al2O3', 'P2O5']
 list_minor_el = ['F', 'Cl', 'S', 'Ni', 'Co', 'Ba', 'Sr', 'Rb', 'Cs', 'Li', 'Zr', 'Cr', 'V']
@@ -60,7 +61,7 @@ class CIPWNorm(BaseOptimizer):
         if 'Total' in raw_data_keys or 'Sum' in raw_data_keys:
             data['Total'] = raw_data['Total']
         else:
-            warnings.warn("Total column not found.")
+            warnings.warn("Total column not found.", DataIntegrityWarning)
 
         data_keys = data.keys()
         filtered_columns = [oxel for oxel in raw_data_keys if oxel not in data_keys]
@@ -68,7 +69,7 @@ class CIPWNorm(BaseOptimizer):
 
         for ox in list_major_ox:
             if ox not in data_keys:
-                data[ox] = 0
+                data[ox] = 0.
 
         n_phase = data.iloc[:, :skip_cols].copy()
         next_step = Series(np.array([""] * len(data.index)))
@@ -79,8 +80,8 @@ class CIPWNorm(BaseOptimizer):
         suppl = data.iloc[:, :skip_cols].copy()
 
         # Initializing columns for SiO2 deficiency calculation
-        si_deff['Y'] = 0
-        si_deff['D'] = 0
+        si_deff['Y'] = 0.
+        si_deff['D'] = 0.
 
         # 2 / CO2 handling options
         if self.verbose > 1: print("Step 2 - CO2 handling options")
@@ -91,8 +92,8 @@ class CIPWNorm(BaseOptimizer):
             if self.verbose > 1:
                 print('CO2 proportion in calcite : ', co2_calcite, ' --- CO2 proportion in cancrinite:', co2_cancrinite)
 
-        # 3 / Conversion of trace elements units
-        if self.verbose > 1: print("Step 3 - Conversion of trace elements units")
+        # 3 / Conversion of trace oxide/element units
+        if self.verbose > 1: print("Step 3 - Conversion of trace oxide/element units")
 
         if minor_included:
             data_keys = data.keys()
@@ -104,15 +105,15 @@ class CIPWNorm(BaseOptimizer):
                 elif oxel in ['F', 'Cl', 'S']:
                     data[oxel] = data[oxel] / 10000
 
-            # If some minor elements does not exist in data, add the corresponding oxide with zero values for
-            # treatment. Also add other required elements that are missing.
+            # If some minor oxide/element does not exist in data, add the corresponding oxide with zero values for
+            # treatment. Also add other required oxels that are missing.
 
             data_keys = data.keys()
             for ox in list_ox_from_minor_el:
                 if ox not in data_keys:
-                    data[ox] = 0
+                    data[ox] = 0.
             if 'F' not in data_keys:
-                data['F'] = 0
+                data['F'] = 0.
 
         # 4-5 / Adjust components to 100%
         if self.verbose > 1: print("Step 4, 5 - Adjust components to 100%")
@@ -201,14 +202,14 @@ class CIPWNorm(BaseOptimizer):
 
             # Other oxides to zero
             for ox in ['MnO', 'NiO', 'CoO', 'BaO', 'SrO', 'Rb2O', 'Cs2O', 'Li2O', 'V2O3']:
-                data_n[ox] = 0
+                data_n[ox] = 0.
 
         else:
             FeO_corr = data_n['MnO'] + data_n['FeO']
             xFeO = data_n['FeO'] / FeO_corr
             xMnO = data_n['MnO'] / FeO_corr
             data_n['FeO'] = data_n['FeO'] + data_n['MnO']
-            data_n['MnO'] = 0
+            data_n['MnO'] = 0.
 
         if self.verbose:
             print(">>> Corrected molar concentrations (mol)")
@@ -284,7 +285,7 @@ class CIPWNorm(BaseOptimizer):
                 if data_n.loc[i, 'SiO2'] > data_n.loc[i, 'ZrO2']:
                     n_phase.loc[i, 'Z'] = data_n.loc[i, 'ZrO2']
                     si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + n_phase.loc[i, 'Z']
-                    data_n.loc[i, 'ZrO2'] = 0
+                    data_n.loc[i, 'ZrO2'] = 0.
                 else:
                     print('WARNING : No further SiO2 after zircon attribution for composition ' + str(
                         i) + '. Check data.')
@@ -299,13 +300,13 @@ class CIPWNorm(BaseOptimizer):
                 data_n.loc[i, 'CaO'] = data_n.loc[i, 'CaO'] - (3 + 1 / 3) * data_n.loc[i, 'P2O5']
             else:
                 temp_ap[i] = data_n.loc[i, 'CaO'] / (3 + 1 / 3)
-                data_n.loc[i, 'CaO'] = 0
+                data_n.loc[i, 'CaO'] = 0.
                 free.loc[i, 'P2O5'] = data_n.loc[i, 'P2O5'] - temp_ap[i]
             free.loc[i, 'P2O5'] = data_n.loc[i, 'P2O5'] - temp_ap[i]
-            data_n.loc[i, 'P2O5'] = 0
+            data_n.loc[i, 'P2O5'] = 0.
 
-        n_phase['Ap-F'] = 0
-        n_phase['Ap-O'] = 0
+        n_phase['Ap-F'] = 0.
+        n_phase['Ap-O'] = 0.
         if minor_included:
             for i in data_n.index:
                 if data_n.loc[i, 'F'] >= 2 / 3 * temp_ap[i]:
@@ -316,7 +317,7 @@ class CIPWNorm(BaseOptimizer):
                     n_phase.loc[i, 'Ap-F'] = 1.5 * data_n.loc[i, 'F']
                     n_phase.loc[i, 'Ap-O'] = temp_ap[i] - 1.5 * data_n.loc[i, 'F']
                     free.loc[i, 'O_12c'] = data_n.loc[i, 'F'] / 2
-                    data_n.loc[i, 'F'] = 0
+                    data_n.loc[i, 'F'] = 0.
             n_phase['Ap'] = n_phase['Ap-F'] + n_phase['Ap-O']
         else:
             n_phase['Ap-O'] = temp_ap
@@ -330,12 +331,12 @@ class CIPWNorm(BaseOptimizer):
                 if data_n.loc[i, 'CaO'] >= data_n.loc[i, 'F'] / 2:
                     n_phase.loc[i, 'Fr'] = data_n.loc[i, 'F'] / 2
                     data_n.loc[i, 'CaO'] = data_n.loc[i, 'CaO'] - data_n.loc[i, 'F'] / 2
-                    data_n.loc[i, 'F'] = 0
+                    data_n.loc[i, 'F'] = 0.
                 else:
                     n_phase.loc[i, 'Fr'] = data_n.loc[i, 'CaO']
-                    data_n.loc[i, 'CaO'] = 0
+                    data_n.loc[i, 'CaO'] = 0.
                     free.loc[i, 'F'] = data_n.loc[i, 'F'] - 2 * n_phase.loc[i, 'Fr']  # Unused F
-                    data_n.loc[i, 'F'] = 0
+                    data_n.loc[i, 'F'] = 0.
                 free.loc[i, 'O_13'] = n_phase.loc[i, 'Fr']
 
         # 14 / Normative halite
@@ -347,11 +348,11 @@ class CIPWNorm(BaseOptimizer):
                     n_phase.loc[i, 'Hl'] = data_n.loc[i, 'Cl']
                     data_n.loc[i, 'Na2O'] = data_n.loc[i, 'Na2O'] - n_phase.loc[i, 'Hl'] / 2
                     free.loc[i, 'O_14'] = n_phase.loc[i, 'Hl'] / 2
-                    data_n.loc[i, 'Cl'] = 0
+                    data_n.loc[i, 'Cl'] = 0.
                 else:
                     n_phase.loc[i, 'Hl'] = data_n.loc[i, 'Na2O'] / 2
                     free.loc[i, 'Cl'] = data_n.loc[i, 'Cl'] - n_phase.loc[i, 'Hl']
-                    data_n.loc[i, 'Na2O'] = 0
+                    data_n.loc[i, 'Na2O'] = 0.
 
         # 15 / Normative thenardite
         if self.verbose > 1: print("Step 15 - Normative thenardite")
@@ -361,11 +362,11 @@ class CIPWNorm(BaseOptimizer):
                 if data_n.loc[i, 'Na2O'] >= 2 * data_n.loc[i, 'SO3']:
                     n_phase.loc[i, 'Th'] = data_n.loc[i, 'SO3']
                     data_n.loc[i, 'Na2O'] = data_n.loc[i, 'Na2O'] - n_phase.loc[i, 'Th']
-                    data_n.loc[i, 'SO3'] = 0
+                    data_n.loc[i, 'SO3'] = 0.
                 else:
                     n_phase.loc[i, 'Th'] = data_n.loc[i, 'Na2O']
                     free.loc[i, 'SO3'] = data_n.loc[i, 'SO3'] - n_phase.loc[i, 'Th']
-                    data_n.loc[i, 'Na2O'] = 0
+                    data_n.loc[i, 'Na2O'] = 0.
 
         # 16 / Normative pyrite
         if self.verbose > 1: print("Step 16 - Normative pyrite")
@@ -375,11 +376,11 @@ class CIPWNorm(BaseOptimizer):
                 if data_n.loc[i, 'FeO'] >= 2 * data_n.loc[i, 'S']:
                     n_phase.loc[i, 'Pr'] = data_n.loc[i, 'S'] / 2
                     data_n.loc[i, 'FeO'] = data_n.loc[i, 'FeO'] - n_phase.loc[i, 'Pr']
-                    data_n.loc[i, 'S'] = 0
+                    data_n.loc[i, 'S'] = 0.
                 else:
                     n_phase.loc[i, 'Pr'] = data_n.loc[i, 'FeO']
                     free.loc[i, 'S'] = data_n.loc[i, 'S'] - 2 * n_phase.loc[i, 'Pr']
-                    data_n.loc[i, 'FeO'] = 0
+                    data_n.loc[i, 'FeO'] = 0.
                 free.loc[i, 'O_16'] = n_phase.loc[i, 'Pr']
 
         # 17 / Normative sodium carbonate or calcite
@@ -387,11 +388,11 @@ class CIPWNorm(BaseOptimizer):
 
         if minor_included:
             if 'CO2' in data_keys:
-                free['CO2'] = 0
+                free['CO2'] = 0.
                 if co2_cancrinite == co2_calcite == 0:
                     for i in data_n.index:
                         free.loc[i, 'CO2'] = data_n.loc[i, 'CO2']
-                        data_n.loc[i, 'CO2'] = 0
+                        data_n.loc[i, 'CO2'] = 0.
                 else:
                     # Cancrinite
                     for i in data_n.index:
@@ -401,7 +402,7 @@ class CIPWNorm(BaseOptimizer):
                                 data_n.loc[i, 'Na2O'] = data_n.loc[i, 'Na2O'] - n_phase.loc[i, 'Nc']
                             else:
                                 n_phase.loc[i, 'Nc'] = data_n.loc[i, 'Na2O']
-                                data_n.loc[i, 'Na2O'] = 0
+                                data_n.loc[i, 'Na2O'] = 0.
                                 free.loc[i, 'CO2'] = free.loc[i, 'CO2'] + data_n.loc[i, 'CO2'] * co2_cancrinite \
                                                      - n_phase.loc[i, 'Nc']  # Free CO2
                             data_n.loc[i, 'CO2'] = data_n.loc[i, 'CO2'] * (1 - co2_cancrinite)
@@ -414,10 +415,10 @@ class CIPWNorm(BaseOptimizer):
                                 data_n.loc[i, 'CaO'] = data_n.loc[i, 'CaO'] - n_phase.loc[i, 'Cc']
                             else:
                                 n_phase.loc[i, 'Cc'] = data_n.loc[i, 'CaO']
-                                data_n.loc[i, 'CaO'] = 0
+                                data_n.loc[i, 'CaO'] = 0.
                                 free.loc[i, 'CO2'] = free.loc[i, 'CO2'] + data_n.loc[i, 'CO2'] - n_phase.loc[
                                     i, 'Cc']  # CO2 to free
-                            data_n.loc[i, 'CO2'] = 0
+                            data_n.loc[i, 'CO2'] = 0.
 
         # 18 / Normative chromite
         if self.verbose > 1: print("Step 18 - Normative chromite")
@@ -427,12 +428,12 @@ class CIPWNorm(BaseOptimizer):
                 if 0 < data_n.loc[i, 'Cr2O3'] <= data_n.loc[i, 'FeO']:
                     n_phase.loc[i, 'Cm'] = data_n.loc[i, 'Cr2O3']
                     data_n.loc[i, 'FeO'] = data_n.loc[i, 'FeO'] - n_phase.loc[i, 'Cm']
-                    data_n.loc[i, 'Cr2O3'] = 0
+                    data_n.loc[i, 'Cr2O3'] = 0.
                 elif data_n.loc[i, 'FeO'] < data_n.loc[i, 'Cr2O3']:
                     n_phase.loc[i, 'Cm'] = data_n.loc[i, 'FeO']
                     free.loc[i, 'Cr2O3'] = data_n.loc[i, 'Cr2O3'] - n_phase.loc[i, 'Cm']
-                    data_n.loc[i, 'FeO'] = 0
-                    data_n.loc[i, 'Cr2O3'] = 0
+                    data_n.loc[i, 'FeO'] = 0.
+                    data_n.loc[i, 'Cr2O3'] = 0.
 
         # 19 / Normative ilmenite
         if self.verbose > 1: print("Step 19 - Normative ilmenite")
@@ -441,11 +442,11 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'FeO'] >= data_n.loc[i, 'TiO2']:
                 n_phase.loc[i, 'Il'] = data_n.loc[i, 'TiO2']
                 data_n.loc[i, 'FeO'] = data_n.loc[i, 'FeO'] - n_phase.loc[i, 'Il']
-                data_n.loc[i, 'TiO2'] = 0
+                data_n.loc[i, 'TiO2'] = 0.
             else:
                 n_phase.loc[i, 'Il'] = data_n.loc[i, 'FeO']
                 data_n.loc[i, 'TiO2'] = data_n.loc[i, 'TiO2'] - n_phase.loc[i, 'Il']
-                data_n.loc[i, 'FeO'] = 0
+                data_n.loc[i, 'FeO'] = 0.
 
         # 20 / Normative orthoclase or potassium metasilicate
         if self.verbose > 1: print("Step 20 - Normative orthoclase or potassium metasilicate")
@@ -454,13 +455,13 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'Al2O3'] >= data_n.loc[i, 'K2O']:
                 n_phase.loc[i, 'Orp'] = data_n.loc[i, 'K2O']
                 data_n.loc[i, 'Al2O3'] = data_n.loc[i, 'Al2O3'] - n_phase.loc[i, 'Orp']
-                data_n.loc[i, 'K2O'] = 0
+                data_n.loc[i, 'K2O'] = 0.
                 si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 6 * n_phase.loc[i, 'Orp']
             else:
                 n_phase.loc[i, 'Orp'] = data_n.loc[i, 'Al2O3']
                 n_phase.loc[i, 'Ks'] = data_n.loc[i, 'K2O'] - n_phase.loc[i, 'Orp']  # Rest of K2O to Ks
-                data_n.loc[i, 'Al2O3'] = 0
-                data_n.loc[i, 'K2O'] = 0
+                data_n.loc[i, 'Al2O3'] = 0.
+                data_n.loc[i, 'K2O'] = 0.
                 si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 6 * n_phase.loc[i, 'Orp'] + n_phase.loc[i, 'Ks']
 
         # 21 / Normative albite
@@ -470,11 +471,11 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'Al2O3'] >= data_n.loc[i, 'Na2O']:
                 n_phase.loc[i, 'Abp'] = data_n.loc[i, 'Na2O']
                 data_n.loc[i, 'Al2O3'] = data_n.loc[i, 'Al2O3'] - n_phase.loc[i, 'Abp']
-                data_n.loc[i, 'Na2O'] = 0
+                data_n.loc[i, 'Na2O'] = 0.
             else:
                 n_phase.loc[i, 'Abp'] = data_n.loc[i, 'Al2O3']
                 data_n.loc[i, 'Na2O'] = data_n.loc[i, 'Na2O'] - n_phase.loc[i, 'Abp']  # Rest of Na2O to Ab
-                data_n.loc[i, 'Al2O3'] = 0
+                data_n.loc[i, 'Al2O3'] = 0.
             si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 6 * n_phase.loc[i, 'Abp']
 
         # 22 / Normative acmite or sodium metasilicate
@@ -484,13 +485,13 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'Na2O'] >= data_n.loc[i, 'Fe2O3']:
                 n_phase.loc[i, 'Ac'] = data_n.loc[i, 'Fe2O3']
                 n_phase.loc[i, 'Ns'] = data_n.loc[i, 'Na2O'] - n_phase.loc[i, 'Ac']  # Rest of Na2O to Ns
-                data_n.loc[i, 'Na2O'] = 0
-                data_n.loc[i, 'Fe2O3'] = 0
+                data_n.loc[i, 'Na2O'] = 0.
+                data_n.loc[i, 'Fe2O3'] = 0.
                 si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 4 * n_phase.loc[i, 'Ac'] + n_phase.loc[i, 'Ns']
             else:
                 n_phase.loc[i, 'Ac'] = data_n.loc[i, 'Na2O']
                 data_n.loc[i, 'Fe2O3'] = data_n.loc[i, 'Fe2O3'] - n_phase.loc[i, 'Ac']
-                data_n.loc[i, 'Na2O'] = 0
+                data_n.loc[i, 'Na2O'] = 0.
                 si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 4 * n_phase.loc[i, 'Ac']
 
         # 23 / Normative anorthite or corundum
@@ -500,12 +501,12 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'Al2O3'] >= data_n.loc[i, 'CaO']:
                 n_phase.loc[i, 'An'] = data_n.loc[i, 'CaO']
                 n_phase.loc[i, 'C'] = data_n.loc[i, 'Al2O3'] - data_n.loc[i, 'CaO']  # Rest of Al2O3 in C
-                data_n.loc[i, 'CaO'] = 0
-                data_n.loc[i, 'Al2O3'] = 0
+                data_n.loc[i, 'CaO'] = 0.
+                data_n.loc[i, 'Al2O3'] = 0.
             else:
                 n_phase.loc[i, 'An'] = data_n.loc[i, 'Al2O3']
                 data_n.loc[i, 'CaO'] = data_n.loc[i, 'CaO'] - n_phase.loc[i, 'An']
-                data_n.loc[i, 'Al2O3'] = 0
+                data_n.loc[i, 'Al2O3'] = 0.
             si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 2 * n_phase.loc[i, 'An']
 
         # 24 / Normative sphene / rutile
@@ -515,12 +516,12 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'CaO'] >= data_n.loc[i, 'TiO2']:
                 n_phase.loc[i, 'Tnp'] = data_n.loc[i, 'TiO2']
                 data_n.loc[i, 'CaO'] = data_n.loc[i, 'CaO'] - n_phase.loc[i, 'Tnp']
-                data_n.loc[i, 'TiO2'] = 0
+                data_n.loc[i, 'TiO2'] = 0.
             else:
                 n_phase.loc[i, 'Tnp'] = data_n.loc[i, 'CaO']
                 n_phase.loc[i, 'Ru'] = data_n.loc[i, 'TiO2'] - n_phase.loc[i, 'Tnp']  # Rest of TiO2 in Ru
-                data_n.loc[i, 'CaO'] = 0
-                data_n.loc[i, 'TiO2'] = 0
+                data_n.loc[i, 'CaO'] = 0.
+                data_n.loc[i, 'TiO2'] = 0.
             si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + n_phase.loc[i, 'Tnp']
 
         # 25 / Normative magnetite or hematite
@@ -530,12 +531,12 @@ class CIPWNorm(BaseOptimizer):
             if data_n.loc[i, 'Fe2O3'] >= data_n.loc[i, 'FeO']:
                 n_phase.loc[i, 'Mt'] = data_n.loc[i, 'FeO']
                 n_phase.loc[i, 'Hm'] = data_n.loc[i, 'Fe2O3'] - n_phase.loc[i, 'Mt']  # Rest of Fe2O3 in Mt
-                data_n.loc[i, 'FeO'] = 0
-                data_n.loc[i, 'Fe2O3'] = 0
+                data_n.loc[i, 'FeO'] = 0.
+                data_n.loc[i, 'Fe2O3'] = 0.
             else:
                 n_phase.loc[i, 'Mt'] = data_n.loc[i, 'Fe2O3']
                 data_n.loc[i, 'FeO'] = data_n.loc[i, 'FeO'] - n_phase.loc[i, 'Mt']
-                data_n.loc[i, 'Fe2O3'] = 0
+                data_n.loc[i, 'Fe2O3'] = 0.
 
         # 26 / Subdivision of Mg and Fe in some minerals
         if self.verbose > 1: print("Step 26 - Repartition of Mg and Fe in minerals")
@@ -543,40 +544,40 @@ class CIPWNorm(BaseOptimizer):
         data_n['FeMgO'] = data_n['MgO'] + data_n['FeO']
         prop['xMg'] = data_n['MgO'] / (data_n['MgO'] + data_n['FeO'])
         prop['xFe'] = data_n['FeO'] / (data_n['MgO'] + data_n['FeO'])
-        data_n['MgO'] = 0
-        data_n['FeO'] = 0
+        data_n['MgO'] = 0.
+        data_n['FeO'] = 0.
 
         # 27 / Provisional normative diopside, wollastonite or hypersthene
         if self.verbose > 1: print("Step 27 - normative diopside, wollastonite or hypersthene")
 
-        n_phase['Wop'] = 0
+        n_phase['Wop'] = 0.
         for i in data_n.index:
             if data_n.loc[i, 'CaO'] >= data_n.loc[i, 'FeMgO']:
                 n_phase.loc[i, 'Dip'] = data_n.loc[i, 'FeMgO']
                 n_phase.loc[i, 'Wop'] = data_n.loc[i, 'CaO'] - n_phase.loc[i, 'Dip']
-                data_n.loc[i, 'CaO'] = 0
-                data_n.loc[i, 'FeMgO'] = 0
+                data_n.loc[i, 'CaO'] = 0.
+                data_n.loc[i, 'FeMgO'] = 0.
                 si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 2 * n_phase.loc[i, 'Dip'] + n_phase.loc[i, 'Wop']
-                n_phase.loc[i, 'Hyp'] = 0
+                n_phase.loc[i, 'Hyp'] = 0.
             else:
                 n_phase.loc[i, 'Dip'] = data_n.loc[i, 'CaO']
                 n_phase.loc[i, 'Hyp'] = data_n.loc[i, 'FeMgO'] - n_phase.loc[i, 'Dip']
-                data_n.loc[i, 'CaO'] = 0
-                data_n.loc[i, 'FeMgO'] = 0
+                data_n.loc[i, 'CaO'] = 0.
+                data_n.loc[i, 'FeMgO'] = 0.
                 si_deff.loc[i, 'Y'] = si_deff.loc[i, 'Y'] + 2 * n_phase.loc[i, 'Dip'] + n_phase.loc[i, 'Hyp']
 
         # 28 / Normative quartz and Si deficiency
         if self.verbose > 1: print("Step 28 - Normative quartz and Si deficiency")
-        n_phase['Q'] = 0
+        n_phase['Q'] = 0.
         for i in data_n.index:
             if data_n.loc[i, 'SiO2'] >= si_deff.loc[i, 'Y']:
                 n_phase.loc[i, 'Q'] = data_n.loc[i, 'SiO2'] - si_deff.loc[i, 'Y']
-                data_n.loc[i, 'SiO2'] = 0
+                data_n.loc[i, 'SiO2'] = 0.
                 next_step[i] = '36b'  # Instead of 36a which is obligatory in this algorithm
                 if self.verbose: print("Si saturated for the composition", i)
             else:
                 si_deff.loc[i, 'D'] = si_deff.loc[i, 'Y'] - data_n.loc[i, 'SiO2']
-                data_n.loc[i, 'SiO2'] = 0
+                data_n.loc[i, 'SiO2'] = 0.
                 next_step[i] = '29'
 
         # 29 / Normative olivine or hypersthene
@@ -589,12 +590,12 @@ class CIPWNorm(BaseOptimizer):
                     next_step[i] = '36b'
                 else:
                     n_phase.loc[i, 'Ol'] = n_phase.loc[i, 'Hyp'] / 2
-                    n_phase.loc[i, 'Hy'] = 0
+                    n_phase.loc[i, 'Hy'] = 0.
                     si_deff.loc[i, 'D1'] = si_deff.loc[i, 'D'] - n_phase.loc[i, 'Hyp'] / 2
                     next_step[i] = '30'
             else:
                 n_phase.loc[i, 'Hy'] = n_phase.loc[i, 'Hyp']
-                n_phase.loc[i, 'Ol'] = 0
+                n_phase.loc[i, 'Ol'] = 0.
 
         # 30 / Normative sphene or perovskite
         if self.verbose > 1: print("Step 30 - Normative sphene or perovskite")
@@ -607,7 +608,7 @@ class CIPWNorm(BaseOptimizer):
                     next_step[i] = '36c'
                 else:
                     n_phase.loc[i, 'Pf'] = n_phase.loc[i, 'Tnp']
-                    n_phase.loc[i, 'Tn'] = 0
+                    n_phase.loc[i, 'Tn'] = 0.
                     si_deff.loc[i, 'D2'] = si_deff.loc[i, 'D1'] - n_phase.loc[i, 'Tnp']
                     next_step[i] = '31'
 
@@ -629,7 +630,7 @@ class CIPWNorm(BaseOptimizer):
         # 32 / Normative leucite or orthoclase
         if self.verbose > 1: print("Step 32 - Normative leucite or orthoclase")
 
-        n_phase['Lcp'] = 0
+        n_phase['Lcp'] = 0.
         for i in data_n.index:
             if next_step[i] == '32':
                 if si_deff.loc[i, 'D3'] < 2 * n_phase.loc[i, 'Orp']:
@@ -638,7 +639,7 @@ class CIPWNorm(BaseOptimizer):
                     next_step[i] = '36e'
                 else:
                     n_phase.loc[i, 'Lcp'] = n_phase.loc[i, 'Orp']
-                    n_phase.loc[i, 'Or'] = 0
+                    n_phase.loc[i, 'Or'] = 0.
                     si_deff.loc[i, 'D4'] = si_deff.loc[i, 'D3'] - 2 * n_phase.loc[i, 'Orp']
                     next_step[i] = '33'
 
@@ -653,7 +654,7 @@ class CIPWNorm(BaseOptimizer):
                     next_step[i] = '36e'  # Instead of 36f
                 else:
                     n_phase.loc[i, 'Cs'] = n_phase.loc[i, 'Wop'] / 2
-                    n_phase.loc[i, 'Wo'] = 0
+                    n_phase.loc[i, 'Wo'] = 0.
                     si_deff.loc[i, 'D5'] = si_deff.loc[i, 'D4'] - n_phase.loc[i, 'Wop'] / 2
                     next_step[i] = '34'
 
@@ -670,7 +671,7 @@ class CIPWNorm(BaseOptimizer):
                 else:
                     n_phase.loc[i, 'Cs'] = n_phase.loc[i, 'Cs'] + n_phase.loc[i, 'Dip'] / 2
                     n_phase.loc[i, 'Ol'] = n_phase.loc[i, 'Ol'] + n_phase.loc[i, 'Dip'] / 2
-                    n_phase.loc[i, 'Di'] = n_phase.loc[i, 'Di-fe'] = n_phase.loc[i, 'Di-mg'] = 0
+                    n_phase.loc[i, 'Di'] = n_phase.loc[i, 'Di-fe'] = n_phase.loc[i, 'Di-mg'] = 0.
                     si_deff.loc[i, 'D6'] = si_deff.loc[i, 'D5'] - n_phase.loc[i, 'Dip']
                     next_step[i] = '35'
             else:
@@ -687,7 +688,7 @@ class CIPWNorm(BaseOptimizer):
                     next_step[i] = '36g'
                 else:
                     n_phase.loc[i, 'Kp'] = n_phase.loc[i, 'Lcp']
-                    n_phase.loc[i, 'Lc'] = 0
+                    n_phase.loc[i, 'Lc'] = 0.
                     suppl.loc[i, 'defSiO2'] = (si_deff.loc[i, 'D6'] - 2 * n_phase.loc[i, 'Kp']) * corr_mol_w['SiO2']
                     next_step[i] = '36g'
 
@@ -718,7 +719,7 @@ class CIPWNorm(BaseOptimizer):
                     n_phase.loc[i, 'Wo'] = n_phase.loc[i, 'Wop']
 
         # Steps of 36a and 36f, obligatory for this algorithm
-        if self.verbose > 1: print("     Obilgatory 36a, 36f and Fe-Mg distribution in olivine")
+        if self.verbose > 1: print("Obligatory 36a, 36f and Fe-Mg distribution in olivine")
         n_phase['Hy-fe'] = n_phase['Hy'] * prop['xFe']
         n_phase['Hy-mg'] = n_phase['Hy'] * prop['xMg']
         n_phase['Di-fe'] = n_phase['Di'] * prop['xFe']
@@ -763,7 +764,7 @@ class CIPWNorm(BaseOptimizer):
         # Add free O
         if minor_included:
             # Free O
-            free['O_wt%'] = 0
+            free['O_wt%'] = 0.
             if 'O_12b' in free_phases:
                 free['O_wt%'] = free['O_wt%'] + (1 + (0.1 * (mol_w_min['Ap-F'] / 328.8691887) - 1)) * \
                                 corr_mol_w['O'] * free['O_12b']
@@ -781,7 +782,7 @@ class CIPWNorm(BaseOptimizer):
             partitions['O'] = free['O_wt%']
 
         # Add free oxides
-        partitions['free_Ox'] = 0
+        partitions['free_Ox'] = 0.
         free_keys = free.keys()
         for oxel in ['P2O5', 'F', 'Cl', 'SO3', 'Cr2O3']:
             if oxel in free_keys:

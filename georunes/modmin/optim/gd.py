@@ -1,16 +1,20 @@
+import warnings
 import numpy as np
 from pandas import DataFrame
 from georunes.modmin.optim.base import Optimizer, is_in_bounds, random_part_with_bounds
+from georunes.tools.warnings import FunctionParameterWarning
 
 
 class GradientDescent(Optimizer):
 
-    def __init__(self, dist_func="euclidian", **kwargs):
+    def __init__(self, dist_func="euclidian", filling_tolerance=0.05, **kwargs):
         Optimizer.__init__(self, **kwargs)
         self.dist_func = dist_func
+        self.filling_tolerance = filling_tolerance
         self.notif = ">>>>>> Gradient Descent method / deviation function : " + dist_func
 
-    def grad(self, x, y, A, total=1):
+    @staticmethod
+    def grad(x, y, A, total=1):
         B = A.copy()
         B.loc[len(B.index)] = np.array([1] * len(x))  # Row added to minerals_data (A) to keep a sum equals to total
         Bt = B.transpose()
@@ -41,8 +45,8 @@ class GradientDescent(Optimizer):
 
         if force_totals:
             if unfillable_partitions_allowed:
-                raise Exception("The parameter force_totals is True. The parameter unfillable_partitions_allowed "
-                                "should be set to False. Check the computing configuration.")
+                warnings.warn("The parameter force_totals is True. Then, the parameter unfillable_partitions_allowed "
+                                "will be set to False.", FunctionParameterWarning)
             target_totals = self.init_total
         else:
             target_totals = [100] * len(self.data.index)
@@ -81,7 +85,7 @@ class GradientDescent(Optimizer):
                     idx = list_minerals_i.index(key)
                     if idx:
                         min_minerals_prop[idx] = max(min_minerals_prop[idx], min_minerals[key])
-            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1.05:  # 5% tolerance
+            if not unfillable_partitions_allowed and sum(max_minerals_prop) < 1+self.filling_tolerance:  # % tolerance, default 5
                 raise Exception("Problem in composition " + str(i)
                                 + ". The sum of the maximum proportions of minerals cannot complete to 100 "
                                   "(found " + str(100 * sum(max_minerals_prop)) + str(")."))
@@ -151,7 +155,7 @@ class GradientDescent(Optimizer):
             idx_new_row = len(partitions)
             for miner, prop in dict_res.items():
                 partitions.loc[idx_new_row, miner] = prop
-            partitions = partitions.fillna(0)
+            partitions = partitions.fillna(0).infer_objects(copy=False) # infer_objects prevent the downcasting of object dtype
             partitions.iloc[idx_new_row] = 100 * partitions.iloc[idx_new_row]
             partitions = partitions.round(to_round)
 
@@ -164,7 +168,7 @@ class GradientDescent(Optimizer):
                 print("Solution", idx_new_row)
                 print(partitions.loc[idx_new_row].to_dict())
                 print("Corresponding composition")
-                print([str(self.list_bulk_ox[p]) + " : " + str(found_chems[i]) for p in range(self.nb_oxides)])
+                print([ str(a) + " : " + str(b) for a,b in zip(self.list_bulk_ox , found_chems[i])])
                 print("Deviation :", round(deviation, to_round), "%" if self.dist_func == "SMAPE" else "", "\n------")
 
         partitions["Total"] = partitions.sum(axis=1).round(to_round)
