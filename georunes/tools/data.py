@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import pandas as pd
 
 
 def nan_to_none(x, y):
@@ -22,6 +23,8 @@ def min_wo_none(x, y):
     else:
         return min(x, y)
 
+def is_dataframe(x) -> bool:
+    return isinstance(x, pd.DataFrame)
 
 def gg_max(x, y):
     x, y = nan_to_none(x, y)

@@ -1,5 +1,6 @@
 import warnings
 import matplotlib.pyplot as plt
+from georunes.tools.data import is_dataframe
 from georunes.tools.preprocessing import check_data, data_create_graphic_preset, data_set_graphic_preset
 from georunes.tools.filemanager import FileManager
 from georunes.tools.warnings import FunctionParameterWarning
@@ -27,8 +28,11 @@ class DiagramBase:
                  auto_graphic_preset=True, graphic_preset=None,
                  ):
 
-        filemanager = FileManager.get_instance()
-        self.data = filemanager.read_file(datasource, sheet_name=sheet)
+        if is_dataframe(datasource):
+            self.data = datasource
+        else:
+            filemanager = FileManager.get_instance()
+            self.data = filemanager.read_file(datasource, sheet_name=sheet)
         self.check_parameters()  # Verify if some required data are present in file. Can be implemented in child classes
         self.title = title
         self.h_ratio = h_ratio
