@@ -23,10 +23,12 @@ def min_wo_none(x, y):
     else:
         return min(x, y)
 
+
 def is_dataframe(x) -> bool:
     return isinstance(x, pd.DataFrame)
 
-def gg_max(x, y):
+
+def safe_max(x, y):
     x, y = nan_to_none(x, y)
     if (x is None) and (y is None):
         return np.nan
@@ -38,40 +40,37 @@ def gg_max(x, y):
         return max(x, y)
 
 
-# Function to get min in each colum of two rows
-def row_min(old_row, cur_row):
+# Function to get min in each column of two rows
+def minimize_rows(old_row, current_row):
     if not old_row:
-        return cur_row
+        return current_row
 
         # Check if same length
-    if len(old_row) != len(cur_row):
-        raise ValueError('Two rows doesn\' have the same size !')
-
+    if len(old_row) != len(current_row):
+        raise ValueError('Two rows doesn\'t have the same size !')
     new_row = []
-    for x, y in zip(old_row, cur_row):
+    for x, y in zip(old_row, current_row):
         new_row.append(min_wo_none(x, y))
     return new_row
 
 
-# Function to get max in each colum of two rows
-def row_max(old_row, cur_row):
+# Function to get max in each column of two rows
+def maximize_rows(old_row, current_row):
     if not old_row:
-        return cur_row
+        return current_row
 
     # Check if same length
-    if len(old_row) != len(cur_row):
+    if len(old_row) != len(current_row):
         raise ValueError('Two rows doesn\' have the same size !')
-
     new_row = []
-    for x, y in zip(old_row, cur_row):
-        new_row.append(gg_max(x, y))
-
+    for x, y in zip(old_row, current_row):
+        new_row.append(safe_max(x, y))
     return new_row
 
 
-def unique(list1):
+def unique(checked_list):
     unique_list = []
-    for x in list1:
+    for x in checked_list:
         if x not in unique_list:
             unique_list.append(x)
     return unique_list

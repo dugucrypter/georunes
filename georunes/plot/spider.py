@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import lines
 from georunes.plot.base import DiagramBase
 from georunes.tools.chemistry import val_ox_to_el_ppm, name_el_to_def_ox
-from georunes.tools.data import row_min, row_max
+from georunes.tools.data import minimize_rows, maximize_rows
 from georunes.tools.reservoirs import Reservoirs, get_reservoir_norm
 
 listing_ree = ["La", "Ce", "Pr", "Nd", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu"]
