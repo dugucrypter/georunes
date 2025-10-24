@@ -143,8 +143,8 @@ class DiagramSpider(DiagramBase):
                     if self.zorder_column:
                         zorder = list(group[self.zorder_column])[0]
                     if custom_fillmode in ("enclosed-lines", "mixed", "enclosed"):
-                        min_vals = row_min(min_vals, vals)
-                        max_vals = row_max(max_vals, vals)
+                        min_vals = minimize_rows(min_vals, vals)
+                        max_vals = maximize_rows(max_vals, vals)
                     mark = list(group[self.marker_column])[0]
                     marker_edge_w = None
                     if mark in ("+", "x"):
