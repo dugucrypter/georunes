@@ -23,9 +23,8 @@ class LegendDrawer:
         if not self.no_legend:
             leg_canvas = self.ax if self.legend_in_axs else self.fig
             leg = leg_canvas.legend(loc=self.legend_loc, ncol=self.legend_ncol, fontsize=self.legend_fs, edgecolor='k')
-
             # Set marker size in legend
-            for leg_obj in leg.legendHandles:
+            for leg_obj in leg.legend_handles:
                 leg_obj._sizes = self.legend_ms
         else:
             self.fig.subplots_adjust(bottom=0.11)
