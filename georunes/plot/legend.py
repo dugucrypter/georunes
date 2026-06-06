@@ -88,7 +88,7 @@ class PlotLegend(DiagramBase):
         ordered_handles = []
         ordered_labels = []
         line = 0
-        for i in range(1, max_order + 1):
+        for i in range(0, max_order + 1):
             if i in list_label_legend.keys():  # If group is not excluded
                 idx = labels.index(list_label_legend[i])
                 ordered_handles.append(handles[idx])
