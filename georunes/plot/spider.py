@@ -24,6 +24,7 @@ class DiagramSpider(DiagramBase):
                  markersize=8,
                  xlabel="", ylabel="",
                  zorder_column=None,
+                 horizontal_gridlines = None,
                  **kwargs
                  ):
 
@@ -56,6 +57,7 @@ class DiagramSpider(DiagramBase):
             self.enclosed_in_bg = ("",)
         else:
             self.enclosed_in_bg = enclosed_in_bg
+        self.horizontal_gridlines = horizontal_gridlines
 
     def init_plot(self):
 
@@ -80,6 +82,9 @@ class DiagramSpider(DiagramBase):
 
         self.ax.set_xlabel(self.xlabel, fontsize=self.fontsize)
         self.ax.set_ylabel(self.ylabel, fontsize=self.fontsize)
+
+        if self.horizontal_gridlines == "major":
+            self.ax.grid(True, axis='y', which='major', color='#ddd')
 
     def is_group_enclosed(self, name):
         if type(name) != str and len(
