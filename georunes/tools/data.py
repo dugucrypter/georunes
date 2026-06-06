@@ -39,6 +39,18 @@ def safe_max(x, y):
     else:
         return max(x, y)
 
+def powers_of_p_between(p, a, b):
+    """ Returns all powers of p that are between a and b, inclusive."""
+    values = []
+    n = 0
+    while True:
+        val = p ** n
+        if val > b:
+            break
+        if val >= a:
+            values.append(val)
+        n += 1
+    return values
 
 # Function to get min in each column of two rows
 def minimize_rows(old_row, current_row):
