@@ -13,7 +13,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                  annotation=None,
                  xscale='linear', yscale='linear',
                  padding=None,
-                 marker='',
+                 marker='', marker_as_subgroup=False,
                  xmolar=False, ymolar=False,
                  alpha_color=0.4, alpha_edge_color=0.8,
                  x_formatter=None, y_formatter=None,
@@ -40,6 +40,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         self.xscale = xscale
         self.yscale = yscale
         self.marker = marker
+        self.marker_as_subgroup = marker_as_subgroup
         self.alpha_color = alpha_color
         self.alpha_edge_color = alpha_edge_color
         self.xmolar = xmolar
@@ -73,7 +74,10 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         self.set_decorations()
 
         # Categorize by group and marker
-        groups = self.data.groupby(self.group_name)
+        if self.marker_as_subgroup:
+            groups = self.data.groupby([self.group_name, self.marker_column])
+        else :
+            groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
             if self.is_group_allowed(name):
@@ -99,7 +103,10 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 else:
                     yvals = group[self.yvar]
 
-                label = list(group[self.label_column])[0] if self.label_defined else name
+                if self.marker_as_subgroup :
+                    label = list(group[self.label_column])[0] + str(marker) + str(list(group[self.color_column])[0]) if self.label_defined else name
+                else :
+                    label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
                 if self.zorder_column:
                     zorder = list(group[self.zorder_column])[0]
