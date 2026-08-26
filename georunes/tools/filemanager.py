@@ -56,3 +56,41 @@ class FileManager:
                 self.datas[ref] = data
                 print(ref + " data loaded.")
                 return data
+
+
+def load_subdata(datasource, filters=None, sheet=0):
+    """
+    Load data using GeoRUnes FileManager and filter rows.
+
+    Parameters
+    ----------
+    datasource : str
+        Path to the data file.
+
+    filters : dict, optional
+        Column/value filters. Values can be single values or lists.
+        Multiple columns are combined with AND.
+        Multiple values within a column are combined with OR.
+
+    sheet : int or str, default 0
+        Excel sheet index or name.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Filtered dataframe.
+    """
+
+    data = FileManager.get_instance().read_file(datasource, sheet_name=sheet)
+    if not filters:
+        return data.copy()
+    mask = True
+
+    for column, values in filters.items():
+        if column not in data.columns:
+            raise KeyError(f"Column '{column}' not found in datasource.")
+        if not isinstance(values, (list, tuple, set)):
+            values = [values]
+        mask &= data[column].isin(values)
+
+    return data.loc[mask].copy()
