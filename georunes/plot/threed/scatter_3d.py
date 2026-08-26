@@ -52,7 +52,7 @@ class DiagramScatter3D(DiagramBase, ArrowDrawer, LegendDrawer):
         self.y_formatter = y_formatter
         self.z_formatter = z_formatter
 
-    def init_plot(self):
+    def init_plot(self, *args):
         if self.h_ratio is None:
             self.fig = plt.figure()
             self.ax = self.fig.add_subplot(111, projection='3d')

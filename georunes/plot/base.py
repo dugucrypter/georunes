@@ -12,6 +12,7 @@ class DiagramBase:
                  no_marker=False,
                  no_title=False, no_legend=False,
                  title="", window_title=None, h_ratio=None,
+                 ax=None,
                  group_name='group', exclude_groups=("",), extra_exclude=None,
                  marker_column='marker', color_column='color', zorder_column=None,
                  supp_group=None,  # Second group for classification data
@@ -116,14 +117,17 @@ class DiagramBase:
         if self.padding_bottom:
             self.fig.subplots_adjust(bottom=self.padding_bottom)
 
-    def init_plot(self):
+    def init_plot(self, ax=None):
+        if ax is not None:
+            self.ax = ax
+            self.fig = ax.figure
+            return
         if self.h_ratio is None:
             self.fig, self.ax = plt.subplots()
+        elif isinstance(self.h_ratio, list):
+            self.fig, self.ax = plt.subplots(figsize=self.h_ratio)
         else:
-            if isinstance(self.h_ratio, list):
-                self.fig, self.ax = plt.subplots(figsize=self.h_ratio)
-            else:
-                self.fig, self.ax = plt.subplots(figsize=plt.figaspect(self.h_ratio))
+            self.fig, self.ax = plt.subplots(figsize=plt.figaspect(self.h_ratio))
 
     def is_group_allowed(self, name):
         if type(name) != str and len(

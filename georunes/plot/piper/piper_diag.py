@@ -44,7 +44,7 @@ class DiagramPiper(DiagramBase, LegendDrawer):
         self.nb_grid_separators = nb_grid_separators
         self.show_axis = show_axis
 
-    def init_plot(self):
+    def init_plot(self, *args):
         ratio_parameter = math.sqrt(3) / 2
         if self.h_ratio:
             ratio_parameter = self.h_ratio

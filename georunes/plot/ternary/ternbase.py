@@ -48,7 +48,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         self.no_ticks_label = no_ticks_label
         self.vertical_ticks = vertical_ticks
 
-    def init_plot(self):
+    def init_plot(self,  *args):
         ratio_parameter = math.sqrt(3) / 2
         if self.h_ratio:
             ratio_parameter = self.h_ratio

@@ -59,7 +59,7 @@ class DiagramSpider(DiagramBase):
             self.enclosed_in_bg = enclosed_in_bg
         self.horizontal_gridlines = horizontal_gridlines
 
-    def init_plot(self):
+    def init_plot(self, *args):
 
         if self.h_ratio is None:
             self.fig, self.ax = plt.subplots()
