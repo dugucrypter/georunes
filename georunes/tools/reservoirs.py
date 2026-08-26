@@ -1,6 +1,6 @@
 import warnings
 import pandas as pd
-from georunes.tools.preprocessing import check_geochem_res
+from georunes.tools.data_config import check_geochem_res
 
 try:
     import importlib.resources as pkg_resources

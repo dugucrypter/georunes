@@ -1,7 +1,7 @@
 import warnings
 import matplotlib.pyplot as plt
 from georunes.tools.data import is_dataframe
-from georunes.tools.preprocessing import check_data, data_create_graphic_preset, data_set_graphic_preset
+from georunes.tools.data_config import check_data, data_create_graphic_preset, data_set_graphic_preset
 from georunes.tools.filemanager import FileManager
 from georunes.tools.warnings import FunctionParameterWarning
 
