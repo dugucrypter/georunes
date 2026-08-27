@@ -136,10 +136,6 @@ class DiagramQAP(DiagramTernaryBase, ArrowDrawerTernary):
         for name, group in groups:
 
             if self.is_group_allowed(name):
-                var_sum = group[self.top_var] + group[self.left_var] + group[self.right_var]
-                norm_z = 100 * group[self.left_var] / var_sum
-                norm_x = 100 * group[self.right_var] / var_sum
-                norm_y = 100 * group[self.top_var] / var_sum
 
                 if self.marker != '':
                     marker = self.marker
@@ -147,11 +143,16 @@ class DiagramQAP(DiagramTernaryBase, ArrowDrawerTernary):
                     marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
-                    size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
                                                  self.markersize['val_min'], self.markersize['size_max'],
                                                  self.markersize['size_min'])
                 else:
-                    size = self.markersize
+                    sizes = self.markersize
+
+                var_sum = group[self.top_var] + group[self.left_var] + group[self.right_var]
+                norm_z = 100 * group[self.left_var] / var_sum
+                norm_x = 100 * group[self.right_var] / var_sum
+                norm_y = 100 * group[self.top_var] / var_sum
 
                 # Convert points to tuples
                 points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in
@@ -165,8 +166,8 @@ class DiagramQAP(DiagramTernaryBase, ArrowDrawerTernary):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.tax.scatter(points, edgecolors=edge_color,
-                                 marker=marker, label=label, facecolors=sample_color, s=size,
-                                 zorder=zorder)
+                                 marker=marker, label=label, facecolors=sample_color,
+                                 s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in group[self.top_var].items():

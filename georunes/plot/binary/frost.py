@@ -3,6 +3,7 @@ from matplotlib.colors import to_rgba
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
+from georunes.tools.plotting import normalize_marker_size
 
 
 # Frost, B.R., Barnes, C.G., Collins, W.J., Arculus, R.J., Ellis, D.J. and Frost, C.D., 2001. A geochemical
@@ -47,6 +48,17 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
         for name, group in groups:
 
             if self.is_group_allowed(name):
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 fenb = group["FeO"] / (group["FeO"] + group["MgO"])
                 si = (group["SiO2"])
@@ -59,9 +71,8 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(si, fenb, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sziz*2, zorder=zorder)
 
         self.plot_arrows()
         self.plot_legend()
@@ -115,6 +126,18 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
 
             if self.is_group_allowed(name):
 
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
+
                 fenb = group["FeOt"] / (group["FeOt"] + group["MgO"])
                 si = (group["SiO2"])
 
@@ -126,9 +149,8 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(si, fenb, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
         self.plot_arrows()
         self.plot_legend()
@@ -179,6 +201,18 @@ class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
 
             if self.is_group_allowed(name):
 
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
+
                 mali = group["Na2O"] + group["K2O"] - group["CaO"]
                 si = (group["SiO2"])
 
@@ -190,9 +224,8 @@ class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(si, mali, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
         self.plot_arrows()
         self.plot_legend()

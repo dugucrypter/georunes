@@ -4,6 +4,7 @@ from matplotlib.colors import to_rgba
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
+from georunes.tools.plotting import normalize_marker_size
 
 
 # Cox, K.G., Bell, J.D. and Pankhurst, R.J., 1979. Petrographic aspects of plutonic rocks. In The Interpretation of
@@ -180,6 +181,19 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
         for name, group in groups:
 
             if self.exclude_groups and name not in self.exclude_groups:
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                 self.markersize['val_min'], self.markersize['size_max'],
+                                                 self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
+
                 nak = group["Na2O"] + group["K2O"]
 
                 label = list(group[self.label_column])[0] if self.label_defined else name
@@ -190,9 +204,8 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(group["SiO2"], nak, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in group["SiO2"].items():

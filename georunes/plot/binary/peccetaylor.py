@@ -4,6 +4,7 @@ from matplotlib.colors import to_rgba
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
+from georunes.tools.plotting import normalize_marker_size
 
 
 # Peccerillo, A. and Taylor, S.R., 1976. Geochemistry of Eocene calc-alkaline volcanic rocks from the Kastamonu area,
@@ -63,7 +64,20 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                 self.markersize['val_min'], self.markersize['size_max'],
+                                                 self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
+
                 label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = 4
                 if self.zorder_column:
@@ -72,9 +86,8 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(group["SiO2"], group["K2O"], edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in group["SiO2"].items():

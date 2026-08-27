@@ -4,6 +4,7 @@ from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.chemistry import molar_ratio
 from georunes.tools.language import format_chemical_formula as _fml, get_translator
+from georunes.tools.plotting import normalize_marker_size
 
 
 # Shand, S.J., 1943. Eruptive rocks: their genesis, composition, and classification, with a chapter on meteorites. J.
@@ -74,6 +75,19 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
         for name, group in groups:
 
             if self.is_group_allowed(name):
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                 self.markersize['val_min'], self.markersize['size_max'],
+                                                 self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
+
                 acnk = molar_ratio(group["Al2O3"]) / (
                         molar_ratio(group["Na2O"]) + molar_ratio(group["K2O"]) + molar_ratio(group["CaO"]))
                 ank = molar_ratio(group["Al2O3"]) / (molar_ratio(group["Na2O"]) + molar_ratio(group["K2O"]))

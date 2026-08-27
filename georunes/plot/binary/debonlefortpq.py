@@ -4,6 +4,7 @@ from matplotlib.colors import to_rgba
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import ArrowDrawer, LegendDrawer
 from georunes.tools.chemistry import val_ox_to_mc
+from georunes.tools.plotting import normalize_marker_size
 
 
 # Debon, F. and Le Fort, P., 1983. A chemical–mineralogical classification of common plutonic rocks and associations.
@@ -95,7 +96,19 @@ class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                 self.markersize['val_min'], self.markersize['size_max'],
+                                                 self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 si = val_ox_to_mc(group["SiO2"])
                 na = val_ox_to_mc(group["Na2O"])
@@ -113,9 +126,8 @@ class DiagramPQ(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(param_P, param_Q, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in param_P.items():

@@ -107,11 +107,11 @@ class DiagramScatter3D(DiagramBase, ArrowDrawer, LegendDrawer):
                     marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
-                    size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
                                                  self.markersize['val_min'], self.markersize['size_max'],
                                                  self.markersize['size_min'])
                 else:
-                    size = self.markersize
+                    sizes = self.markersize
 
                 if self.xmolar:
                     xvals = val_el_to_mol(group[self.xvar])
@@ -135,11 +135,8 @@ class DiagramScatter3D(DiagramBase, ArrowDrawer, LegendDrawer):
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(
                     xvals, yvals, zvals,
-                    edgecolors=edge_color,
-                    marker=marker, label=label,
-                    facecolors=sample_color,
-                    s=size,
-                    zorder=zorder)
+                    edgecolors=edge_color, marker=marker, label=label, facecolors=sample_color,
+                    s=sizes**2,  zorder=zorder)
 
                 if self.annotation:
                     for i, sample in xvals.items():

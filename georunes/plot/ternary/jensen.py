@@ -88,13 +88,6 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
         for name, group in groups:
 
             if self.is_group_allowed(name):
-                top_var = val_ox_to_mc(group['Fe2O3t']) + val_ox_to_el(group['TiO2'])
-                left_var = val_ox_to_mc(group['Al2O3'])
-                right_var = val_ox_to_mc(group['MgO'])
-                var_sum = top_var + left_var + right_var
-                norm_z = 100 * left_var / var_sum
-                norm_x = 100 * right_var / var_sum
-                norm_y = 100 * top_var / var_sum
 
                 if self.marker != '':
                     marker = self.marker
@@ -102,11 +95,19 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
                     marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
-                    size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
                                                  self.markersize['val_min'], self.markersize['size_max'],
                                                  self.markersize['size_min'])
                 else:
-                    size = self.markersize
+                    sizes = self.markersize
+
+                top_var = val_ox_to_mc(group['Fe2O3t']) + val_ox_to_el(group['TiO2'])
+                left_var = val_ox_to_mc(group['Al2O3'])
+                right_var = val_ox_to_mc(group['MgO'])
+                var_sum = top_var + left_var + right_var
+                norm_z = 100 * left_var / var_sum
+                norm_x = 100 * right_var / var_sum
+                norm_y = 100 * top_var / var_sum
 
                 # Convert points to tuples
                 points = [(norm_x.get(i), norm_y.get(i), norm_z.get(i)) for i, sample in top_var.items()]
@@ -119,8 +120,8 @@ class DiagramJensen(DiagramTernaryBase, ArrowDrawerTernary):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.tax.scatter(points, edgecolors=edge_color,
-                                 marker=marker, label=label, facecolors=sample_color, s=size,
-                                 zorder=zorder)
+                                 marker=marker, label=label, facecolors=sample_color,
+                                 s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in top_var.items():

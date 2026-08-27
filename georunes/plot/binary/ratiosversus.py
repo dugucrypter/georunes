@@ -64,17 +64,18 @@ class DiagramRatiosVs(DiagramBase, ArrowDrawer, LegendDrawer):
         for name, group in groups:
 
             if self.is_group_allowed(name):
+
                 if self.marker != '':
                     marker = self.marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
-                    size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
                                                  self.markersize['val_min'], self.markersize['size_max'],
                                                  self.markersize['size_min'])
                 else:
-                    size = self.markersize
+                    sizes = self.markersize
 
                 xvals = group[self.xnum] / group[self.xdenom]
                 yvals = group[self.ynum] / group[self.ydenom]
@@ -89,7 +90,7 @@ class DiagramRatiosVs(DiagramBase, ArrowDrawer, LegendDrawer):
 
                 self.ax.scatter(xvals, yvals, edgecolors=edge_color,
                                 marker=marker, label=label, facecolors=sample_color,
-                                s=size, zorder=zorder)
+                                s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in xvals.items():

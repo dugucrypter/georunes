@@ -91,11 +91,11 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                     marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
-                    size = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
                                                  self.markersize['val_min'], self.markersize['size_max'],
                                                  self.markersize['size_min'])
                 else:
-                    size = self.markersize
+                    sizes = self.markersize
 
                 label = list(group[self.label_column])[0] if self.label_defined else name
                 zorder = None
@@ -110,7 +110,7 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.pax.scatter(points, edgecolors=edge_color,
-                                 marker=marker, label=label, facecolors=sample_color, s=size,
-                                 zorder=zorder)
+                                 marker=marker, label=label, facecolors=sample_color,
+                                 s=sizes**2, order=zorder)
 
         self.plot_legend()

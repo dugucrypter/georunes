@@ -4,6 +4,7 @@ from matplotlib.colors import to_rgba
 from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.language import get_translator
+from georunes.tools.plotting import normalize_marker_size
 
 
 # Pearce, J.A., Harris, N.B.W. and Tindle, A.G., 1984. Trace Element Discrimination Diagrams for the Tectonic
@@ -95,7 +96,19 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 vx = group["Nb"] + group["Y"]
                 vy = group["Rb"]
@@ -108,10 +121,8 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label,
-                                facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
         self.plot_arrows()
         self.plot_legend()
         self.adjust_padding()
@@ -166,7 +177,18 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 vx = group["Ta"] + group["Yb"]
                 vy = group["Rb"]
@@ -179,9 +201,8 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
         self.plot_arrows()
         self.plot_legend()
@@ -231,7 +252,18 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 vx = group["Y"]
                 vy = group["Nb"]
@@ -244,8 +276,8 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize, zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
         self.plot_arrows()
         self.plot_legend()
@@ -304,7 +336,19 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 vx = group["Yb"]
                 vy = group["Ta"]
@@ -317,8 +361,7 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, order=zorder)
 
         self.plot_legend()

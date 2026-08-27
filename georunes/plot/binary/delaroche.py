@@ -5,6 +5,7 @@ from georunes.plot.base import DiagramBase
 from georunes.plot.helpers import LegendDrawer, ArrowDrawer
 from georunes.tools.chemistry import val_ox_to_mc
 from georunes.tools.language import get_translator
+from georunes.tools.plotting import normalize_marker_size
 
 
 # De la Roche, H.D., Leterrier, J.T., Grandclaude, P. and Marchal, M., 1980. A classification of volcanic and
@@ -216,7 +217,19 @@ class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
+
+                if self.marker != '':
+                    marker = self.marker
+                else:
+                    marker = list(group[self.marker_column])[0]
+
+                if self.marker_size_scaled():
+                    sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
+                else:
+                    sizes = self.markersize
 
                 si = val_ox_to_mc(group["SiO2"])
                 na = val_ox_to_mc(group["Na2O"])
@@ -238,9 +251,8 @@ class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(param_R1, param_R2, edgecolors=sample_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=edge_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=edge_color,
+                                s=sizes**2, order=zorder)
 
                 if self.annotation:
                     for i, sample in param_R1.items():
