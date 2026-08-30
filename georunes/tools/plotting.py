@@ -31,12 +31,23 @@ def normalize_marker_size(serie, val_max, val_min, size_max, size_min, log_scale
         size_max = 18
     if size_min is None:
         size_min = 1
-    serie = np.clip(serie, a_min=val_min, a_max=None)
-    serie = np.clip(serie, a_min=None, a_max=val_max)
-    a = (size_max - size_min) / (val_max - val_min)
-    b = size_max - a * val_max
-    size_serie = serie * a + b
-    return size_serie
+
+    serie = np.clip(serie, a_min=val_min, a_max=val_max)
+    if log_scale:
+        if val_min <= 0:
+            raise ValueError("val_min must be > 0 when log_scale=True.")
+        serie_scaled = np.log10(serie)
+        val_min_scaled = np.log10(val_min)
+        val_max_scaled = np.log10(val_max)
+    else:
+        serie_scaled = serie
+        val_min_scaled = val_min
+        val_max_scaled = val_max
+    a = (size_max - size_min) / (val_max_scaled - val_min_scaled)
+    b = size_min - a * val_min_scaled
+    size_serie = a * serie_scaled + b
+
+    return np.nan_to_num(size_serie, nan=0)
 
 
 def is_in_canvas(x, y, xlim, ylim):

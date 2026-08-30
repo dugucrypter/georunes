@@ -18,7 +18,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                  xmolar=False, ymolar=False,
                  alpha_color=0.4, alpha_edge_color=0.8,
                  x_formatter=None, y_formatter=None,
-                 markersize=70,
+                 markersize=None,
                  **kwargs
                  ):
         if markersize is None :

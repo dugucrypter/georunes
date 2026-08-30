@@ -26,7 +26,7 @@ class DiagramBase:
                  lang_cfg=None,
                  custom_zorder={},
                  fontsize='medium', title_fs='medium', legend_fs='medium',
-                 legend_ms=[50], markersize=None,
+                 legend_ms=[50], markersize=plt.rcParams["lines.markersize"],
                  auto_graphic_preset=True, graphic_preset=None,
                  ):
 
