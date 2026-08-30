@@ -26,9 +26,9 @@ def tern_coords_to_bin_coords(rvar, tvar, lvar=None, scale=100):
     return xvar, yvar
 
 
-def normalize_marker_size(serie, val_max, val_min, size_max, size_min):
+def normalize_marker_size(serie, val_max, val_min, size_max, size_min, log_scale=True):
     if size_max is None:
-        size_max = 100
+        size_max = 18
     if size_min is None:
         size_min = 1
     serie = np.clip(serie, a_min=val_min, a_max=None)

@@ -66,8 +66,8 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
 
             if self.is_group_allowed(name):
 
-                if self.marker != '':
-                    marker = self.marker
+                if self.unique_marker:
+                    marker = self.unique_marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
@@ -87,7 +87,7 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(group["SiO2"], group["K2O"], edgecolors=edge_color,
                                 marker=marker, label=label, facecolors=sample_color,
-                                s=sizes**2, order=zorder)
+                                s=sizes**2, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in group["SiO2"].items():

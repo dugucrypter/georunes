@@ -76,8 +76,8 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
 
             if self.is_group_allowed(name):
 
-                if self.marker != '':
-                    marker = self.marker
+                if self.unique_marker:
+                    marker = self.unique_marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
@@ -100,9 +100,8 @@ class DiagramShand(DiagramBase, ArrowDrawer, LegendDrawer):
                 sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(acnk, ank, edgecolors=edge_color,
-                                marker=list(group[self.marker_column])[0], label=label, facecolors=sample_color,
-                                s=self.markersize,
-                                zorder=zorder)
+                                marker=marker, label=label, facecolors=sample_color,
+                                s=sizes**2, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in acnk.items():

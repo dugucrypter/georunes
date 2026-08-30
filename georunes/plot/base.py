@@ -8,8 +8,9 @@ from georunes.tools.warnings import FunctionParameterWarning
 
 class DiagramBase:
     def __init__(self, datasource,
-                 sheet=0,
+                 sheet=0, #todo markers
                  no_marker=False,
+                 unique_marker = None,
                  no_title=False, no_legend=False,
                  title="", window_title=None, h_ratio=None,
                  ax=None,
@@ -60,6 +61,7 @@ class DiagramBase:
         self.supp_group = supp_group
         self.datasource = datasource
         self.no_marker = no_marker
+        self.unique_marker=unique_marker
         self.custom_zorder = custom_zorder
         self.arrows = arrows
         self.legend_ncol = legend_ncol

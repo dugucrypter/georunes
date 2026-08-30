@@ -21,6 +21,8 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                  markersize=70,
                  **kwargs
                  ):
+        if markersize is None :
+            markersize = plt.rcParams["lines.markersize"]
         config_padding = {"bottom": 0.20}
         if padding:
             config_padding.update(padding)
@@ -81,15 +83,16 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
             groups = self.data.groupby(self.group_name)
         for name, group in groups:
             if self.is_group_allowed(name):
-                if self.marker != '':
-                    marker = self.marker
+
+                if self.unique_marker:
+                    marker = self.unique_marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
                 if self.marker_size_scaled():
                     sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
                                                  self.markersize['val_min'], self.markersize['size_max'],
-                                                 self.markersize['size_min'])
+                                                 self.markersize['size_min'], log_scale=self.markersize['log_scale'])
                 else:
                     sizes = self.markersize
 
@@ -115,7 +118,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
                 self.ax.scatter(
                     xvals, yvals,
                     edgecolors=edge_color, marker=marker, label=label,
-                    facecolors=sample_color, s=sizes**2, order=zorder)
+                    facecolors=sample_color, s=sizes**2, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in xvals.items():

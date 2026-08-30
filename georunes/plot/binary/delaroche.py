@@ -219,8 +219,8 @@ class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
 
             if self.is_group_allowed(name):
 
-                if self.marker != '':
-                    marker = self.marker
+                if self.unique_marker:
+                    marker = self.unique_marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
@@ -252,7 +252,7 @@ class DiagramR1R2(DiagramBase, ArrowDrawer, LegendDrawer):
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(param_R1, param_R2, edgecolors=sample_color,
                                 marker=marker, label=label, facecolors=edge_color,
-                                s=sizes**2, order=zorder)
+                                s=sizes**2, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in param_R1.items():

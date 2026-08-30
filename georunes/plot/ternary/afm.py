@@ -44,8 +44,8 @@ class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
 
             if self.is_group_allowed(name):
 
-                if self.marker != '':
-                    marker = self.marker
+                if self.unique_marker:
+                    marker = self.unique_marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
@@ -79,7 +79,7 @@ class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.tax.scatter(points, edgecolors=edge_color,
                                  marker=marker, label=label, facecolors=sample_color,
-                                 s=sizes**2, order=zorder)
+                                 s=sizes**2, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in top_var.items():

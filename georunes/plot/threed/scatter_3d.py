@@ -101,8 +101,9 @@ class DiagramScatter3D(DiagramBase, ArrowDrawer, LegendDrawer):
         for name, group in groups:
 
             if self.is_group_allowed(name):
-                if self.marker != '':
-                    marker = self.marker
+
+                if self.unique_marker:
+                    marker = self.unique_marker
                 else:
                     marker = list(group[self.marker_column])[0]
 
@@ -136,7 +137,7 @@ class DiagramScatter3D(DiagramBase, ArrowDrawer, LegendDrawer):
                 self.ax.scatter(
                     xvals, yvals, zvals,
                     edgecolors=edge_color, marker=marker, label=label, facecolors=sample_color,
-                    s=sizes**2,  zorder=zorder)
+                    s=sizes,  zorder=zorder)
 
                 if self.annotation:
                     for i, sample in xvals.items():
