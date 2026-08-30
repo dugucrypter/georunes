@@ -180,7 +180,7 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
         groups = self.data.groupby(self.group_name)
         for name, group in groups:
 
-            if self.exclude_groups and name not in self.exclude_groups:
+            if self.is_group_allowed(name):
 
                 if self.unique_marker:
                     marker = self.unique_marker
