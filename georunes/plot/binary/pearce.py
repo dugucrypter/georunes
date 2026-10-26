@@ -123,6 +123,11 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sizes**2, zorder=zorder)
+
+                if self.annotation:
+                    for i, sample in vx.items():
+                        self.ax.annotate(group[self.annotation].get(i), (vx.get(i), vy[i]),
+                                         fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
         self.adjust_padding()
@@ -205,6 +210,10 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sizes**2, zorder=zorder)
 
+                if self.annotation:
+                    for i, sample in vx.items():
+                        self.ax.annotate(group[self.annotation].get(i), (vx.get(i), vy[i]),
+                                         fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
 
@@ -280,6 +289,11 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sizes**2, zorder=zorder)
+
+                if self.annotation:
+                    for i, sample in vx.items():
+                        self.ax.annotate(group[self.annotation].get(i), (vx.get(i), vy[i]),
+                                         fontsize='xx-small')
 
         self.plot_arrows()
         self.plot_legend()
@@ -365,5 +379,10 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
                 self.ax.scatter(vx, vy, edgecolors=edge_color,
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sizes**2, zorder=zorder)
+
+                if self.annotation:
+                    for i, sample in vx.items():
+                        self.ax.annotate(group[self.annotation].get(i), (vx.get(i), vy[i]),
+                                         fontsize='xx-small')
 
         self.plot_legend()

@@ -128,5 +128,9 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                                  marker=marker, label=label, facecolors=sample_color, alpha=self.alpha_color,
                                  s=sizes**2, zorder=zorder)
 
+                if self.annotation:
+                    for i, point in enumerate(points):
+                        self.tax.annotate(group[self.annotation].get(i), point, fontsize='xx-small')
+
         self.plot_legend()
         self.tax.clear_matplotlib_ticks()

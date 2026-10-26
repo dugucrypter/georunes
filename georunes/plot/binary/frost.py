@@ -75,6 +75,11 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sziz*2, zorder=zorder)
 
+                if self.annotation:
+                    for i, sample in si.items():
+                        self.ax.annotate(group[self.annotation].get(i), (si.get(i), fenb[i]),
+                                         fontsize='xx-small')
+
         self.plot_arrows()
         self.plot_legend()
 
@@ -153,6 +158,10 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sizes**2, zorder=zorder)
 
+                if self.annotation:
+                    for i, sample in si.items():
+                        self.ax.annotate(group[self.annotation].get(i), (si.get(i), fenb[i]),
+                                         fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
 
@@ -228,5 +237,9 @@ class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
                                 marker=marker, label=label, facecolors=sample_color,
                                 s=sizes**2, zorder=zorder)
 
+                if self.annotation:
+                    for i, sample in si.items():
+                        self.ax.annotate(group[self.annotation].get(i), (si.get(i), mali[i]),
+                                         fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
