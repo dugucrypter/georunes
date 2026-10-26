@@ -28,7 +28,8 @@ class DiagramBase:
                  fontsize='medium', title_fs='medium', legend_fs='medium',
                  legend_ms=[50], markersize=plt.rcParams["lines.markersize"],
                  auto_graphic_preset=True, graphic_preset=None,
-                 force_color=None
+                 force_color=None,
+                 custom_ax_init=False
                  ):
 
         if is_dataframe(datasource):
@@ -39,7 +40,8 @@ class DiagramBase:
         self.check_parameters()  # Verify if some required data are present in file. Can be implemented in child classes
         self.title = title
         self.h_ratio = h_ratio
-        self.init_plot()
+        if not custom_ax_init :
+            self.init_plot(ax)
         if exclude_groups is None:
             self.exclude_groups = ("",)
         else:
@@ -125,7 +127,7 @@ class DiagramBase:
         if self.padding_bottom:
             self.fig.subplots_adjust(bottom=self.padding_bottom)
 
-    def init_plot(self, ax=None):
+    def init_plot(self, ax=None, *args ):
         if ax is not None:
             self.ax = ax
             self.fig = ax.figure

@@ -14,6 +14,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                  top_var='', left_var='', right_var='',
                  top_label='', left_label='', right_label='',
                  tscale='linear', left_scale='linear', right_scale='linear',
+                 title="", tax = None,
                  padding=None,
                  marker='', annotation=None,
                  alpha_color=0.4, alpha_edge_color=0.8,
@@ -24,13 +25,16 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
                  **kwargs
                  ):
         self.scale = scale
+        self.title = title
         if padding is None:
             padding = {"bottom": 0.14}
         self.fig = None
         self.ax = None
         self.tax = None
         DiagramBase.__init__(self, datasource=datasource, h_ratio=h_ratio, legend_ncol=legend_ncol, padding=padding,
+                             custom_ax_init=True,
                              **kwargs)
+        self.init_plot(tax)
         self.annotation = annotation
         self.top_label = top_label
         self.left_label = left_label
@@ -48,11 +52,18 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         self.no_ticks_label = no_ticks_label
         self.vertical_ticks = vertical_ticks
 
-    def init_plot(self,  *args):
-        ratio_parameter = math.sqrt(3) / 2
+    def init_plot(self, tax=None,  *args):
+        if tax is not None:
+            self.tax = tax
+            self.ax = tax.get_axes()
+            self.fig = tax.get_figure()
+            return
+
         if self.h_ratio:
-            ratio_parameter = self.h_ratio
-        self.fig, self.ax = plt.subplots(figsize=plt.figaspect(ratio_parameter))  # Ratio figure size
+            ratio_parameter = self.h_ratio # Ratio figure size
+        else :
+            ratio_parameter = math.sqrt(3) / 2
+        self.fig, self.ax = plt.subplots(figsize=plt.figaspect(ratio_parameter))
         self.tax = ternary.TernaryAxesSubplot(ax=self.ax, scale=self.scale)
 
     def plot_config(self, no_gridline=False, no_ticks=False, no_ticks_label=False):

@@ -10,6 +10,7 @@ from georunes.tools.plotting import normalize_marker_size
 
 class DiagramPiper(DiagramBase, LegendDrawer):
     def __init__(self, datasource,
+                 pax=None,
                  padding=None,
                  marker='', annotation=None,
                  alpha_color=0.4,  alpha_edge_color=0.8,
@@ -29,7 +30,9 @@ class DiagramPiper(DiagramBase, LegendDrawer):
         self.ax = None
         self.pax = None
         DiagramBase.__init__(self, datasource=datasource,  h_ratio=h_ratio, legend_ncol=legend_ncol, padding=padding,
+                             custom_ax_init=True,
                              **kwargs)
+        self.init_plot(pax)
         self.annotation = annotation
         self.marker = marker
         self.alpha_color = alpha_color
@@ -44,7 +47,13 @@ class DiagramPiper(DiagramBase, LegendDrawer):
         self.nb_grid_separators = nb_grid_separators
         self.show_axis = show_axis
 
-    def init_plot(self, *args):
+    def init_plot(self, pax=None, *args):
+        if pax is not None:
+            self.pax = pax
+            self.ax = pax.get_axes()
+            self.fig = pax.get_figure()
+            return
+
         ratio_parameter = math.sqrt(3) / 2
         if self.h_ratio:
             ratio_parameter = self.h_ratio
