@@ -73,7 +73,7 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
                 edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                 self.ax.scatter(si, fenb, edgecolors=edge_color,
                                 marker=marker, label=label, facecolors=sample_color,
-                                s=sziz*2, zorder=zorder)
+                                s=sizes*2, zorder=zorder)
 
                 if self.annotation:
                     for i, sample in si.items():
