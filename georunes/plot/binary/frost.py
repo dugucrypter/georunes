@@ -82,6 +82,7 @@ class DiagramFrostSiFeNb(DiagramBase, ArrowDrawer, LegendDrawer):
 
         self.plot_arrows()
         self.plot_legend()
+        self.post_plotting()
 
 
 class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
@@ -164,6 +165,7 @@ class DiagramFrostSiFeTotNb(DiagramBase, ArrowDrawer, LegendDrawer):
                                          fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
+        self.post_plotting()
 
 
 class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
@@ -243,3 +245,4 @@ class DiagramFrostSiMALI(DiagramBase, ArrowDrawer, LegendDrawer):
                                          fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
+        self.post_plotting()

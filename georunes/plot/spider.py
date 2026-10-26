@@ -207,6 +207,7 @@ class DiagramSpider(DiagramBase):
 
         self.plot_reservoirs(legend_cfg, legend_list, legend_cfg_labels)
         self.plot_legend(legend_cfg, legend_cfg_labels)
+        self.post_plotting()
 
     def plot_reservoirs(self, legend_cfg, legend_list, legend_cfg_labels):
         res = Reservoirs.get_instance()
@@ -241,8 +242,9 @@ class DiagramSpider(DiagramBase):
             leg = leg_canvas.legend(handles=tuple(legend_cfg), labels=tuple(legend_cfg_labels), loc=self.legend_loc,
                                     ncol=self.legend_ncol, edgecolor='k', fontsize=self.legend_fs)
             if self.thick_legend_linewidth:
-
                 for leg_obj in leg.legendHandles:
                     leg_obj.set_linewidth(2.0)
 
             self.fig.subplots_adjust(bottom=0.2)
+        self.after_plot_legend()
+

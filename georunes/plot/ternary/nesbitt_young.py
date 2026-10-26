@@ -145,3 +145,4 @@ class DiagramNesbittYoung(DiagramTernaryBase, ArrowDrawerTernary):
         self.plot_arrows()
         self.fig.subplots_adjust(right=0.92)
         self.plot_legend()
+        self.post_plotting()

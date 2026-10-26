@@ -130,7 +130,7 @@ class DiagramPearceRYN(PearceBase, ArrowDrawer, LegendDrawer):
                                          fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
-        self.adjust_padding()
+        self.post_plotting()
 
 
 class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
@@ -216,6 +216,7 @@ class DiagramPearceRYT(PearceBase, ArrowDrawer, LegendDrawer):
                                          fontsize='xx-small')
         self.plot_arrows()
         self.plot_legend()
+        self.post_plotting()
 
 
 class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
@@ -297,6 +298,7 @@ class DiagramPearceNY(PearceBase, ArrowDrawer, LegendDrawer):
 
         self.plot_arrows()
         self.plot_legend()
+        self.post_plotting()
 
 
 class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
@@ -386,3 +388,4 @@ class DiagramPearceTY(PearceBase, ArrowDrawer, LegendDrawer):
                                          fontsize='xx-small')
 
         self.plot_legend()
+        self.post_plotting()

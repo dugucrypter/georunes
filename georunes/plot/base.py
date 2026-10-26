@@ -183,3 +183,7 @@ class DiagramBase:
 
     def save_svg(self, fname, **kwargs):
         self.fig.savefig(fname, **kwargs)
+
+    def post_plotting(self) :
+        if self.padding_config:
+            self.adjust_padding()

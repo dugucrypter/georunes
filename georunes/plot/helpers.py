@@ -28,3 +28,6 @@ class LegendDrawer:
                 leg_obj._sizes = self.legend_ms
         else:
             self.fig.subplots_adjust(bottom=0.11)
+
+    def after_plot_legend(self):
+        pass

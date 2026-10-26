@@ -175,3 +175,4 @@ class DiagramQAP(DiagramTernaryBase, ArrowDrawerTernary):
                                           fontsize='xx-small')
 
         self.plot_legend()
+        self.post_plotting()

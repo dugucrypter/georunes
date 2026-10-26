@@ -126,3 +126,4 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
 
         self.plot_arrows()
         self.plot_legend()
+        self.post_plotting()

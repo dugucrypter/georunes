@@ -134,3 +134,4 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
 
         self.plot_legend()
         self.tax.clear_matplotlib_ticks()
+        self.post_plotting()

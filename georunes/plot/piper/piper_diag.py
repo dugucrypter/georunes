@@ -114,3 +114,4 @@ class DiagramPiper(DiagramBase, LegendDrawer):
                                  s=sizes**2, zorder=zorder)
 
         self.plot_legend()
+        self.post_plotting()
