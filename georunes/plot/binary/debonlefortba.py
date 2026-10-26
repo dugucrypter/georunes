@@ -117,8 +117,8 @@ class DiagramBA(DiagramBase, ArrowDrawer, LegendDrawer):
 
                 if self.marker_size_scaled():
                     sizes = normalize_marker_size(group[self.markersize['var_scale']], self.markersize['val_max'],
-                                                 self.markersize['val_min'], self.markersize['size_max'],
-                                                 self.markersize['size_min'])
+                                                  self.markersize['val_min'], self.markersize['size_max'],
+                                                  self.markersize['size_min'])
                 else:
                     sizes = self.markersize
 

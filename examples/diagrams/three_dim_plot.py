@@ -20,7 +20,6 @@ femgti = DiagramScatter3D(datasource=source, sheet=sheet,
                           legend_ncol=4,
                           )
 
-
 knaca.plot()
 femgti.plot()
 
