@@ -28,6 +28,7 @@ class DiagramBase:
                  fontsize='medium', title_fs='medium', legend_fs='medium',
                  legend_ms=[50], markersize=plt.rcParams["lines.markersize"],
                  auto_graphic_preset=True, graphic_preset=None,
+                 force_color=None
                  ):
 
         if is_dataframe(datasource):
@@ -83,6 +84,7 @@ class DiagramBase:
         else :
             self.label_column = None
             self.label_defined = False
+        self.force_color=force_color
         if not ignore_checkings:
             check_data(self.data, group_name=self.group_name, supp_group=self.supp_group,
                        color_column=self.color_column, marker_column=self.marker_column, zorder_column=self.zorder_column,
@@ -93,6 +95,10 @@ class DiagramBase:
                     self.data = data_set_graphic_preset(self.data, graphic_preset, group_name=group_name)
                 else:
                     self.data = data_create_graphic_preset(self.data, group_name=group_name)
+
+        if isinstance(self.force_color, dict):
+            for group, col in self.force_color.items() :
+                self.data.loc[self.data[self.group_name] == group, self.color_column] = col
 
     def init_padding(self, padding):
         self.padding_left, self.padding_right, self.padding_top, self.padding_bottom = None, None, None, None
