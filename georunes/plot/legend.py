@@ -13,6 +13,7 @@ class PlotLegend(DiagramBase):
                  decor_set=None,
                  title='Legend',
                  alpha_color=0.4, alpha_edge_color=1,
+                 legend_frameon=True,
                  **kwargs
                  ):
         DiagramBase.__init__(self, datasource=datasource,
@@ -25,6 +26,7 @@ class PlotLegend(DiagramBase):
         self.alpha_color = alpha_color
         self.alpha_edge_color = alpha_edge_color
         self.label_order_column = label_order_column
+        self.legend_frameon = legend_frameon
 
     def is_group_allowed(self, name):
         if (self.exclude_groups is not None) and (name not in self.exclude_groups):
@@ -67,14 +69,14 @@ class PlotLegend(DiagramBase):
                     edge_color = to_rgba(color, alpha=self.alpha_edge_color)
                     self.ax.plot([], [], linewidth=1, label=label, color=list(group[self.color_column])[0],
                                  marker=marker, markeredgecolor=edge_color,
-                                 markerfacecolor=sample_color, markersize=self.markersize,
+                                 markerfacecolor=sample_color, markersize=self.markersize**2,
                                  )
                 else:
                     sample_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_color)
                     edge_color = to_rgba(list(group[self.color_column])[0], alpha=self.alpha_edge_color)
                     self.ax.scatter([], [], edgecolors=edge_color, facecolors=sample_color,
                                     marker=list(group[self.marker_column])[0], label=label,
-                                    s=self.markersize,
+                                    s=self.markersize**2,
                                     )
                 self.fig.subplots_adjust(left=0.1, right=0.9)
 
@@ -87,20 +89,25 @@ class PlotLegend(DiagramBase):
         max_order = max(*[int(x) for x in list_label_legend.keys()])
         ordered_handles = []
         ordered_labels = []
-        line = 0
         for i in range(0, max_order + 1):
             if i in list_label_legend.keys():  # If group is not excluded
                 idx = labels.index(list_label_legend[i])
                 ordered_handles.append(handles[idx])
                 ordered_labels.append(labels[idx])
-                line += 1
-                if self.lines_to_break and line in self.lines_to_break:
-                    r = patches.Rectangle((0, 0), 1, 1, fill=False, edgecolor='none', visible=False)
-                    ordered_handles.append(r)
-                    ordered_labels.append("")
 
         for key, val in handles_norm.items():
             ordered_handles.append(val)
             ordered_labels.append(key)
 
-        self.ax.legend(ordered_handles, ordered_labels, ncol=self.legend_ncol, loc=self.legend_loc)
+        if self.lines_to_break:
+            for break_at in self.lines_to_break:
+                blank = patches.Rectangle(
+                    (0, 0), 1, 1,
+                    fill=False,
+                    edgecolor="none",
+                    visible=False
+                )
+                ordered_handles.insert(break_at, blank)
+                ordered_labels.insert(break_at, "")
+
+        self.ax.legend(ordered_handles, ordered_labels, ncol=self.legend_ncol, loc=self.legend_loc, frameon=self.legend_frameon)
