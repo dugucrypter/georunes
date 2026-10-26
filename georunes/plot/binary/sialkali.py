@@ -37,7 +37,7 @@ class DiagramSiAlkali(DiagramBase, ArrowDrawer, LegendDrawer):
         self.ax.set_xlim(35, 80)
         self.ax.set_ylim(1, 17)
 
-        if not self.no_title:
+        if not self.hide_title:
             self.ax.set_title(self.title, size=self.title_fs)
 
         self.ax.set_xlabel(self.xlabel, fontsize=self.fontsize)

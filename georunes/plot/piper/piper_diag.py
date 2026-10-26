@@ -67,7 +67,7 @@ class DiagramPiper(DiagramBase, LegendDrawer):
             self.pax.gridlines(color="black", num_seps=self.nb_grid_separators, linewidth=0.5)
         self.pax.boundary(linewidth=1.0)
 
-        if not self.no_title:
+        if not self.hide_title:
             if self.title == "":
                 self.title = 'Piper diagram'
             self.pax.set_title(self.title)

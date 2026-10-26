@@ -77,7 +77,7 @@ class DiagramTernaryBase(DiagramBase, LegendDrawer):
         self.tax.right_corner_label(self.right_label)
         self.tax.top_corner_label(self.top_label)
 
-        if not self.no_title:
+        if not self.hide_title:
             if self.title == "":
                 self.title = 'Triangular diagram'
             self.tax.set_title(self.title)

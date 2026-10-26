@@ -9,9 +9,9 @@ from georunes.tools.filemanager import FileManager
 class DiagramBase:
     def __init__(self, datasource,
                  sheet=0,
-                 no_marker=False,
+                 hide_markers=False,
                  unique_marker = None,
-                 no_title=False, no_legend=False,
+                 hide_title=False, hide_legend=False,
                  title="", window_title=None, h_ratio=None,
                  ax=None,
                  group_name='group', exclude_groups=("",), extra_exclude=None,
@@ -55,15 +55,15 @@ class DiagramBase:
                     self.data = self.data[self.data[col] != value]
 
         self.window_title = window_title if window_title else title
-        self.no_title = no_title
-        self.no_legend = no_legend
+        self.hide_title = hide_title
+        self.hide_legend = hide_legend
         self.group_name = group_name
         self.color_column= color_column
         self.marker_column = marker_column
         self.zorder_column = zorder_column
         self.supp_group = supp_group
         self.datasource = datasource
-        self.no_marker = no_marker
+        self.hide_markers = hide_markers
         self.unique_marker=unique_marker
         self.custom_zorder = custom_zorder
         self.arrows = arrows

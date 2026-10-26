@@ -58,7 +58,7 @@ class DiagramVs(DiagramBase, ArrowDrawer, LegendDrawer):
         if self.ylim is not None:
             self.ax.set_ylim(self.ylim)
 
-        if not self.no_title:
+        if not self.hide_title:
             self.ax.set_title(self.title, size=self.title_fs)
 
         self.ax.set_yscale(self.yscale)

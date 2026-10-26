@@ -13,21 +13,21 @@ sheet = 'ggtest'
 
 jensen = DiagramJensen(datasource=source, sheet=sheet,
                        group_name='Lithology',
-                        no_title=True,
+                        hide_title=True,
                        legend_ncol=2,
                        alpha_color=0.8
                        )
 
 qap = DiagramQAP(datasource=source, sheet=sheet,
                  group_name='Lithology',
-                        no_title=True,
+                        hide_title=True,
                  legend_ncol=2,
                  alpha_color=0.8
                  )
 
 barker = DiagramAnAbOr(datasource=source, sheet=sheet,
                        group_name='Lithology',
-                        no_title=True,
+                        hide_title=True,
                        legend_ncol=2,
                        alpha_color=0.8,
                        )

@@ -30,7 +30,7 @@ class PearceBase(DiagramBase, ArrowDrawer, LegendDrawer):
         self.y_formatter = y_formatter
 
     def set_decorations(self):
-        if not self.no_title:
+        if not self.hide_title:
             self.ax.set_title(self.title, size=self.title_fs)
 
         self.ax.set_xlabel(self.xlabel, fontsize=self.fontsize)

@@ -75,7 +75,7 @@ class DiagramSpider(DiagramBase):
 
     def set_decoration(self):
 
-        if not self.no_title:
+        if not self.hide_title:
             self.ax.set_title(self.title, size="small")
 
         if self.ylim:
@@ -240,7 +240,7 @@ class DiagramSpider(DiagramBase):
 
     def plot_legend(self, legend_cfg, legend_cfg_labels):
 
-        if not self.no_legend:
+        if not self.hide_legend:
 
             leg_canvas = self.ax if self.legend_in_axs else self.fig
             leg = leg_canvas.legend(handles=tuple(legend_cfg), labels=tuple(legend_cfg_labels), loc=self.legend_loc,

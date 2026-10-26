@@ -78,7 +78,7 @@ class DiagramScatter3D(DiagramBase, ArrowDrawer, LegendDrawer):
         if self.zlim is not None:
             self.ax.set_ylim(self.zlim)
 
-        if not self.no_title:
+        if not self.hide_title:
             self.ax.set_title(self.title, size=self.title_fs)
 
         self.ax.set_yscale(self.yscale)

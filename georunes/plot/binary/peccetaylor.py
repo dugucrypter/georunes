@@ -25,7 +25,7 @@ class DiagramPecceTaylor(DiagramBase, ArrowDrawer, LegendDrawer):
         self.alpha_edge_color = alpha_edge_color
 
     def set_decoration(self):
-        if not self.no_title:
+        if not self.hide_title:
             self.ax.set_title(self.title, size=self.title_fs)
         _ = get_translator(self.lang_cfg)
         self.ax.set_xlim(45, 80)

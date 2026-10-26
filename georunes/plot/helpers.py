@@ -20,7 +20,7 @@ class ArrowDrawerTernary:
 
 class LegendDrawer:
     def plot_legend(self):
-        if not self.no_legend:
+        if not self.hide_legend:
             leg_canvas = self.ax if self.legend_in_axs else self.fig
             leg = leg_canvas.legend(loc=self.legend_loc, ncol=self.legend_ncol, fontsize=self.legend_fs, edgecolor='k')
             # Set marker size in legend
