@@ -10,12 +10,12 @@ from georunes.tools.plotting import normalize_marker_size
 # Canadian Journal of Earth Sciences, 8(5), pp.523-548.
 
 class DiagramAFM(DiagramTernaryBase, ArrowDrawerTernary):
-    def __init__(self, datasource, title="AFM diagram (Irvine and Baragar 1971)", **kwargs):
+    def __init__(self, datasource, title="AFM diagram (Irvine and Baragar 1971)", legend_ncol=4, **kwargs):
         DiagramTernaryBase.__init__(self, datasource=datasource,
                                     title=title,
                                     top_label='F', left_label='A', right_label='M',
                                     tscale='linear', left_scale='linear', right_scale='linear',
-                                    legend_ncol=4,
+                                    legend_ncol=legend_ncol,
                                     **kwargs)
 
     def set_decoration(self, ):
